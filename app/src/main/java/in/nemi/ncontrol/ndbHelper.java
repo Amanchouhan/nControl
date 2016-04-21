@@ -1,5 +1,6 @@
 package in.nemi.ncontrol;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -19,7 +20,6 @@ public class ndbHelper extends SQLiteOpenHelper{
 
     public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
@@ -40,12 +40,17 @@ public class ndbHelper extends SQLiteOpenHelper{
     }
 
     //Add a user to the db
-    public void addUser() {
-
+    public void addUser(Users user) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, user.get_username());
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_USERS, null, values);
+        db.close();
     }
 
     //remove a user from the db
-    public void deleteUser() {
-
+    public void deleteUser(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from " + TABLE_USERS + " where " + COLUMN_USERNAME + "=\"" + username + "\";");
     }
 }
