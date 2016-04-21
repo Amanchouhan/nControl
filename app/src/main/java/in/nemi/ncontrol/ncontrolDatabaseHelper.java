@@ -10,8 +10,8 @@ import android.os.Build;
  */
 public class ncontrolDatabaseHelper extends SQLiteOpenHelper{
 
-    private static final string DATABASE_NAME="ncontrol.db"
-    private static final int DATABASE_VERSION="1"
+    private static final String DATABASE_NAME="ncontrol.db";
+    private static final int DATABASE_VERSION="1";
 
   public ncontrolDatabaseHelper (Context context){
 
