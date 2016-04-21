@@ -37,17 +37,15 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="78dp"
         android:layout_height="80dp"
         android:text="Create User"
         android:id="@+id/textView"
         android:clickable="true"
-        android:onClick="hyperlink"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="127dp"
-        android:layout_marginEnd="127dp"
-        android:layout_below="@+id/button" />
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true" />
+
+    <!--android:onClick="hyperlink"-->
 
 
 </RelativeLayout>

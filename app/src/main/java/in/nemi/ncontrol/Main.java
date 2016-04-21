@@ -1,6 +1,6 @@
 package in.nemi.ncontrol;
 
-        import android.app.Activity;
+import android.app.Activity;
         import android.app.DownloadManager;
         import android.content.Context;
         import android.database.Cursor;
@@ -13,22 +13,22 @@ package in.nemi.ncontrol;
  */
 public class Main extends Activity {
 
-     private Context context;
-    public SQLiteDatabase database=null;
+    //    private Context context;
+    //    public SQLiteDatabase database = null;
+    ndbHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        ncontrolDatabaseHelper db = new ncontrolDatabaseHelper(context);
-        db.onCreate(database);
-
-
+        databaseHelper = new ndbHelper(this, null, null, 1);
     }
-        // public static boolean hyperlink(String TABLE_NAME,String COLUMN_ROLE, String admin) {
-     //   SQLiteDatabase db =ncontrolDatabaseHelper.database;
+}
 
+//        ncontrolDatabaseHelper db = new ncontrolDatabaseHelper(context);
+//        db.onCreate(database);
+    // public static boolean hyperlink(String TABLE_NAME,String COLUMN_ROLE, String admin) {
+    //   SQLiteDatabase db = ncontrolDatabaseHelper.database;
 
       // String Query = "Select * from " + TABLE_NAME + " where " + COLUMN_ROLE + " = " + admin;
       //  Cursor cursor = db.rawQuery(Query, null);
@@ -39,8 +39,3 @@ public class Main extends Activity {
        // cursor.close();
        // return true;
    // }
-
-
-
-
-}
