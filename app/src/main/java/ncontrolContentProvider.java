@@ -4,10 +4,17 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
+import in.nemi.ncontrol.ncontrolDatabaseHelper;
+
 /**
  * Created by Developer on 21-04-2016.
  */
 public class ncontrolContentProvider extends ContentProvider{
+
+    //database
+    private ncontrolDatabaseHelper database;
+
+    private static final int DATAS=10;
 
 
     @Override
