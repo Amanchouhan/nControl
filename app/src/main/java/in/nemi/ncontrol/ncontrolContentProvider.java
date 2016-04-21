@@ -1,3 +1,8 @@
+package in.nemi.ncontrol;
+
+/**
+ * Created by Developer on 21-04-2016.
+ */
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -14,7 +19,14 @@ public class ncontrolContentProvider extends ContentProvider{
     //database
     private ncontrolDatabaseHelper database;
 
+
     private static final int DATAS=10;
+    private static final int DATA_ID=20;
+
+    private static final String AUTHORITY="in.nemi.ncontrol.provider";
+    private static final String BASE_PATH="todos";
+    public static final Uri CONTENT_URI=Uri.parse("content")
+
 
 
     @Override
@@ -50,3 +62,4 @@ public class ncontrolContentProvider extends ContentProvider{
         return 0;
     }
 }
+
