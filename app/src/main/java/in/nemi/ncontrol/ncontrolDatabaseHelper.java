@@ -10,8 +10,9 @@ import android.os.Build;
  */
 public class ncontrolDatabaseHelper extends SQLiteOpenHelper{
 
+    public static SQLiteDatabase database;
     private static final String DATABASE_NAME="ncontrol.db";
-    private static final int DATABASE_VERSION="1";
+    private static final int DATABASE_VERSION=1;
 
   public ncontrolDatabaseHelper (Context context){
 
@@ -20,12 +21,15 @@ public class ncontrolDatabaseHelper extends SQLiteOpenHelper{
   }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase database) {
+
+        ncontrolUsrMngmntTable.onCreate(database);
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase database, int oldversion, int newversion) {
 
+         ncontrolUsrMngmntTable.onUpgrade(database,oldversion,newversion);
     }
 }
