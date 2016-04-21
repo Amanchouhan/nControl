@@ -11,6 +11,7 @@ import android.os.Build;
 public class ncontrolDatabaseHelper extends SQLiteOpenHelper{
 
     public static SQLiteDatabase database;
+
     private static final String DATABASE_NAME="ncontrol.db";
     private static final int DATABASE_VERSION=1;
 
