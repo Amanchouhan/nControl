@@ -2,6 +2,7 @@ package in.nemi.ncontrol;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -42,17 +43,34 @@ public class ndbHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    //Add a user to the db
-    public void addUser() {
-            SQLiteDatabase db = getWritableDatabase();
-            ContentValues cv = new ContentValues();
-        cv.put(COLUMN_USERNAME, String.valueOf(main.user_name));
-        cv.put(COLUMN_PASSWORD, String.valueOf(main.password));
-        db.insert(TABLE_USERS,null,cv);
+    //Check for superuser
+    public boolean checkS() {
+        Boolean exists = null;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USERS, new String[] {"role"}, "role = ?", new String[] {"super"}, null, null, null);
+        if (cursor.getCount() == 1) {
+            exists = true;
+        } else {
+            exists = false;
+        }
+        cursor.close();
+        db.close();
+        return exists;
     }
 
-    //remove a user from the db
-    public void deleteUser() {
+    //Add a user to the db
+    public void addUser(Users user) {
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, user.get_username());
+        cv.put(COLUMN_PASSWORD, user.get_password());
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_USERS, null, cv);
+        db.close();
+    }
 
+    //remove a user from the db (please remember you'll get the username by touching it in its listview)
+    public void deleteUser(String username) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
     }
 }

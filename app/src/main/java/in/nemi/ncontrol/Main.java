@@ -1,10 +1,9 @@
 package in.nemi.ncontrol;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,22 +24,13 @@ public class Main extends Activity {
         setContentView(R.layout.main);
         databaseHelper = new ndbHelper(this, null, null, 1);
 
-        user_name = (EditText)findViewById(R.id.ed_username_1);
-        password = (EditText)findViewById(R.id.ed_password_1);
-        create_user = (TextView)findViewById(R.id.tv_create_user) ;
-        create_user.setClickable(true);
-
-        login = (Button)findViewById(R.id.button_login);
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),SecondActivity.class);
-                startActivity(i);
-                databaseHelper.addUser();
-            }
-        });
-
-
+        //check for superuser
+        Boolean a = databaseHelper.checkS();
+        if (!a) {
+            Dialog d = new Dialog(Main.this);
+            d.setContentView(R.layout.createsuper);
+            d.setTitle("Super doesn't exist!");
+            d.show();
+        }
     }
 }
