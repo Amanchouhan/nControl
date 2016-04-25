@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class ndbHelper extends SQLiteOpenHelper{
 
+    Main main;
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ncontrol.db";
     public static final String TABLE_USERS = "users";
@@ -20,6 +22,7 @@ public class ndbHelper extends SQLiteOpenHelper{
 
     public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
@@ -40,17 +43,16 @@ public class ndbHelper extends SQLiteOpenHelper{
     }
 
     //Add a user to the db
-    public void addUser(Users user) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_USERNAME, user.get_username());
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(TABLE_USERS, null, values);
-        db.close();
+    public void addUser() {
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues cv = new ContentValues();
+        cv.put(COLUMN_USERNAME, String.valueOf(main.user_name));
+        cv.put(COLUMN_PASSWORD, String.valueOf(main.password));
+        db.insert(TABLE_USERS,null,cv);
     }
 
     //remove a user from the db
-    public void deleteUser(String username) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("delete from " + TABLE_USERS + " where " + COLUMN_USERNAME + "=\"" + username + "\";");
+    public void deleteUser() {
+
     }
 }
