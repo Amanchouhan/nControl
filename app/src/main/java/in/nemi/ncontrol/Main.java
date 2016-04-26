@@ -1,17 +1,13 @@
 package in.nemi.ncontrol;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -73,7 +69,7 @@ public class Main extends Activity {
         } else if (pass.equals("")) {
             Toast.makeText(getApplicationContext(), "Enter the password", Toast.LENGTH_LONG).show();
         } else if (pass.equals(databaseHelper.loginUser(user))) {
-            Intent i = new Intent(Main.this, SecondActivity.class);
+            Intent i = new Intent(Main.this, UsrMgmt.class);
             i.putExtra("Username", user);
             startActivity(i);
         } else {

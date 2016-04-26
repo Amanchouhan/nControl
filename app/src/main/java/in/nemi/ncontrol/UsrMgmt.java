@@ -2,25 +2,28 @@ package in.nemi.ncontrol;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
 /**
- * Created by Developer on 21-04-2016.
+ * Created by Developer on 25-04-2016.
  */
 public class UsrMgmt extends Activity {
-
-    TextView name, role;
-    Button Edit, Delete;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_detail_row);
+        setContentView(R.layout.usrmgmt);
+
+        TextView name, role;
+        Button Edit, Delete;
 
         name = (TextView)findViewById(R.id.username_list);
         role = (TextView)findViewById(R.id.role_list);
@@ -42,6 +45,5 @@ public class UsrMgmt extends Activity {
 
             }
         });
-
     }
 }
