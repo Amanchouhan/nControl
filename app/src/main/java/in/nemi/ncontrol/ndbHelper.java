@@ -59,10 +59,12 @@ public class ndbHelper extends SQLiteOpenHelper{
     }
 
     //Add a user to the db
-    public void addUser(Users user) {
+    public void addUser(String role, String user, String pass) {
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_USERNAME, user.get_username());
-        cv.put(COLUMN_PASSWORD, user.get_password());
+//        cv.put(COLUMN_ID, null);
+        cv.put(COLUMN_ROLE, role);
+        cv.put(COLUMN_USERNAME, user);
+        cv.put(COLUMN_PASSWORD, pass);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_USERS, null, cv);
         db.close();

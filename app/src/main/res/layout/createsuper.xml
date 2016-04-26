@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
+        android:fontFamily="sans-serif"
         android:layout_gravity="center_horizontal"
         android:hint="Username" />
 
@@ -25,13 +26,8 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editText2"
+        android:fontFamily="sans-serif"
         android:layout_gravity="center_horizontal"
         android:hint="Password" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ADD"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>
