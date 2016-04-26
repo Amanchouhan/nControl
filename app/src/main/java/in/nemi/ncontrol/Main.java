@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.view.View;
@@ -21,6 +22,8 @@ public class Main extends Activity {
     ndbHelper databaseHelper;
     EditText username_super, password_super,username,password;
     Button add,login;
+    private SharedPreferences loginPrefs;
+    private SharedPreferences.Editor loginEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

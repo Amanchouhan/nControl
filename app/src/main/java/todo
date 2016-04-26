@@ -1,12 +1,19 @@
 TODO:
 - login using sql and shared prefs
 - double check password when creating super
+- start main activity of the app on boot
 
 
 DONE:
+
+25/4/2015:
 - Detection for super user on startup
 - Dialog for super user creation
+
+26/4/2015:
 - Add super user using dialog
-- Validates the add super user form
+- Validation in add super user form
 - Adds the super user
 - Made all entries in user table to not null
+- Doesn't go back to login on pressing back button
+- *Auto boot on android start added with bugs
