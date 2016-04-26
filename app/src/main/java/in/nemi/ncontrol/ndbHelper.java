@@ -59,11 +59,10 @@ public class ndbHelper extends SQLiteOpenHelper{
     }
 
     //Add a user to the db
-    public void addUser(String role, String user, String pass) {
+    public void addUser(String role, String user,String pass) {
         ContentValues cv = new ContentValues();
-//        cv.put(COLUMN_ID, null);
-        cv.put(COLUMN_ROLE, role);
         cv.put(COLUMN_USERNAME, user);
+        cv.put(COLUMN_ROLE, role);
         cv.put(COLUMN_PASSWORD, pass);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_USERS, null, cv);
@@ -75,4 +74,7 @@ public class ndbHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
     }
+
+
+
 }

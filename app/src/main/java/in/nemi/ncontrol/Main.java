@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by shouryas on 4/21/2016.
@@ -17,14 +18,33 @@ import android.widget.TextView;
 public class Main extends Activity {
 
     ndbHelper databaseHelper;
-    EditText username, password;
-    Button add;
+    EditText username_super, password_super,username,password;
+    Button add,login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         databaseHelper = new ndbHelper(this, null, null, 1);
+
+
+        //User Login
+        username = (EditText)findViewById(R.id.ed_username_1);
+        password = (EditText)findViewById(R.id.ed_password_1);
+        login = (Button)findViewById(R.id.button_login);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String user = username.getText().toString();
+                String pass = password.getText().toString();
+                if(user.equals("")) {
+                    Toast.makeText(getApplicationContext(),"Enter the user name", Toast.LENGTH_LONG).show();
+                } else if(pass.equals("")) {
+                    Toast.makeText(getApplicationContext(),"Enter the password", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         //check for superuser
         Boolean a = databaseHelper.checkS();
@@ -34,24 +54,25 @@ public class Main extends Activity {
             d.setTitle("Super doesn't exist!");
             d.setCancelable(false);
             d.show();
-            username = (EditText) d.findViewById(R.id.editText);
-            password = (EditText) d.findViewById(R.id.editText2);
+            username_super = (EditText) d.findViewById(R.id.editText);
+            password_super = (EditText) d.findViewById(R.id.editText2);
             add = (Button) d.findViewById(R.id.addsuper);
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String u = username.getText().toString();
-                    String p = password.getText().toString();
+                    String u = username_super.getText().toString();
+                    String p = password_super.getText().toString();
                     String r = "super";
-                    databaseHelper.addUser(r,u,p);
-                    d.dismiss();
+                    if(u.equals("")) {
+                        Toast.makeText(getApplicationContext(),"Enter the user name", Toast.LENGTH_LONG).show();
+                    } else if (p.equals("")) {
+                        Toast.makeText(getApplicationContext(),"Enter the password", Toast.LENGTH_LONG).show();
+                    } else {
+                        databaseHelper.addUser(r, u, p);
+                        d.dismiss();
+                    }
                 }
             });
         }
-    }
-
-
-    public void add(View view) {
-
     }
 }
