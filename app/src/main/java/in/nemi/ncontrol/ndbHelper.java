@@ -11,8 +11,6 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class ndbHelper extends SQLiteOpenHelper{
 
-    Main main;
-
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ncontrol.db";
     public static final String TABLE_USERS = "users";
@@ -30,9 +28,9 @@ public class ndbHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         String query = "create table " + TABLE_USERS + "(" +
                 COLUMN_ID + " integer primary key autoincrement," +
-                COLUMN_ROLE + " text," +
-                COLUMN_USERNAME + " text," +
-                COLUMN_PASSWORD + " text" +
+                COLUMN_ROLE + " text not null," +
+                COLUMN_USERNAME + " text not null," +
+                COLUMN_PASSWORD + " text not null" +
                 ");";
         db.execSQL(query);
     }
@@ -69,12 +67,31 @@ public class ndbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
+    //login
+    public String loginUser(String u) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT " + COLUMN_USERNAME + "," + COLUMN_PASSWORD + " FROM " + TABLE_USERS;
+        Cursor cursor = db.rawQuery(query, null);
+        String a,b;
+        b = "NOT FOUND";
+        if (cursor.moveToFirst()) {
+            do {
+                a = cursor.getString(0);
+                if (a.equals(u)) {
+                    b=cursor.getString(1);
+                    break;
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return b;
+    }
+
     //remove a user from the db (please remember you'll get the username by touching it in its listview)
     public void deleteUser(String username) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
+        db.close();
     }
-
-
-
 }

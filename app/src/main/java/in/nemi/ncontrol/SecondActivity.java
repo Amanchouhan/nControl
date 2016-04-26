@@ -15,10 +15,10 @@ import java.util.ArrayList;
  */
 public class SecondActivity extends Activity {
 
-    Main loginActivity;
-    ListView listView_user_detail;
-    ArrayList<String> user_list = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
+//    Main loginActivity;
+//    ListView listView_user_detail;
+//    ArrayList<String> user_list = new ArrayList<String>();
+//    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +28,9 @@ public class SecondActivity extends Activity {
        /* user_list.add("thens");
         user_list.add("nemi");*/
 
-        listView_user_detail = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this, R.layout.user_detail_row, user_list);
-        listView_user_detail.setAdapter(adapter);
+//        listView_user_detail = (ListView) findViewById(R.id.listView);
+//        adapter = new ArrayAdapter<String>(this, R.layout.user_detail_row, user_list);
+//        listView_user_detail.setAdapter(adapter);
 
 
 

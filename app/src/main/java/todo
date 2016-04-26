@@ -1,11 +1,12 @@
-detection for super user on startup
-Dialog for super user creation
-add super user using dialog
-validates the add super user form
-adds the super user
+TODO:
+- login using sql and shared prefs
+- double check password when creating super
 
 
-
-
-
-
+DONE:
+- Detection for super user on startup
+- Dialog for super user creation
+- Add super user using dialog
+- Validates the add super user form
+- Adds the super user
+- Made all entries in user table to not null
