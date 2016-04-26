@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.DialogPreference;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ public class Main extends Activity {
 
     ndbHelper databaseHelper;
     EditText username, password;
+    Button add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,34 +29,29 @@ public class Main extends Activity {
         //check for superuser
         Boolean a = databaseHelper.checkS();
         if (!a) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Super doesn't exist!");
-            builder.setMessage("Please set a username and password for super");
-            builder.setCancelable(false);
-            builder.setView(getLayoutInflater().inflate(R.layout.createsuper, null));
-
-            username = (EditText) findViewById(R.id.editText);
-            password = (EditText) findViewById(R.id.editText2);
-
-            builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
-
+            final Dialog d = new Dialog(Main.this);
+            d.setContentView(R.layout.createsuper);
+            d.setTitle("Super doesn't exist!");
+            d.setCancelable(false);
+            d.show();
+            username = (EditText) d.findViewById(R.id.editText);
+            password = (EditText) d.findViewById(R.id.editText2);
+            add = (Button) d.findViewById(R.id.addsuper);
+            add.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which){
+                public void onClick(View v) {
                     String u = username.getText().toString();
                     String p = password.getText().toString();
                     String r = "super";
                     databaseHelper.addUser(r,u,p);
+                    d.dismiss();
                 }
             });
-
-            AlertDialog ad = builder.create();
-            ad.show();
-
-//            Dialog d = new Dialog(Main.this);
-//            d.setContentView(R.layout.createsuper);
-//            d.setTitle("Super doesn't exist!");
-//            d.setCancelable(false);
-//            d.show();
         }
+    }
+
+
+    public void add(View view) {
+
     }
 }

@@ -30,4 +30,10 @@
         android:layout_gravity="center_horizontal"
         android:hint="Password" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:id="@+id/addsuper"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>
