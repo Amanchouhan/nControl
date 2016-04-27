@@ -17,3 +17,7 @@ DONE:
 - Made all entries in user table to not null
 - Doesn't go back to login on pressing back button
 - *Auto boot on android start added with bugs
+
+
+
+

@@ -1,49 +1,68 @@
 package in.nemi.ncontrol;
 
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.Context;
+import android.content.Loader;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Developer on 25-04-2016.
  */
-public class UsrMgmt extends Activity {
+public class UsrMgmt extends Activity  {
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usrmgmt);
-
-        TextView name, role;
-        Button Edit, Delete;
-
-        name = (TextView)findViewById(R.id.username_list);
-        role = (TextView)findViewById(R.id.role_list);
-
-        Edit = (Button)findViewById(R.id.edit_userdetail);
-        Delete = (Button)findViewById(R.id.delete_userdetail);
+        ndbHelper db=new ndbHelper(this,null,null,1);
 
 
-        Edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        Spinner spinner = (Spinner) findViewById(R.id.dropdown_list);
+        ArrayAdapter<String> adapter;
+        ListAdapter listAdapter;
+        List<String> list;
 
-            }
-        });
+        list = new ArrayList();
+        list.add("User");
+        list.add("Admin");
 
-        Delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+        adapter = new ArrayAdapter(getApplication(), android.R.layout.simple_spinner_dropdown_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+
+
+
+            //Retrieving data into list view
+            String[] data = new String[db.getUsername().size()];
+            data = db.getUsername().toArray(data);
+
+            listAdapter = new ArrayAdapter<String>(this,R.layout.pos,R.id.username_list,data);
+            ListView listView = (ListView)findViewById(R.id.listView);
+            listView.setAdapter(listAdapter);
+
     }
 }
+

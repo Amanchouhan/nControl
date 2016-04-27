@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by Developer on 21-04-2016.
@@ -24,6 +27,9 @@ public class ndbHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
+
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "create table " + TABLE_USERS + "(" +
@@ -42,7 +48,7 @@ public class ndbHelper extends SQLiteOpenHelper{
     }
 
     //Check for superuser
-    public boolean checkS() {
+    public Boolean checkS() {
         Boolean exists = null;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS, new String[] {"role"}, "role = ?", new String[] {"super"}, null, null, null);
@@ -94,4 +100,24 @@ public class ndbHelper extends SQLiteOpenHelper{
         db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
         db.close();
     }
+
+
+
+
+   public ArrayList<String> getUsername() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cur = db.rawQuery("SELECT " + COLUMN_USERNAME +
+                " from " + TABLE_USERS, new String[] {});
+        ArrayList<String> array = new ArrayList<String>();
+        while (cur.moveToNext()) {
+            String uname = cur.getString(cur.getColumnIndex(COLUMN_USERNAME));
+            array.add(uname);
+
+        }
+       return array;
+
+
+
+    }
+
 }

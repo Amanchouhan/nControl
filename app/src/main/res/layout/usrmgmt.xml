@@ -29,10 +29,25 @@
               android:id="@+id/ed_password"
               android:hint="@string/password"  />
 
+
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dropdown_list"></Spinner>
+        android:id="@+id/dropdown_list"
+        android:popupBackground="#404040"
+        android:background="#cccccc"
+        android:textAlignment="center"
+        android:spinnerMode="dropdown"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:id="@+id/button2"
+        android:layout_gravity="center"
+        />
 
 </LinearLayout>
 
@@ -40,10 +55,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/linearLayout"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/linearLayout"
+        android:layout_toEndOf="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
+        />
 
 
 
