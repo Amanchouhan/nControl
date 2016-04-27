@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class Main extends Activity {
 
     ndbHelper databaseHelper;
-    EditText username_super, password_super,username,password;
+    EditText username_super, password_super, username, password;
     Button add,login;
 
     @Override
@@ -67,7 +67,7 @@ public class Main extends Activity {
             Toast.makeText(getApplicationContext(), "Enter the password", Toast.LENGTH_LONG).show();
         } else if (pass.equals(databaseHelper.loginUser(user))) {
             Intent i = new Intent(Main.this, UsrMgmt.class);
-            i.putExtra("Username", user);
+//            i.putExtra("Username", user);
             startActivity(i);
         } else {
             Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
