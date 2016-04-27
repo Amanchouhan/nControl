@@ -1,56 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/usermgmt">
-
-<LinearLayout
-    android:layout_width="200px" android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/linearLayout">
-
-<TextView
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Create User"
-    android:gravity="center_horizontal"
-    />
+    android:layout_height="match_parent"
+    android:gravity="left"
+    android:orientation="horizontal" >
 
+    <TableLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent">
 
-<EditText android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/ed_create_user"
-          android:hint="@string/user_name"
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-    />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:text="Add User" />
+        </TableRow>
 
-    <EditText android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/ed_password"
-              android:hint="@string/password"  />
+        <LinearLayout
+            android:id="@+id/LinearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/dropdown_list"></Spinner>
+            <EditText
+                android:id="@+id/usernamefield"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/passwordfield"
+                android:hint="Password" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/categoryfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout4"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/addbutton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="ADD" />
+        </LinearLayout>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="742dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.10"
+        android:background="#eee" >
+
+        <ListView
+            android:id="@+id/userlistview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" >
+        </ListView>
+
+    </LinearLayout>
 
 </LinearLayout>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/userListView"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/linearLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-
-
-
-</RelativeLayout>
-
-
-
-
-
