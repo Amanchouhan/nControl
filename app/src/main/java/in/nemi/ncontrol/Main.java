@@ -3,7 +3,6 @@ package in.nemi.ncontrol;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +17,6 @@ public class Main extends Activity {
     ndbHelper databaseHelper;
     EditText username_super, password_super,username,password;
     Button add,login;
-    private SharedPreferences loginPrefs;
-    private SharedPreferences.Editor loginEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -94,4 +94,12 @@ public class ndbHelper extends SQLiteOpenHelper{
         db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
         db.close();
     }
+
+    public Cursor getUsers() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(
+                "select * from " + TABLE_USERS,
+                null
+        );
+    }
 }

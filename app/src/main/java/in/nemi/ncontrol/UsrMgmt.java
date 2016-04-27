@@ -1,6 +1,7 @@
 package in.nemi.ncontrol;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,28 +23,17 @@ public class UsrMgmt extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usrmgmt);
 
-        TextView name, role;
-        Button Edit, Delete;
+        ndbHelper databaseHelper;
+        databaseHelper = new ndbHelper(this, null, null, 1);
+        Cursor cursor = databaseHelper.getUsers();
+        String[] users = new String[]{
+                databaseHelper.COLUMN_USERNAME
+        };
+        int[] id = new int[]{};
 
-        name = (TextView)findViewById(R.id.username_list);
-        role = (TextView)findViewById(R.id.role_list);
+        ListAdapter userAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, users);
+        ListView userListView = (ListView) findViewById(R.id.userListView);
+        userListView.setAdapter(userAdapter);
 
-        Edit = (Button)findViewById(R.id.edit_userdetail);
-        Delete = (Button)findViewById(R.id.delete_userdetail);
-
-
-        Edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        Delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 }
