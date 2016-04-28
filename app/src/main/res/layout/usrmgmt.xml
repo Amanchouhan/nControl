@@ -2,12 +2,13 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/usermgmt">
+    android:id="@+id/usermgmt" android:background="#eee"
+    >
 
 <LinearLayout
     android:layout_width="200px" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/linearLayout">
+    android:id="@+id/linearLayout" >
 
 <TextView
     android:layout_width="match_parent"
@@ -26,7 +27,8 @@
 
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:id="@+id/ed_password"
+              android:id="@+id/ed_create_password"
+              android:inputType="textPassword"
               android:hint="@string/password"  />
 
 
@@ -35,33 +37,88 @@
         android:layout_height="wrap_content"
         android:id="@+id/dropdown_list"
         android:popupBackground="#404040"
-        android:background="#cccccc"
         android:textAlignment="center"
         android:spinnerMode="dropdown"
+        android:paddingRight="10dp"
+        android:background="@android:color/transparent"
+
+
         />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ADD"
+        android:width="100dp"
         android:id="@+id/button2"
-        android:layout_gravity="center"
-        />
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@+id/linearLayout"
+        android:layout_toEndOf="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:id="@+id/relativeLayout"
+
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Id"
+            android:id="@+id/textView3"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Role"
+            android:id="@+id/textView2"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView3"
+            android:layout_toEndOf="@+id/textView3"
+            android:gravity="center"
+            android:layout_weight="0.5"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User name"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_toEndOf="@+id/textView2"
+            android:gravity="center"
+            android:layout_weight="0.5"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Action"
+            android:id="@+id/textView4"
+            android:layout_weight="2"
+            android:gravity="center"
+
+            />
+    </LinearLayout>
+
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:id="@+id/listView"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/linearLayout"
         android:layout_toEndOf="@+id/linearLayout"
         android:layout_alignParentBottom="true"
-        />
+        android:layout_below="@+id/relativeLayout" />
 
 
 

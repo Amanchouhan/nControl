@@ -18,8 +18,6 @@ public class Main extends Activity {
     ndbHelper databaseHelper;
     EditText username_super, password_super,username,password;
     Button add,login;
-    private SharedPreferences loginPrefs;
-    private SharedPreferences.Editor loginEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +46,9 @@ public class Main extends Activity {
                     String p = password_super.getText().toString();
                     String r = "super";
                     if(u.equals("")) {
-                        Toast.makeText(getApplicationContext(),"Enter the user name", Toast.LENGTH_LONG).show();
+                        username_super.setError("User name");
                     } else if (p.equals("")) {
-                        Toast.makeText(getApplicationContext(),"Enter the password", Toast.LENGTH_LONG).show();
+                        password_super.setError("password");
                     } else {
                         databaseHelper.addUser(r, u, p);
                         d.dismiss();

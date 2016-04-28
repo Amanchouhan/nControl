@@ -2,7 +2,15 @@ TODO:
 - login using sql and shared prefs
 - double check password when creating super
 - start main activity of the app on boot
-
+- Edit,Delete right end
+- Icons instead of texts for the buttons
+- Headings for the each column
+- Revamp the UI. Make it more colorful
+- Naviagation for tha app
+- Refresh Listview
+- Validation for all
+- Implement setError
+- Navigation Drawer
 
 DONE:
 
@@ -17,6 +25,9 @@ DONE:
 - Made all entries in user table to not null
 - Doesn't go back to login on pressing back button
 - *Auto boot on android start added with bugs
+
+
+
 
 
 

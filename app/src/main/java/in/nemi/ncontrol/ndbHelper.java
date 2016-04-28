@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Developer on 21-04-2016.
  */
-public class ndbHelper extends SQLiteOpenHelper{
+public class ndbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ncontrol.db";
@@ -24,10 +24,8 @@ public class ndbHelper extends SQLiteOpenHelper{
 
     public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        SQLiteDatabase db = this.getWritableDatabase();
+
     }
-
-
 
 
     @Override
@@ -51,7 +49,7 @@ public class ndbHelper extends SQLiteOpenHelper{
     public Boolean checkS() {
         Boolean exists = null;
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, new String[] {"role"}, "role = ?", new String[] {"super"}, null, null, null);
+        Cursor cursor = db.query(TABLE_USERS, new String[]{"role"}, "role = ?", new String[]{"super"}, null, null, null);
         if (cursor.getCount() == 1) {
             exists = true;
         } else {
@@ -63,7 +61,7 @@ public class ndbHelper extends SQLiteOpenHelper{
     }
 
     //Add a user to the db
-    public void addUser(String role, String user,String pass) {
+    public void addUser(String role, String user, String pass) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_USERNAME, user);
         cv.put(COLUMN_ROLE, role);
@@ -78,13 +76,13 @@ public class ndbHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT " + COLUMN_USERNAME + "," + COLUMN_PASSWORD + " FROM " + TABLE_USERS;
         Cursor cursor = db.rawQuery(query, null);
-        String a,b;
+        String a, b;
         b = "NOT FOUND";
         if (cursor.moveToFirst()) {
             do {
                 a = cursor.getString(0);
                 if (a.equals(u)) {
-                    b=cursor.getString(1);
+                    b = cursor.getString(1);
                     break;
                 }
             } while (cursor.moveToNext());
@@ -101,23 +99,15 @@ public class ndbHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-
-
-
-   public ArrayList<String> getUsername() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cur = db.rawQuery("SELECT " + COLUMN_USERNAME +
-                " from " + TABLE_USERS, new String[] {});
-        ArrayList<String> array = new ArrayList<String>();
-        while (cur.moveToNext()) {
-            String uname = cur.getString(cur.getColumnIndex(COLUMN_USERNAME));
-            array.add(uname);
-
+    //read
+    public Cursor getAllRows() {
+        SQLiteDatabase db = getReadableDatabase();
+        String where = null;
+        Cursor c = db.query(true, TABLE_USERS, new String[]{COLUMN_ID, COLUMN_ROLE, COLUMN_USERNAME, COLUMN_ID}, where, null, null, null, null, null);
+        if (c != null) {
+            c.moveToFirst();
         }
-       return array;
-
-
-
+        return c;
     }
 
 }

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:baselineAligned="false"
+    >
+
+    <!--<TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:weightSum="1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp">
+
+    </TableRow>-->
+
+    <TextView
+        android:id="@+id/id_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="id"
+        android:paddingLeft="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="0.5"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/role_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="role"
+        android:layout_alignTop="@+id/id_list"
+        android:layout_toRightOf="@+id/id_list"
+        android:layout_toEndOf="@+id/id_list"
+        android:layout_weight="0.5"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/username_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="username"
+        android:padding="10dp"
+        android:layout_weight="0.5"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/edit_icon"
+        android:paddingTop="15dp"
+        android:background="@android:color/transparent"
+        android:id="@+id/edit_userdetail"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/delete_icon"
+        android:paddingTop="15dp"
+        android:background="@android:color/transparent"
+        android:id="@+id/delete_userdetail"
+        android:layout_weight="1"/>
+
+
+
+</LinearLayout>
+
+
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/username_list"
+        android:text="user name"
+        android:textStyle="bold"
+        android:layout_marginLeft="65dp"
+        android:layout_marginStart="65dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/role_list"
+        android:layout_toEndOf="@+id/role_list" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/role_list"
+        android:text="role"
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/username_list"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5"
+        android:layout_marginLeft="55dp"
+        android:layout_marginStart="55dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="id"
+        android:id="@+id/textView5"
+        android:layout_alignTop="@+id/role_list" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/edit_icon"
+        android:background="@android:color/transparent"
+        android:id="@+id/edit_userdetail"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/delete_userdetail"
+        android:layout_toStartOf="@+id/delete_userdetail" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/delete_icon"
+        android:background="@android:color/transparent"
+        android:id="@+id/delete_userdetail"
+        android:layout_alignTop="@+id/edit_userdetail"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    &lt;!&ndash;<LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/username_list"
+        android:layout_alignRight="@+id/delete_userdetail"
+        android:layout_alignEnd="@+id/delete_userdetail">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Role"
+            android:paddingLeft="100dp"
+            android:id="@+id/textView3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:paddingLeft="100dp"
+            android:id="@+id/textView4" />
+
+    </LinearLayout>&ndash;&gt;
+
+</LinearLayout>-->
+
+
+
+
+
+
+
+
