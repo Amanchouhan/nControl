@@ -13,11 +13,19 @@ public class ndbHelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ncontrol.db";
+
+    //users table vars
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ROLE = "role";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
+
+    //items table vars
+    public static final String TABLE_ITEMS = "items";
+    public static final String COLUMN_ITEM = "item";
+    public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_PRICE = "price";
 
     public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -26,13 +34,21 @@ public class ndbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "create table " + TABLE_USERS + "(" +
+        String usersquery = "create table " + TABLE_USERS + "(" +
                 COLUMN_ID + " integer primary key autoincrement," +
                 COLUMN_ROLE + " text not null," +
                 COLUMN_USERNAME + " text not null," +
                 COLUMN_PASSWORD + " text not null" +
                 ");";
-        db.execSQL(query);
+        db.execSQL(usersquery);
+
+        String itemsquery = "create table " + TABLE_ITEMS + "(" +
+                COLUMN_ID + " integer primary key autoincrement," +
+                COLUMN_ITEM + " text not null," +
+                COLUMN_CATEGORY + " text not null," +
+                COLUMN_PRICE + " integer not null" +
+                ");";
+        db.execSQL(itemsquery);
     }
 
     @Override

@@ -24,6 +24,8 @@ public class UsrMgmt extends Activity {
 
     ndbHelper databaseHelper;
     EditText role, username, password;
+    Button add;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +36,15 @@ public class UsrMgmt extends Activity {
         final ListView usersview = (ListView) findViewById(R.id.userlistview);
         final UsersAdapter usersAdapter = new UsersAdapter(this, databaseHelper.getUsers());
         usersview.setAdapter(usersAdapter);
+//        for heading for the listview
 //        usersview.addHeaderView(usersview);
 
-
-        Button add;
         role = (EditText) findViewById(R.id.rolefield);
         username = (EditText) findViewById(R.id.usernamefield);
         password = (EditText) findViewById(R.id.passwordfield);
         add = (Button) findViewById(R.id.addbutton);
+
+        //Add User to db
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +113,6 @@ public class UsrMgmt extends Activity {
                     }
                 });
                 d.show();
-
             }
         });
     }
