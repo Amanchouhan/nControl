@@ -1,6 +1,7 @@
 package in.nemi.ncontrol;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,10 +20,10 @@ import android.widget.Toast;
 /**
  * Created by Developer on 25-04-2016.
  */
-public class UsrMgmt extends Activity  {
+public class UsrMgmt extends Activity {
 
     ndbHelper databaseHelper;
-
+    EditText role, username, password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public class UsrMgmt extends Activity  {
         usersview.setAdapter(usersAdapter);
 //        usersview.addHeaderView(usersview);
 
-        final EditText role, username, password;
+
         Button add;
         role = (EditText) findViewById(R.id.rolefield);
         username = (EditText) findViewById(R.id.usernamefield);
@@ -47,12 +48,12 @@ public class UsrMgmt extends Activity  {
                 String u = username.getText().toString();
                 String p = password.getText().toString();
                 String r = role.getText().toString();
-                if(u.equals("")) {
-                    Toast.makeText(getApplicationContext(),"Enter the user name", Toast.LENGTH_LONG).show();
+                if (u.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Enter the user name", Toast.LENGTH_LONG).show();
                 } else if (p.equals("")) {
-                    Toast.makeText(getApplicationContext(),"Enter the password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Enter the password", Toast.LENGTH_LONG).show();
                 } else if (r.equals("")) {
-                    Toast.makeText(getApplicationContext(),"Enter the role", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Enter the role", Toast.LENGTH_LONG).show();
                 } else {
                     databaseHelper.addUser(r, u, p);
                     CursorAdapter adapter = (CursorAdapter) usersview.getAdapter();
@@ -69,22 +70,47 @@ public class UsrMgmt extends Activity  {
         usersview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                TextView a, b, c;
+                final Dialog d = new Dialog(UsrMgmt.this);
+                final TextView a, b, c;
                 a = (TextView) view.findViewById(R.id.column_id);
                 b = (TextView) view.findViewById(R.id.column_role);
                 c = (TextView) view.findViewById(R.id.column_username);
+                final String val1 = a.getText().toString();
+                final String val2 = b.getText().toString();
+                final String val3 = c.getText().toString();
+                d.setContentView(R.layout.useraction);
+                d.setTitle("Please select an action!");
+                d.setCancelable(true);
+                Button delete = (Button) d.findViewById(R.id.deleteuser);
+                Button update = (Button) d.findViewById(R.id.updateuser);
 
-                String val1 = a.getText().toString();
-                String val2 = b.getText().toString();
-                String val3 = c.getText().toString();
 
-//                Dialog d = new Dialog(UsrMgmt.this);
-//                d.setTitle(val1);
-//                d.show();
-                databaseHelper.deleteUser(val1);
-                Cursor cursor = databaseHelper.getUsers();
-                usersAdapter.changeCursor(cursor);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        databaseHelper.deleteUser(val1);
+                        Cursor cursor = databaseHelper.getUsers();
+                        usersAdapter.changeCursor(cursor);
+                        d.dismiss();
+                    }
+                });
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        role = (EditText) findViewById(R.id.rolefield);
+                        username = (EditText) findViewById(R.id.usernamefield);
+                        password = (EditText) findViewById(R.id.passwordfield);
+                        role.setText(val2);
+                        username.setText(val3);
+                        password.setText("");
+                        databaseHelper.deleteUser(val1);
+                        Cursor cursor = databaseHelper.getUsers();
+                        usersAdapter.changeCursor(cursor);
+                        d.dismiss();
+                    }
+                });
+                d.show();
+
             }
         });
     }

@@ -30,6 +30,7 @@ public class Main extends Activity {
         //check for superuser
         Boolean a = databaseHelper.checkS();
         if (!a) {
+            //Dialog with custom layout to add super
             final Dialog d = new Dialog(Main.this);
             d.setContentView(R.layout.createsuper);
             d.setTitle("Super doesn't exist!");
