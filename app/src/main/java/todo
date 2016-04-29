@@ -1,7 +1,11 @@
 TODO:
-- login using sql and shared prefs
+- login using shared prefs
 - double check password when creating super
 - start main activity of the app on boot
+- delete items
+- update items by first copying data in the form, delete the row and finally adding it
+- heading for each column
+
 
 
 DONE:
@@ -17,3 +21,4 @@ DONE:
 - Made all entries in user table to not null
 - Doesn't go back to login on pressing back button
 - *Auto boot on android start added with bugs
+- login using sql

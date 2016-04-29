@@ -1,12 +1,14 @@
 package in.nemi.ncontrol;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -29,8 +31,9 @@ public class UsrMgmt extends Activity  {
         databaseHelper = new ndbHelper(this, null, null, 1);
 
         final ListView usersview = (ListView) findViewById(R.id.userlistview);
-        final UsersAdapter usersAdapter = new UsersAdapter(this, databaseHelper.getUsers(), 0);
+        final UsersAdapter usersAdapter = new UsersAdapter(this, databaseHelper.getUsers());
         usersview.setAdapter(usersAdapter);
+//        usersview.addHeaderView(usersview);
 
         final EditText role, username, password;
         Button add;
@@ -53,16 +56,43 @@ public class UsrMgmt extends Activity  {
                 } else {
                     databaseHelper.addUser(r, u, p);
                     CursorAdapter adapter = (CursorAdapter) usersview.getAdapter();
-                    adapter.notifyDataSetChanged();
+                    Cursor cursor = databaseHelper.getUsers();
+                    usersAdapter.changeCursor(cursor);
+
+                    username.setText("");
+                    password.setText("");
+                    role.setText("");
                 }
+            }
+        });
+
+        usersview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                TextView a, b, c;
+                a = (TextView) view.findViewById(R.id.column_id);
+                b = (TextView) view.findViewById(R.id.column_role);
+                c = (TextView) view.findViewById(R.id.column_username);
+
+                String val1 = a.getText().toString();
+                String val2 = b.getText().toString();
+                String val3 = c.getText().toString();
+
+//                Dialog d = new Dialog(UsrMgmt.this);
+//                d.setTitle(val1);
+//                d.show();
+                databaseHelper.deleteUser(val1);
+                Cursor cursor = databaseHelper.getUsers();
+                usersAdapter.changeCursor(cursor);
             }
         });
     }
 
     public class UsersAdapter extends CursorAdapter {
 
-        public UsersAdapter(Context context, Cursor cursor, int flags) {
-            super(context, cursor, 0);
+        public UsersAdapter(Context context, Cursor cursor) {
+            super(context, cursor);
         }
 
         @Override
@@ -81,6 +111,5 @@ public class UsrMgmt extends Activity  {
             View view = inflater.inflate(R.layout.userslistviewitem, parent, false);
             return view;
         }
-
     }
 }

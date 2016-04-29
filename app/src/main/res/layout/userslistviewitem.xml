@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:baselineAligned="false">
+    android:weightSum="1">
+
 
     <TableRow
         android:id="@+id/tableRow1"
@@ -17,26 +18,26 @@
             android:id="@+id/column_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
             android:padding="10dp"
+            android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:id="@+id/column_role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
             android:padding="10dp"
+            android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:id="@+id/column_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
             android:padding="10dp"
+            android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </TableRow>
 
-</LinearLayout>
+</TableLayout>

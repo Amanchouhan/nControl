@@ -90,8 +90,9 @@ public class ndbHelper extends SQLiteOpenHelper{
 
     //remove a user from the db (please remember you'll get the username by touching it in its listview)
     public void deleteUser(String username) {
+        int col_id= Integer.parseInt(username);
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=\"" + username + "\";");
+        db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
         db.close();
     }
 
