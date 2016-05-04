@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class Main extends Activity {
 
     ndbHelper databaseHelper;
-    EditText username_super, password_super, username, password;
+    EditText username_super, password_super, confirm_password_super,username, password;
     Button add,login;
 
     @Override
@@ -38,18 +38,26 @@ public class Main extends Activity {
             d.show();
             username_super = (EditText) d.findViewById(R.id.editText);
             password_super = (EditText) d.findViewById(R.id.editText2);
+            confirm_password_super = (EditText) d.findViewById(R.id.editText3);
+
+
             add = (Button) d.findViewById(R.id.addsuper);
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String u = username_super.getText().toString();
                     String p = password_super.getText().toString();
+                    String conf_pass = confirm_password_super.getText().toString();
+
                     String r = "super";
                     if(u.equals("")) {
-                        Toast.makeText(getApplicationContext(),"Enter the user name", Toast.LENGTH_LONG).show();
+                        username_super.setError("User name");
                     } else if (p.equals("")) {
-                        Toast.makeText(getApplicationContext(),"Enter the password", Toast.LENGTH_LONG).show();
-                    } else {
+                        password_super.setError("Password");
+
+                    } else if(p.compareTo(conf_pass)!=0) {
+                        confirm_password_super.setError("Password is not correct");
+                    }else{
                         databaseHelper.addUser(r, u, p);
                         d.dismiss();
                     }
@@ -63,11 +71,11 @@ public class Main extends Activity {
         String user = username.getText().toString();
         String pass = password.getText().toString();
         if(user.equals("")) {
-            Toast.makeText(getApplicationContext(),"Enter the username", Toast.LENGTH_LONG).show();
+            username.setError("Username");
         } else if (pass.equals("")) {
-            Toast.makeText(getApplicationContext(), "Enter the password", Toast.LENGTH_LONG).show();
+            password.setError("password");
         } else if (pass.equals(databaseHelper.loginUser(user))) {
-            Intent i = new Intent(Main.this, UsrMgmt.class);
+            Intent i = new Intent(Main.this, MainActivity.class);
 //            i.putExtra("Username", user);
             startActivity(i);
         } else {

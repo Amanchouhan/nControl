@@ -75,7 +75,7 @@
                 android:id="@+id/addbutton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="ADD" />
+                android:text="ADD USER" />
         </LinearLayout>
     </TableLayout>
 

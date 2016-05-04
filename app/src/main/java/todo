@@ -1,11 +1,20 @@
 TODO:
-- login using shared prefs
-- double check password when creating super
-- start main activity of the app on boot
-- delete items
-- update items by first copying data in the form, delete the row and finally adding it
-- heading for each column
 
+- POS activity
+
+- header show who is loged in with logout button
+- Add ncontrol icon
+- login using shared prefs
+- start main activity of the app on boot
+- heading for each column
+- double check password when creating super // Done
+- relevant icons: back->three lines; users, items // Done
+- user -> User Management  // Done
+- item -> Item Management  // Done
+- icon for app draw
+- logout icon
+- show logged in user
+- change icon on svg
 
 
 DONE:
@@ -22,3 +31,14 @@ DONE:
 - Doesn't go back to login on pressing back button
 - *Auto boot on android start added with bugs
 - login using sql
+
+29/4/2015:
+- delete items
+- update items by first copying data in the form, delete the row and finally adding it
+
+2/5/2015:
+- Navigation drawer using fragments
+- setError in validation user login
+
+3/5/2015:
+

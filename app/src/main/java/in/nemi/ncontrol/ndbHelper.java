@@ -82,7 +82,16 @@ public class ndbHelper extends SQLiteOpenHelper{
         db.insert(TABLE_USERS, null, cv);
         db.close();
     }
-
+    //Add a user to the db
+    public void addItem(String item, String category, String price) {
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_ITEM, item);
+        cv.put(COLUMN_CATEGORY, category);
+        cv.put(COLUMN_PRICE, price);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_ITEMS, null, cv);
+        db.close();
+    }
     //login
     public String loginUser(String u) {
         SQLiteDatabase db = getReadableDatabase();
@@ -119,4 +128,20 @@ public class ndbHelper extends SQLiteOpenHelper{
                 null
         );
     }
+    //remove a item from the db (please remember you'll get the username by touching it in its listview)
+    public void deleteItems(String itemname) {
+        int col_id= Integer.parseInt(itemname);
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_ITEMS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
+        db.close();
+    }
+
+    public Cursor getItems() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(
+                "select * from " + TABLE_ITEMS,
+                null
+        );
+    }
+
 }

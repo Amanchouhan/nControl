@@ -48,8 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Category"
-                android:inputType="textPassword" />
+                android:hint="Category" />
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +74,7 @@
                 android:id="@+id/additembutton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="ADD" />
+                android:text="ADD ITEM" />
         </LinearLayout>
     </TableLayout>
 
