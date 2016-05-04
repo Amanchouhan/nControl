@@ -1,22 +1,22 @@
-package in.nemi.ncontrol;
+package swipe;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import in.nemi.ncontrol.R;
 
 /**
  * Created by Aman on 5/4/2016.
  */
-public class LogoutFragment extends android.app.Fragment {
-    public LogoutFragment() {
-    }
-
-    @Nullable
+public class Windows extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.main, container, false);
-        return rootView;
+
+        View android = inflater.inflate(R.layout.swipe_window_fragment, container, false);
+        return android;
     }
 }

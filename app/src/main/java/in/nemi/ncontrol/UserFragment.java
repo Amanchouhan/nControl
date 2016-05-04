@@ -25,7 +25,7 @@ import android.widget.TextView;
  */
 public class UserFragment extends android.app.Fragment {
     ndbHelper databaseHelper;
-    EditText role, username, password;
+    EditText role, username, password,re_enter_password;
     Button add;
     UsersAdapter usersAdapter;
 
@@ -47,6 +47,8 @@ public class UserFragment extends android.app.Fragment {
         role = (EditText) rootView.findViewById(R.id.rolefield);
         username = (EditText) rootView.findViewById(R.id.usernamefield);
         password = (EditText) rootView.findViewById(R.id.passwordfield);
+        re_enter_password = (EditText) rootView.findViewById(R.id.co_passwordfield);
+
         add = (Button) rootView.findViewById(R.id.addbutton);
         //Add User to db
         add.setOnClickListener(new View.OnClickListener() {
@@ -55,10 +57,14 @@ public class UserFragment extends android.app.Fragment {
                 String u = username.getText().toString();
                 String p = password.getText().toString();
                 String r = role.getText().toString();
+                String re = re_enter_password.getText().toString();
+
                 if (u.equals("")) {
                     username.setError("UserName");
                 } else if (p.equals("")) {
                     password.setError("Password");
+                }else if(p.compareTo(re)!=0) {
+                    re_enter_password.setError("Re-enter password");
                 } else if (r.equals("")) {
                     role.setError("Role");
                 } else {
@@ -69,6 +75,7 @@ public class UserFragment extends android.app.Fragment {
 
                     username.setText("");
                     password.setText("");
+                    re_enter_password.setText("");
                     role.setText("");
                 }
             }
