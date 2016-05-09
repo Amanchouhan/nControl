@@ -27,7 +27,7 @@
             android:id="@+id/column_role"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -35,9 +35,28 @@
             android:id="@+id/column_username"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+        <Button
+            android:id="@+id/dele_id"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="275dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:background="#ffddff"
+            android:text="remove"
+            />
+
+        <Button
+            android:id="@+id/update_id"
+
+            android:layout_width="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content"
+            android:background="#FFFFDD"
+            android:text="update"/>
 
     </TableRow>
 

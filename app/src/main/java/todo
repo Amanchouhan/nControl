@@ -1,20 +1,32 @@
-TODO:
+TODO: Priority-wise
 
-- POS activity
+- tabs shouldn't be on the action bar rather they should be inside the fragment for showing items
+- fill tabs in the swipe tab layout by getting category data from the db
+- touching each tab shows a list view of items in a particular category
+- touching each listview item of POS adds an item in the bill listview
+- to increase qty of an item in the listview touch multiple times
+- manually set qty of items in sales listview
+- automatic(live) totalling of the bill below the bill listview
+- clicking on pay saved the data in the bill listview to the sales table in ncontrol db
+- create new table in the ncontrol db for sale
+- in settings provide a functionality to add printers
+- print service using printer api(bluetooth)
+- facility in settings to change bill
+- clear button clears the list view for bill
+- see sales listview inside the sales fragment
+- modify sales inside the sales fragment
+- delete sales inside the sales fragment
+- delete and update from button provided in rows of list view
+- charts, graphs and reports for any period in time selected
+- heading for each column in all list views
 
-- header show who is loged in with logout button
+- relevant icons: back -> three lines
+- replace png icons with svg icons
+- different color pay and clear
 - Add ncontrol icon
+- show logged in user
 - login using shared prefs
 - start main activity of the app on boot
-- heading for each column
-- double check password when creating super // Done
-- relevant icons: back->three lines; users, items // Done
-- user -> User Management  // Done
-- item -> Item Management  // Done
-- icon for app draw
-- logout icon
-- show logged in user
-- change icon on svg
 
 
 DONE:
@@ -41,4 +53,25 @@ DONE:
 - setError in validation user login
 
 3/5/2015:
+- relevant icons: back->three lines; users, items // Done
+- user -> User Management  // Done
+- item -> Item Management  // Done
+- double check password when creating super // Done
 
+4/5/2015:
+- logout button implemented inside navigation
+- re-enter password done in user management
+- double check password when creating super
+- swip with tab ?
+- logout icon
+- POS fragment
+
+5/5/2015:
+- tab
+- delete and update items and users from delete and update button on list view
+- tab in to the pos done
+6/5/2015:
+- tab in to the pos done
+
+7/5/2015:
+- delete and update items and users from delete and update button on list view

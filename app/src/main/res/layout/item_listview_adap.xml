@@ -11,7 +11,7 @@
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
+        android:paddingLeft="5dp"
         android:weightSum="1">
 
         <TextView
@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="0dp"
+            android:layout_span="3"
             android:text="Medium Text"
             android:visibility="invisible"
             android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -26,27 +27,46 @@
 
         <TextView
             android:id="@+id/tv_item_id"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:padding="0dp"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:gravity="center"
+            android:layout_column="0"
+            android:textStyle="normal"
+            android:text="Medium Text" />
 
         <TextView
             android:id="@+id/tv_category_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_width="150dp"
+            android:gravity="center"
+            android:layout_column="1"
+            android:text="Medium Text" />
 
         <TextView
             android:id="@+id/tv_price_id"
+            android:layout_width="150dp"
+            android:gravity="center"
+            android:layout_column="2"
+            android:text="Medium Text"/>
+        <Button
+            android:id="@+id/dele_item_id"
+          android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="230dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:background="#ffddff"
+            android:text="remove"
+            />
+        <Button
+            android:id="@+id/update_item_id"
+            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_weight=".25"
+            android:background="#FFFFDD"
+            android:text="update"
+            />
+
 
     </TableRow>
 

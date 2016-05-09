@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +18,18 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 /**
  * Created by Aman on 5/3/2016.
  */
-public class UserFragment extends android.app.Fragment {
+public class UserFragment extends Fragment {
     ndbHelper databaseHelper;
-    EditText role, username, password,re_enter_password;
+    EditText role, username, password, re_enter_password;
     Button add;
     UsersAdapter usersAdapter;
-
+    ListView usersview;
     public UserFragment() {
     }
 
@@ -41,7 +42,7 @@ public class UserFragment extends android.app.Fragment {
 
 
         usersAdapter = new UsersAdapter(getActivity(), databaseHelper.getUsers());
-        final ListView usersview = (ListView) rootView.findViewById(R.id.userlistview);
+        usersview = (ListView) rootView.findViewById(R.id.userlistview);
         usersview.setAdapter(usersAdapter);
 
         role = (EditText) rootView.findViewById(R.id.rolefield);
@@ -63,7 +64,7 @@ public class UserFragment extends android.app.Fragment {
                     username.setError("UserName");
                 } else if (p.equals("")) {
                     password.setError("Password");
-                }else if(p.compareTo(re)!=0) {
+                } else if (p.compareTo(re) != 0) {
                     re_enter_password.setError("Re-enter password");
                 } else if (r.equals("")) {
                     role.setError("Role");
@@ -80,54 +81,7 @@ public class UserFragment extends android.app.Fragment {
                 }
             }
         });
-        usersview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                final TextView a, b, c;
-                a = (TextView) view.findViewById(R.id.column_id);
-                b = (TextView) view.findViewById(R.id.column_role);
-                c = (TextView) view.findViewById(R.id.column_username);
-                final String val1 = a.getText().toString();
-                final String val2 = b.getText().toString();
-                final String val3 = c.getText().toString();
-
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Please select an action!");
-                alertDialogBuilder.setMessage("Click yes to exit!").setCancelable(false)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                databaseHelper.deleteUser(val1);
-                                Cursor cursor = databaseHelper.getUsers();
-                                usersAdapter.changeCursor(cursor);
-
-                            }
-                        })
-                        .setNegativeButton("Update", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                role.setText(val2);
-                                username.setText(val3);
-                                password.setText("");
-                                databaseHelper.deleteUser(val1);
-                                Cursor cursor = databaseHelper.getUsers();
-                                usersAdapter.changeCursor(cursor);
-
-                            }
-                        }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-            }
-        });
         return rootView;
     }
 
@@ -142,9 +96,38 @@ public class UserFragment extends android.app.Fragment {
             TextView a1 = (TextView) view.findViewById(R.id.column_id);
             TextView a2 = (TextView) view.findViewById(R.id.column_role);
             TextView a3 = (TextView) view.findViewById(R.id.column_username);
+            Button delete = (Button) view.findViewById(R.id.dele_id);
+            Button update = (Button) view.findViewById(R.id.update_id);
+
             a1.setText(cursor.getString(0));
             a2.setText(cursor.getString(1));
             a3.setText(cursor.getString(2));
+
+            final String val1 = a1.getText().toString();
+            final String val2 = a2.getText().toString();
+            final String val3 = a3.getText().toString();
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "delete..."+val3, Toast.LENGTH_LONG).show();
+                    databaseHelper.deleteUser(val1);
+                    Cursor cursor = databaseHelper.getUsers();
+                    usersAdapter.changeCursor(cursor);
+                }
+            });
+            update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "update..."+val3, Toast.LENGTH_LONG).show();
+                    role.setText(val3);
+                    username.setText(val2);
+                    password.setText("");
+                    databaseHelper.deleteUser(val1);
+                    Cursor cursor = databaseHelper.getUsers();
+                    usersAdapter.changeCursor(cursor);
+                }
+            });
         }
 
         @Override

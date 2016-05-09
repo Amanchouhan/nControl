@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import in.nemi.ncontrol.ndbHelper;
 /**
  * Created by Aman on 5/3/2016.
  */
-public class ItemFragment extends android.app.Fragment {
+public class ItemFragment extends Fragment {
     ItemsAdapter itemsAdapter;
     ndbHelper databaseHelper;
     EditText et_item, et_category, et_price;
@@ -34,17 +35,25 @@ public class ItemFragment extends android.app.Fragment {
     public ItemFragment() {
     }
 
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//
+//        super.onCreate(savedInstanceState);
+//        databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+//        itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
+//        ViewGroup headerView = (ViewGroup)getActivity().getLayoutInflater().inflate(R.layout.header_listview_adap,itemview,false);
+//        itemview.addHeaderView(headerView);
+//
+//    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.itemsmgmt, container, false);
         databaseHelper = new ndbHelper(getActivity(), null, null, 1);
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
-        itemview = (ListView) rootView.findViewById(R.id.itemlistview);
+        final ListView itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
-//        for heading for the listview
-//        usersview.addHeaderView(usersview);
-
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
@@ -116,13 +125,13 @@ public class ItemFragment extends android.app.Fragment {
 
                             }
                         }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
 
-                        // create alert dialog
+                // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
 
                 // show it
@@ -142,7 +151,6 @@ public class ItemFragment extends android.app.Fragment {
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-
             TextView tv_column = (TextView) view.findViewById(R.id.tv_item_column_id);
             TextView tv_item = (TextView) view.findViewById(R.id.tv_item_id);
             TextView tv_category = (TextView) view.findViewById(R.id.tv_category_id);
@@ -153,12 +161,40 @@ public class ItemFragment extends android.app.Fragment {
             tv_category.setText(cursor.getString(2));
             tv_price.setText(cursor.getString(3));
 
+
+            final String item_columnid = tv_column.getText().toString();
+            final String item = tv_item.getText().toString();
+            final String category = tv_category.getText().toString();
+            final String price = tv_price.getText().toString();
+            Button delete = (Button) view.findViewById(R.id.dele_item_id);
+            Button update = (Button) view.findViewById(R.id.update_item_id);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    databaseHelper.deleteItems(item_columnid);
+                    Cursor cursor = databaseHelper.getItems();
+                    itemsAdapter.changeCursor(cursor);
+                }
+            });
+            update.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    et_item.setText(item);
+                    et_category.setText(category);
+                    et_price.setText(price);
+                    databaseHelper.deleteItems(item_columnid);
+                    Cursor cursor = databaseHelper.getItems();
+                    itemsAdapter.changeCursor(cursor);
+                }
+            });
+
         }
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             View view = inflater.inflate(R.layout.item_listview_adap, parent, false);
+
             return view;
         }
     }

@@ -27,6 +27,8 @@ public class ndbHelper extends SQLiteOpenHelper{
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_PRICE = "price";
 
+
+
     public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -36,9 +38,9 @@ public class ndbHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         String usersquery = "create table " + TABLE_USERS + "(" +
                 COLUMN_ID + " integer primary key autoincrement," +
-                COLUMN_ROLE + " text not null," +
-                COLUMN_USERNAME + " text not null," +
-                COLUMN_PASSWORD + " text not null" +
+                COLUMN_ROLE + " text," +
+                COLUMN_USERNAME + " text," +
+                COLUMN_PASSWORD + " text" +
                 ");";
         db.execSQL(usersquery);
 
@@ -49,6 +51,7 @@ public class ndbHelper extends SQLiteOpenHelper{
                 COLUMN_PRICE + " integer not null" +
                 ");";
         db.execSQL(itemsquery);
+
     }
 
     @Override
@@ -143,5 +146,6 @@ public class ndbHelper extends SQLiteOpenHelper{
                 null
         );
     }
+
 
 }

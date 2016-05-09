@@ -1,6 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/pager"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:gravity="left"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="7dp"
+                android:text="Customer Detail" />
+
+
+            <EditText
+                android:id="@+id/name_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name" />
+
+
+            <EditText
+                android:id="@+id/contact_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Contact"
+                android:inputType="textPassword" />
+
+            <ListView
+
+                android:id="@+id/userlist"
+                android:layout_width="match_parent"
+                android:layout_height="325dp">
+
+            </ListView>
+
+            <LinearLayout
+                android:id="@+id/total_linear"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:text="Total" />
+
+                <TextView
+                    android:id="@+id/total_amo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:text="0.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wwi"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/pay"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="pay" />
+
+                <Button
+                    android:id="@+id/clear"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Clear" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TabHost
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"/>
+
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0"/>
+
+
+                <FrameLayout
+                    android:id="@+id/realtabcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+
+            </LinearLayout>
+        </TabHost>
+    </LinearLayout>
+</LinearLayout>
