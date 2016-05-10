@@ -1,4 +1,4 @@
-package in.nemi.ncontrol;
+package nemi.in;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

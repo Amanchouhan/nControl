@@ -1,4 +1,4 @@
-package in.nemi.ncontrol;
+package nemi.in;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Developer on 21-04-2016.
  */
-public class ndbHelper extends SQLiteOpenHelper{
+public class ndbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ncontrol.db";

@@ -1,13 +1,10 @@
-package in.nemi.ncontrol;
+package nemi.in;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +14,13 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import in.nemi.ncontrol.R;
-import in.nemi.ncontrol.ndbHelper;
 
 /**
  * Created by Aman on 5/3/2016.
  */
-public class ItemFragment extends Fragment {
+public class ItemFragment extends android.app.Fragment {
     ItemsAdapter itemsAdapter;
     ndbHelper databaseHelper;
     EditText et_item, et_category, et_price;
@@ -39,14 +34,13 @@ public class ItemFragment extends Fragment {
 //    public void onCreate(Bundle savedInstanceState) {
 //
 //        super.onCreate(savedInstanceState);
-//        databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+//        databaseHelper = new nemi.in.ndbHelper(getActivity(), null, null, 1);
 //        itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
 //        ViewGroup headerView = (ViewGroup)getActivity().getLayoutInflater().inflate(R.layout.header_listview_adap,itemview,false);
 //        itemview.addHeaderView(headerView);
 //
 //    }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.itemsmgmt, container, false);

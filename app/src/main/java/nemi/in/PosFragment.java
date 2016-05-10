@@ -1,35 +1,30 @@
-package swipe;
+package nemi.in;
 
-
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import in.nemi.ncontrol.Main;
 import in.nemi.ncontrol.R;
-import in.nemi.ncontrol.ndbHelper;
 
-public class PoFragment extends Fragment {
+public class PosFragment extends Fragment {
     TabHost tHost;
     Button btn_pay, btn_clear;
     EditText ed_name, ed_contact;
-    public PoFragment() {
+    public PosFragment() {
     }
-
-
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.main_activity_for_swipe, container, false);
@@ -38,22 +33,23 @@ public class PoFragment extends Fragment {
         ed_contact = (EditText) rootView.findViewById(R.id.contact_id);
         btn_pay = (Button) rootView.findViewById(R.id.pay);
         btn_clear = (Button) rootView.findViewById(R.id.clear);
-        btn_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in = new Intent(getActivity(), Main.class);
-                startActivity(in);
-            }
-        });
+//        btn_clear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent in = new Intent(getActivity(), nemi.in.Main.class);
+//                startActivity(in);
+//            }
+//        });
         tHost.setup();
-        TabHost.OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
+        TabHost.
+                OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                android.support.v4.app.FragmentManager fm = getChildFragmentManager();
+                FragmentManager fm = getFragmentManager();
                 Android androidFragment = (Android) fm.findFragmentByTag("android");
                 Ios appleFragment = (Ios) fm.findFragmentByTag("apple");
                 Windows windows = (Windows) fm.findFragmentByTag("windows");
-                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                FragmentTransaction ft = fm.beginTransaction();
 
 
                 if (androidFragment != null)
@@ -95,7 +91,7 @@ public class PoFragment extends Fragment {
         /** Setting tabchangelistener for the tab */
         tHost.setOnTabChangedListener(tabChangeListener);
 
-        /** Defining tab builder for Andriod tab */
+        /** Defining tab builder for Android tab */
         TabHost.TabSpec tSpecAndroid = tHost.newTabSpec("android");
         tSpecAndroid.setIndicator("Android", getResources().getDrawable(R.drawable.android));
         tSpecAndroid.setContent(new DummyTabContent(getActivity()));
@@ -123,7 +119,6 @@ public class PoFragment extends Fragment {
         public Windows() {
         }
 
-        @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.itemslistview, container, false);
@@ -160,8 +155,8 @@ public class PoFragment extends Fragment {
                 click.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getActivity(),"Click is going on...",Toast.LENGTH_LONG).show();
-//                        new ListVi();
+                        Toast.makeText(getActivity(),"Click is going on...", Toast.LENGTH_LONG).show();
+                        new ListVi();
                     }
                 });
             }
@@ -175,50 +170,49 @@ public class PoFragment extends Fragment {
         }
     }
 
-//    public class ListVi extends Fragment
-//    {
-//        ItemsAdapter itemsAdapter;
-//        ndbHelper databaseHelper;
-//        ListView itemlist;
-//        public ListVi() {
-//        }
-//
-//        @Nullable
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//            View view = inflater.inflate(R.layout.main_activity_for_swipe,container,false);
-//            itemlist = (ListView) view.findViewById(R.id.userlist);
-//            databaseHelper = new ndbHelper(getActivity(), null, null, 1);
-//            itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
-//            itemlist.setAdapter(itemsAdapter);
-//
-//            return view;
-//
-//        }
-//        public class ItemsAdapter extends CursorAdapter{
-//            public ItemsAdapter(Context context, Cursor c) {
-//                super(context, c);
-//            }
-//
-//            @Override
-//            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-//                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-//                View view = inflater.inflate(R.layout.item_view_on_front, parent, false);
-//                return view;
-//            }
-//            @Override
-//            public void bindView(View view, Context context, Cursor cursor) {
-//                TextView tv_item_fe = (TextView) view.findViewById(R.id.item_fe);
-//                TextView tv_category_fe = (TextView) view.findViewById(R.id.category_fe);
-//                TextView tv_price_fe = (TextView) view.findViewById(R.id.price_fe);
-//
-//                tv_item_fe.setText(cursor.getString(0));
-//                tv_category_fe.setText(cursor.getString(1));
-//                tv_price_fe.setText(cursor.getString(2));
-//            }
-//
-//        }
-//    }
+    public class ListVi extends Fragment
+    {
+        ItemsAdapter itemsAdapter;
+        ndbHelper databaseHelper;
+        ListView itemlist;
+        public ListVi() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.main_activity_for_swipe,container,false);
+            itemlist = (ListView) view.findViewById(R.id.userlist);
+            databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+            itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
+            itemlist.setAdapter(itemsAdapter);
+
+            return view;
+
+        }
+        public class ItemsAdapter extends CursorAdapter {
+            public ItemsAdapter(Context context, Cursor c) {
+                super(context, c);
+            }
+
+            @Override
+            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+                View view = inflater.inflate(R.layout.item_view_on_front, parent, false);
+                return view;
+            }
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                TextView tv_item_fe = (TextView) view.findViewById(R.id.item_fe);
+                TextView tv_category_fe = (TextView) view.findViewById(R.id.category_fe);
+                TextView tv_price_fe = (TextView) view.findViewById(R.id.price_fe);
+
+                tv_item_fe.setText(cursor.getString(0));
+                tv_category_fe.setText(cursor.getString(1));
+                tv_price_fe.setText(cursor.getString(2));
+            }
+
+        }
+    }
 
     /*-------------------------------------------------------Android Fragment-----------------------------------------------------------------*/
     public class Android extends Fragment {
@@ -228,8 +222,6 @@ public class PoFragment extends Fragment {
 
         public Android() {
         }
-
-        @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.itemslistview, container, false);
@@ -276,7 +268,6 @@ public class PoFragment extends Fragment {
         public Ios() {
         }
 
-        @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.itemslistview, container, false);

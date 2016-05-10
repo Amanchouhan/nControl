@@ -8,13 +8,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-        <receiver android:name=".BootReciever">
+        <receiver android:name="nemi.in.BootReciever">
             <intent-filter >
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
         <activity
-            android:name=".Main"
+
+            android:name="nemi.in.Main"
             android:noHistory="true">
 
             <intent-filter>
@@ -23,8 +24,8 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".MainActivity"/>
-        <!--<activity android:name="swipe.PosFragment"/>-->
+        <activity android:name="nemi.in.MainActivity"/>
+        <!--<activity android:name="swipe.PosFragmentt"/>-->
 
     </application>
 

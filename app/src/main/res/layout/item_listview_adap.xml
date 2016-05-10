@@ -54,7 +54,7 @@
             android:layout_marginLeft="230dp"
             android:layout_height="wrap_content"
             android:layout_weight=".25"
-            android:background="#ffddff"
+            android:background="#7986CB"
             android:text="remove"
             />
         <Button
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".25"
-            android:background="#FFFFDD"
+            android:background="#8C9EFF"
             android:text="update"
             />
 

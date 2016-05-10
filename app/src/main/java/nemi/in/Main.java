@@ -1,4 +1,4 @@
-package in.nemi.ncontrol;
+package nemi.in;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import in.nemi.ncontrol.R;
+
 
 /**
  * Created by shouryas on 4/21/2016.
