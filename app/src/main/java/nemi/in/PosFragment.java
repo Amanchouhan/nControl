@@ -1,116 +1,122 @@
 package nemi.in;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
 import in.nemi.ncontrol.R;
 
-public class PosFragment extends Fragment {
-    TabHost tHost;
+public class PosFragment extends Fragment implements TabHost.OnTabChangeListener,ViewPager.OnPageChangeListener {
+    private TabHost tHost;
+    private ViewPager viewPager;
+    HorizontalScrollView horizontalScrollView;
+    View rootView;
+    private MyFragmentPagerAdapter myFragmentPagerAdapter;
+    int i = 0;
+
     Button btn_pay, btn_clear;
     EditText ed_name, ed_contact;
     public PosFragment() {
     }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.main_activity_for_swipe, container, false);
+        View rootView = inflater.inflate(R.layout.main_activity_for_swipe, container, false);
         tHost = (TabHost) rootView.findViewById(android.R.id.tabhost);
-        ed_name = (EditText) rootView.findViewById(R.id.name_id);
-        ed_contact = (EditText) rootView.findViewById(R.id.contact_id);
-        btn_pay = (Button) rootView.findViewById(R.id.pay);
-        btn_clear = (Button) rootView.findViewById(R.id.clear);
-//        btn_clear.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent in = new Intent(getActivity(), nemi.in.Main.class);
-//                startActivity(in);
-//            }
-//        });
-        tHost.setup();
-        TabHost.
-                OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String tabId) {
-                FragmentManager fm = getFragmentManager();
-                Android androidFragment = (Android) fm.findFragmentByTag("android");
-                Ios appleFragment = (Ios) fm.findFragmentByTag("apple");
-                Windows windows = (Windows) fm.findFragmentByTag("windows");
-                FragmentTransaction ft = fm.beginTransaction();
+        viewPager = (ViewPager)rootView.findViewById(R.id.view_pager);
+         horizontalScrollView = (HorizontalScrollView)rootView.findViewById(R.id.h_scroll_view);
+//        ed_name = (EditText) rootView.findViewById(R.id.name_id);
+//        ed_contact = (EditText) rootView.findViewById(R.id.contact_id);
+//        btn_pay = (Button) rootView.findViewById(R.id.pay);
+//        btn_clear = (Button) rootView.findViewById(R.id.clear);
+        i++;
+        this.initializeTabHost();
+        this.initializeViewPager();
 
 
-                if (androidFragment != null)
-                    ft.detach(androidFragment);
-                if (appleFragment != null)
-                    ft.detach(appleFragment);
-                if (windows != null)
-                    ft.detach(windows);
-
-
-                if (tabId.equalsIgnoreCase("android")) {
-                    if (androidFragment == null) {
-                        ft.add(R.id.realtabcontent, new Android(), "android");
-                    } else {
-                        ft.attach(androidFragment);
-                    }
-                } else if (tabId.equalsIgnoreCase("apple")) {    /** If current tab is apple */
-                    if (appleFragment == null) {
-                        /** Create AppleFragment and adding to fragmenttransaction */
-                        ft.add(R.id.realtabcontent, new Ios(), "apple");
-                    } else {
-                        /** Bring to the front, if already exists in the fragmenttransaction */
-                        ft.attach(appleFragment);
-                    }
-                } else if (tabId.equalsIgnoreCase("windows")) {    /** If current tab is apple */
-                    if (windows == null) {
-                        /** Create AppleFragment and adding to fragmenttransaction */
-                        ft.add(R.id.realtabcontent, new Windows(), "windows");
-                    } else {
-                        /** Bring to the front, if already exists in the fragmenttransaction */
-                        ft.attach(windows);
-                    }
-                }
-                ft.commit();
-            }
-
-        };
-
-        /** Setting tabchangelistener for the tab */
-        tHost.setOnTabChangedListener(tabChangeListener);
-
-        /** Defining tab builder for Android tab */
-        TabHost.TabSpec tSpecAndroid = tHost.newTabSpec("android");
-        tSpecAndroid.setIndicator("Android", getResources().getDrawable(R.drawable.android));
-        tSpecAndroid.setContent(new DummyTabContent(getActivity()));
-        tHost.addTab(tSpecAndroid);
-
-
-        /** Defining tab builder for Apple tab */
-        TabHost.TabSpec tSpecApple = tHost.newTabSpec("apple");
-        tSpecApple.setIndicator("Apple", getResources().getDrawable(R.drawable.apple));
-        tSpecApple.setContent(new DummyTabContent(getActivity()));
-        tHost.addTab(tSpecApple);
-
-        /** Defining tab builder for Apple tab */
-        TabHost.TabSpec tSpecWindows = tHost.newTabSpec("windows");
-        tSpecWindows.setIndicator("windows", getResources().getDrawable(R.drawable.windows));
-        tSpecWindows.setContent(new DummyTabContent(getActivity()));
-        tHost.addTab(tSpecWindows);
         return rootView;
     }
+    private void initializeViewPager() {
+        List<Fragment>fragmentList=new ArrayList<Fragment>();
+        fragmentList.add(new Windows());
+        fragmentList.add(new Ios());
+        fragmentList.add(new Android());
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(),fragmentList);
+        viewPager.setAdapter(myFragmentPagerAdapter);
+        viewPager.setOnPageChangeListener(this);
+    }
+    private void initializeTabHost() {
+        tHost.setup();
+
+            String[] tabName = {"Windows","Ios","Android"};
+            for (int i=0;i<tabName.length;i++)
+            {
+                TabHost.TabSpec tabSpec;
+                tabSpec = tHost.newTabSpec(tabName[i]);
+                tabSpec.setIndicator(tabName[i]);
+                tabSpec.setContent(new FakeContent(getActivity()));
+                tHost.addTab(tabSpec);
+            }
+
+
+        tHost.setOnTabChangedListener(this);
+
+    }
+    class FakeContent implements TabHost.TabContentFactory{
+
+        private final Context context;
+
+        public FakeContent(Context mcontext) {
+            context = mcontext;
+        }
+
+        @Override
+        public View createTabContent(String tag) {
+            View v = new View(context);
+            v.setMinimumHeight(0);
+            v.setMinimumWidth(0);
+            return v;
+        }
+    }
+    // TabListener
+    @Override
+    public void onTabChanged(String tabId) {
+        int selectItem = tHost.getCurrentTab();
+        viewPager.setCurrentItem(selectItem);
+    }
+
+    //ViewPagerListener
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int selectItem) {
+        tHost.setCurrentTab(selectItem);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+//
+
+
     /*-------------------------------------------------------Windows Fragment-----------------------------------------------------------------*/
     public class Windows extends Fragment {
         ItemsAdapter itemsAdapter;

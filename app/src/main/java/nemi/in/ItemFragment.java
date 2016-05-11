@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -20,7 +20,7 @@ import in.nemi.ncontrol.R;
 /**
  * Created by Aman on 5/3/2016.
  */
-public class ItemFragment extends android.app.Fragment {
+public class ItemFragment extends Fragment {
     ItemsAdapter itemsAdapter;
     ndbHelper databaseHelper;
     EditText et_item, et_category, et_price;
@@ -79,61 +79,6 @@ public class ItemFragment extends android.app.Fragment {
                 }
             }
         });
-        itemview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(final AdapterView<?> parent, View view, int position, long id) {
-
-                final TextView tv_item_column, tv_item, tv_category, tv_price;
-
-
-                tv_item_column = (TextView) view.findViewById(R.id.tv_item_column_id);
-                tv_item = (TextView) view.findViewById(R.id.tv_item_id);
-                tv_category = (TextView) view.findViewById(R.id.tv_category_id);
-                tv_price = (TextView) view.findViewById(R.id.tv_price_id);
-
-
-                final String item_columnid = tv_item_column.getText().toString();
-                final String item = tv_item.getText().toString();
-                final String category = tv_category.getText().toString();
-                final String price = tv_price.getText().toString();
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-                alertDialogBuilder.setTitle("Please select an action!");
-                alertDialogBuilder.setMessage("Click yes to exit!").setCancelable(false)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                databaseHelper.deleteItems(item_columnid);
-                                Cursor cursor = databaseHelper.getItems();
-                                itemsAdapter.changeCursor(cursor);
-
-                            }
-                        })
-                        .setNegativeButton("Update", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                et_item.setText(item);
-                                et_category.setText(category);
-                                et_price.setText(price);
-                                databaseHelper.deleteItems(item_columnid);
-                                Cursor cursor = databaseHelper.getItems();
-                                itemsAdapter.changeCursor(cursor);
-
-                            }
-                        }).setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-            }
-        });
-
-
         return rootView;
     }
 
@@ -165,20 +110,53 @@ public class ItemFragment extends android.app.Fragment {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    databaseHelper.deleteItems(item_columnid);
-                    Cursor cursor = databaseHelper.getItems();
-                    itemsAdapter.changeCursor(cursor);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    databaseHelper.deleteItems(item_columnid);
+                                    Cursor cursor = databaseHelper.getItems();
+                                    itemsAdapter.changeCursor(cursor);
+                                }
+                            }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
             });
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    et_item.setText(item);
-                    et_category.setText(category);
-                    et_price.setText(price);
-                    databaseHelper.deleteItems(item_columnid);
-                    Cursor cursor = databaseHelper.getItems();
-                    itemsAdapter.changeCursor(cursor);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    et_item.setText(item);
+                                    et_category.setText(category);
+                                    et_price.setText(price);
+                                    databaseHelper.deleteItems(item_columnid);
+                                    Cursor cursor = databaseHelper.getItems();
+                                    itemsAdapter.changeCursor(cursor);
+                                }
+                            }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();
+
                 }
             });
 

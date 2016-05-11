@@ -1,6 +1,5 @@
 TODO: Priority-wise
 
-- tabs shouldn't be on the action bar rather they should be inside the fragment for showing items
 - fill tabs in the swipe tab layout by getting category data from the db
 - touching each tab shows a list view of items in a particular category
 - touching each listview item of POS adds an item in the bill listview
@@ -75,3 +74,11 @@ DONE:
 
 7/5/2015:
 - delete and update items and users from delete and update button on list view
+
+10/05/2016
+- set three line and image on navigational drawer
+- confirmation dialog box on update and delete button (are you sure...)
+
+11/05/2016
+- done swipe with tab
+
