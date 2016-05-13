@@ -1,10 +1,12 @@
 package nemi.in;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,8 @@ import java.util.Vector;
 
 import in.nemi.ncontrol.R;
 
-public class PosFragment extends Fragment implements TabHost.OnTabChangeListener,ViewPager.OnPageChangeListener {
+public class PosFragment extends Fragment implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+    ndbHelper databaseHelper;
     private TabHost tHost;
     private ViewPager viewPager;
     HorizontalScrollView horizontalScrollView;
@@ -33,13 +36,16 @@ public class PosFragment extends Fragment implements TabHost.OnTabChangeListener
 
     Button btn_pay, btn_clear;
     EditText ed_name, ed_contact;
+
     public PosFragment() {
     }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        databaseHelper = new ndbHelper(getActivity(), null, null, 1);
         View rootView = inflater.inflate(R.layout.main_activity_for_swipe, container, false);
         tHost = (TabHost) rootView.findViewById(android.R.id.tabhost);
-        viewPager = (ViewPager)rootView.findViewById(R.id.view_pager);
-         horizontalScrollView = (HorizontalScrollView)rootView.findViewById(R.id.h_scroll_view);
+        viewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
+        horizontalScrollView = (HorizontalScrollView) rootView.findViewById(R.id.h_scroll_view);
 //        ed_name = (EditText) rootView.findViewById(R.id.name_id);
 //        ed_contact = (EditText) rootView.findViewById(R.id.contact_id);
 //        btn_pay = (Button) rootView.findViewById(R.id.pay);
@@ -51,33 +57,35 @@ public class PosFragment extends Fragment implements TabHost.OnTabChangeListener
 
         return rootView;
     }
+
     private void initializeViewPager() {
-        List<Fragment>fragmentList=new ArrayList<Fragment>();
-        fragmentList.add(new Windows());
-        fragmentList.add(new Ios());
-        fragmentList.add(new Android());
-        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(),fragmentList);
+        List<Fragment> fragmentList = new ArrayList<Fragment>();
+        fragmentList.add(new Grocery());
+        fragmentList.add(new Food());
+        fragmentList.add(new Fruit());
+        fragmentList.add(new Seafood());
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(myFragmentPagerAdapter);
         viewPager.setOnPageChangeListener(this);
     }
+
     private void initializeTabHost() {
         tHost.setup();
-
-            String[] tabName = {"Windows","Ios","Android"};
-            for (int i=0;i<tabName.length;i++)
-            {
-                TabHost.TabSpec tabSpec;
-                tabSpec = tHost.newTabSpec(tabName[i]);
-                tabSpec.setIndicator(tabName[i]);
-                tabSpec.setContent(new FakeContent(getActivity()));
-                tHost.addTab(tabSpec);
-            }
-
-
+        Cursor c = databaseHelper.getCategories();
+        c.moveToFirst();
+        for (int i = 0; i < c.getCount(); i++) {
+            TabHost.TabSpec tabSpec;
+            tabSpec = tHost.newTabSpec(c.getString(0));
+            tabSpec.setIndicator(c.getString(0));
+            tabSpec.setContent(new FakeContent(getActivity()));
+            tHost.addTab(tabSpec);
+            c.moveToNext();
+        }
+        c.close();
         tHost.setOnTabChangedListener(this);
-
     }
-    class FakeContent implements TabHost.TabContentFactory{
+
+    class FakeContent implements TabHost.TabContentFactory {
 
         private final Context context;
 
@@ -93,6 +101,7 @@ public class PosFragment extends Fragment implements TabHost.OnTabChangeListener
             return v;
         }
     }
+
     // TabListener
     @Override
     public void onTabChanged(String tabId) {
@@ -118,142 +127,70 @@ public class PosFragment extends Fragment implements TabHost.OnTabChangeListener
 
 
     /*-------------------------------------------------------Windows Fragment-----------------------------------------------------------------*/
-    public class Windows extends Fragment {
-        ItemsAdapter itemsAdapter;
+    public class Grocery extends Fragment {
         ndbHelper databaseHelper;
-        ListView itemview;
-        public Windows() {
+        ListView item_view;
+        GroceryAdapter groceryAdapter;
+
+        public Grocery() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.itemslistview, container, false);
             databaseHelper = new ndbHelper(getActivity(), null, null, 1);
-            itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
-            itemview = (ListView) rootView.findViewById(R.id.itemlistview);
-            itemview.setAdapter(itemsAdapter);
+//            groceryAdapter = new GroceryAdapter(getActivity(), databaseHelper.getGrocery());
+            item_view = (ListView) rootView.findViewById(R.id.itemlistview);
+            item_view.setAdapter(groceryAdapter);
             return rootView;
         }
 
-        public class ItemsAdapter extends CursorAdapter {
-            public ItemsAdapter(Context context, Cursor cursor) {
-                super(context, cursor);
-            }
-
-
-
-            @Override
-            public void bindView(View view, Context context, final Cursor cursor) {
-
-
-                final TextView tv_column = (TextView) view.findViewById(R.id.fetch);
-                final TextView tv_item = (TextView) view.findViewById(R.id.item_fetch);
-                final TextView tv_category = (TextView) view.findViewById(R.id.category_fetch);
-                final TextView tv_price = (TextView) view.findViewById(R.id.price_fetch);
-
-                Button click = (Button) view.findViewById(R.id.click_here);
-
-                tv_column.setText(cursor.getString(0));
-                tv_item.setText(cursor.getString(1));
-                tv_category.setText(cursor.getString(2));
-                tv_price.setText(cursor.getString(3));
-
-                click.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(getActivity(),"Click is going on...", Toast.LENGTH_LONG).show();
-                        new ListVi();
-                    }
-                });
-            }
-
-            @Override
-            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                View view = inflater.inflate(R.layout.item_list_adap_image, parent, false);
-                return view;
-            }
-        }
-    }
-
-    public class ListVi extends Fragment
-    {
-        ItemsAdapter itemsAdapter;
-        ndbHelper databaseHelper;
-        ListView itemlist;
-        public ListVi() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.main_activity_for_swipe,container,false);
-            itemlist = (ListView) view.findViewById(R.id.userlist);
-            databaseHelper = new ndbHelper(getActivity(), null, null, 1);
-            itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
-            itemlist.setAdapter(itemsAdapter);
-
-            return view;
-
-        }
-        public class ItemsAdapter extends CursorAdapter {
-            public ItemsAdapter(Context context, Cursor c) {
+        public class GroceryAdapter extends CursorAdapter {
+            public GroceryAdapter(Context context, Cursor c) {
                 super(context, c);
             }
 
             @Override
             public View newView(Context context, Cursor cursor, ViewGroup parent) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                View view = inflater.inflate(R.layout.item_view_on_front, parent, false);
+                View view = inflater.inflate(R.layout.item_list_adap_image, parent, false);
                 return view;
             }
+
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                TextView tv_item_fe = (TextView) view.findViewById(R.id.item_fe);
-                TextView tv_category_fe = (TextView) view.findViewById(R.id.category_fe);
-                TextView tv_price_fe = (TextView) view.findViewById(R.id.price_fe);
-
-                tv_item_fe.setText(cursor.getString(0));
-                tv_category_fe.setText(cursor.getString(1));
-                tv_price_fe.setText(cursor.getString(2));
+                TextView tv_item = (TextView) view.findViewById(R.id.item_fetch);
+                TextView tv_category = (TextView) view.findViewById(R.id.category_fetch);
+                TextView tv_price = (TextView) view.findViewById(R.id.price_fetch);
+                tv_item.setText(cursor.getString(1));
+                tv_category.setText(cursor.getString(2));
+                tv_price.setText(cursor.getString(3));
             }
-
         }
     }
 
     /*-------------------------------------------------------Android Fragment-----------------------------------------------------------------*/
-    public class Android extends Fragment {
-        ItemsAdapter itemsAdapter;
+    public class Food extends Fragment {
         ndbHelper databaseHelper;
         ListView itemview;
+        GroceryAdapter groceryAdapter;
 
-        public Android() {
+        public Food() {
         }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.itemslistview, container, false);
             databaseHelper = new ndbHelper(getActivity(), null, null, 1);
-            itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
+//            groceryAdapter = new GroceryAdapter(getActivity(), databaseHelper.getCategories());
             itemview = (ListView) rootView.findViewById(R.id.itemlistview);
-            itemview.setAdapter(itemsAdapter);
+            itemview.setAdapter(groceryAdapter);
             return rootView;
         }
 
-        public class ItemsAdapter extends CursorAdapter {
-            public ItemsAdapter(Context context, Cursor cursor) {
-                super(context, cursor);
-            }
-
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                TextView tv_column = (TextView) view.findViewById(R.id.item_fetch);
-                TextView tv_item = (TextView) view.findViewById(R.id.category_fetch);
-                TextView tv_category = (TextView) view.findViewById(R.id.price_fetch);
-//            TextView tv_price = (TextView) view.findViewById(R.id.tv_price_id);
-
-                tv_column.setText(cursor.getString(0));
-                tv_item.setText(cursor.getString(1));
-                tv_category.setText(cursor.getString(2));
-//            tv_price.setText(cursor.getString(3));
+        public class GroceryAdapter extends CursorAdapter {
+            public GroceryAdapter(Context context, Cursor c) {
+                super(context, c);
             }
 
             @Override
@@ -261,45 +198,42 @@ public class PosFragment extends Fragment implements TabHost.OnTabChangeListener
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
                 View view = inflater.inflate(R.layout.item_list_adap_image, parent, false);
                 return view;
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                TextView tv_item = (TextView) view.findViewById(R.id.item_fetch);
+                TextView tv_category = (TextView) view.findViewById(R.id.category_fetch);
+                TextView tv_price = (TextView) view.findViewById(R.id.price_fetch);
+                tv_item.setText(cursor.getString(1));
+                tv_category.setText(cursor.getString(2));
+                tv_price.setText(cursor.getString(3));
             }
         }
     }
 
     /*-------------------------------------------------------Ios Fragment-----------------------------------------------------------------*/
-    public class Ios extends Fragment {
-        ItemsAdapter itemsAdapter;
+    public class Fruit extends Fragment {
         ndbHelper databaseHelper;
         ListView itemview;
+        GroceryAdapter groceryAdapter;
 
-        public Ios() {
+        public Fruit() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.itemslistview, container, false);
             databaseHelper = new ndbHelper(getActivity(), null, null, 1);
-            itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
+//            groceryAdapter = new GroceryAdapter(getActivity(), databaseHelper.getFruit());
             itemview = (ListView) rootView.findViewById(R.id.itemlistview);
-            itemview.setAdapter(itemsAdapter);
+            itemview.setAdapter(groceryAdapter);
             return rootView;
         }
 
-        public class ItemsAdapter extends CursorAdapter {
-            public ItemsAdapter(Context context, Cursor cursor) {
-                super(context, cursor);
-            }
-
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                TextView tv_column = (TextView) view.findViewById(R.id.item_fetch);
-                TextView tv_item = (TextView) view.findViewById(R.id.category_fetch);
-                TextView tv_category = (TextView) view.findViewById(R.id.price_fetch);
-//            TextView tv_price = (TextView) view.findViewById(R.id.tv_price_id);
-
-                tv_column.setText(cursor.getString(0));
-                tv_item.setText(cursor.getString(1));
-                tv_category.setText(cursor.getString(2));
-//            tv_price.setText(cursor.getString(3));
+        public class GroceryAdapter extends CursorAdapter {
+            public GroceryAdapter(Context context, Cursor c) {
+                super(context, c);
             }
 
             @Override
@@ -308,7 +242,59 @@ public class PosFragment extends Fragment implements TabHost.OnTabChangeListener
                 View view = inflater.inflate(R.layout.item_list_adap_image, parent, false);
                 return view;
             }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                TextView tv_item = (TextView) view.findViewById(R.id.item_fetch);
+                TextView tv_category = (TextView) view.findViewById(R.id.category_fetch);
+                TextView tv_price = (TextView) view.findViewById(R.id.price_fetch);
+                tv_item.setText(cursor.getString(1));
+                tv_category.setText(cursor.getString(2));
+                tv_price.setText(cursor.getString(3));
+            }
         }
     }
 
+    /*-------------------------------------------------------Seafood Fragment-----------------------------------------------------------------*/
+    public class Seafood extends Fragment {
+        ndbHelper databaseHelper;
+        ListView itemview;
+        GroceryAdapter groceryAdapter;
+
+        public Seafood() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.itemslistview, container, false);
+            databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+//            groceryAdapter = new GroceryAdapter(getActivity(), databaseHelper.getSeafood());
+            itemview = (ListView) rootView.findViewById(R.id.itemlistview);
+            itemview.setAdapter(groceryAdapter);
+            return rootView;
+        }
+
+        public class GroceryAdapter extends CursorAdapter {
+            public GroceryAdapter(Context context, Cursor c) {
+                super(context, c);
+            }
+
+            @Override
+            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+                View view = inflater.inflate(R.layout.item_list_adap_image, parent, false);
+                return view;
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                TextView tv_item = (TextView) view.findViewById(R.id.item_fetch);
+                TextView tv_category = (TextView) view.findViewById(R.id.category_fetch);
+                TextView tv_price = (TextView) view.findViewById(R.id.price_fetch);
+                tv_item.setText(cursor.getString(1));
+                tv_category.setText(cursor.getString(2));
+                tv_price.setText(cursor.getString(3));
+            }
+        }
+    }
 }

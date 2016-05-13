@@ -80,11 +80,13 @@
         <LinearLayout
             android:id="@+id/LinearLayout4"
             android:layout_width="310dp"
+            android:background="#607D8B"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/addbutton"
+                android:background="#607D8B"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="ADD USER" />

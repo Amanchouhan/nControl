@@ -69,7 +69,7 @@ public class ItemFragment extends Fragment {
                     et_item.setError("Price");
                 } else {
                     databaseHelper.addItem(item, category, price);
-                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
+//                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
                     Cursor cursor = databaseHelper.getItems();
                     itemsAdapter.changeCursor(cursor);
 
@@ -87,7 +87,13 @@ public class ItemFragment extends Fragment {
         public ItemsAdapter(Context context, Cursor cursor) {
             super(context, cursor);
         }
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.item_listview_adap, parent, false);
 
+            return view;
+        }
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             TextView tv_column = (TextView) view.findViewById(R.id.tv_item_column_id);
@@ -107,6 +113,7 @@ public class ItemFragment extends Fragment {
             final String price = tv_price.getText().toString();
             Button delete = (Button) view.findViewById(R.id.dele_item_id);
             Button update = (Button) view.findViewById(R.id.update_item_id);
+
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -162,12 +169,6 @@ public class ItemFragment extends Fragment {
 
         }
 
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.item_listview_adap, parent, false);
 
-            return view;
-        }
     }
 }

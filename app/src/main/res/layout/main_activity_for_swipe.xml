@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    android:background="#E8EAF6"
-    android:gravity="left"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -23,28 +20,32 @@
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#90A4AE"
                 android:padding="7dp"
                 android:text="Customer Detail" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/name_id"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Name" />
+                    android:layout_height="match_parent"
+                    android:background="#E8EAF6"
+                    android:hint="Name"
+                    android:paddingLeft="4dp" />
 
 
                 <EditText
                     android:id="@+id/contact_id"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
+                    android:layout_height="match_parent"
+                    android:background="#E8EAF6"
                     android:hint="Contact"
-                    android:inputType="textPassword" />
+                    android:paddingLeft="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -52,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="325dp"
                 android:gravity="bottom"
+                android:background="#CFD8DC"
                 android:orientation="horizontal">
 
                 <ListView
@@ -66,22 +68,28 @@
             <LinearLayout
                 android:id="@+id/total_linear"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="75dp"
                 android:layout_marginBottom="0dp"
                 android:orientation="horizontal">
+
 
                 <TextView
                     android:id="@+id/total"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:background="#CFD8DC"
                     android:gravity="center"
                     android:padding="7dp"
                     android:text="Total" />
 
                 <TextView
                     android:id="@+id/total_amo"
+                    android:background="#CFD8DC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
                     android:padding="7dp"
                     android:text="0.0" />
             </LinearLayout>
@@ -90,6 +98,7 @@
                 android:id="@+id/wwi"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
                 android:layout_marginTop="20dp"
                 android:gravity="bottom"
                 android:orientation="horizontal">
@@ -98,14 +107,14 @@
                     android:id="@+id/pay"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="#536DFE"
+                    android:background="#607D8B"
                     android:text="pay" />
 
                 <Button
                     android:id="@+id/clear"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="#8C9EFF"
+                    android:background="#CFD8DC"
                     android:text="Clear" />
 
             </LinearLayout>
@@ -142,7 +151,8 @@
                         android:id="@android:id/tabs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0" />
+                        android:layout_weight="0"
+                        android:background="#607D8B" />
 
                 </HorizontalScrollView>
 
@@ -150,14 +160,12 @@
                 <FrameLayout
                     android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#ff0000">
+                    android:layout_height="match_parent">
 
                     <android.support.v4.view.ViewPager
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#ff00Ff">
+                        android:layout_height="match_parent">
 
                     </android.support.v4.view.ViewPager>
 

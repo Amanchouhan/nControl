@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
+
         android:weightSum="1">
 
         <TextView
@@ -50,11 +51,12 @@
         <Button
             android:id="@+id/dele_item_id"
           android:layout_marginTop="4dp"
+
             android:layout_width="wrap_content"
             android:layout_marginLeft="230dp"
             android:layout_height="wrap_content"
             android:layout_weight=".25"
-            android:background="#7986CB"
+            android:background="#607D8B"
             android:text="remove"
             />
         <Button
@@ -63,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".25"
-            android:background="#8C9EFF"
+            android:background="#CFD8DC"
             android:text="update"
             />
 
