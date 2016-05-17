@@ -162,23 +162,57 @@ public class ItemFragment extends android.app.Fragment {
             final String price = tv_price.getText().toString();
             Button delete = (Button) view.findViewById(R.id.dele_item_id);
             Button update = (Button) view.findViewById(R.id.update_item_id);
+
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    databaseHelper.deleteItems(item_columnid);
-                    Cursor cursor = databaseHelper.getItems();
-                    itemsAdapter.changeCursor(cursor);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    databaseHelper.deleteItems(item_columnid);
+                                    Cursor cursor = databaseHelper.getItems();
+                                    itemsAdapter.changeCursor(cursor);
+                                }
+                            }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
             });
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    et_item.setText(item);
-                    et_category.setText(category);
-                    et_price.setText(price);
-                    databaseHelper.deleteItems(item_columnid);
-                    Cursor cursor = databaseHelper.getItems();
-                    itemsAdapter.changeCursor(cursor);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    et_item.setText(item);
+                                    et_category.setText(category);
+                                    et_price.setText(price);
+                                    databaseHelper.deleteItems(item_columnid);
+                                    Cursor cursor = databaseHelper.getItems();
+                                    itemsAdapter.changeCursor(cursor);
+                                }
+                            }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+
+                    // show it
+                    alertDialog.show();
+
                 }
             });
 

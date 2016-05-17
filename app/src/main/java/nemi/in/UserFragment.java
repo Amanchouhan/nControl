@@ -1,7 +1,9 @@
 package nemi.in;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -102,25 +104,52 @@ public class UserFragment extends Fragment {
             final String val2 = a2.getText().toString();
             final String val3 = a3.getText().toString();
 
+
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "delete..."+val3, Toast.LENGTH_LONG).show();
-                    databaseHelper.deleteUser(val1);
-                    Cursor cursor = databaseHelper.getUsers();
-                    usersAdapter.changeCursor(cursor);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setMessage("are you sure ?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    databaseHelper.deleteUser(val1);
+                                    Cursor cursor = databaseHelper.getUsers();
+                                    usersAdapter.changeCursor(cursor);
+                                }
+                            }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
             });
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "update..."+val3, Toast.LENGTH_LONG).show();
-                    role.setText(val3);
-                    username.setText(val2);
-                    password.setText("");
-                    databaseHelper.deleteUser(val1);
-                    Cursor cursor = databaseHelper.getUsers();
-                    usersAdapter.changeCursor(cursor);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setMessage("are you sure ?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    role.setText(val2);
+                                    username.setText(val3);
+                                    password.setText("");
+                                    databaseHelper.deleteUser(val1);
+                                    Cursor cursor = databaseHelper.getUsers();
+                                    usersAdapter.changeCursor(cursor);
+                                }
+                            }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
             });
         }

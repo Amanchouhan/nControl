@@ -73,16 +73,15 @@ public class Main extends Activity {
     public void login(View v) {
         String user = username.getText().toString();
         String pass = password.getText().toString();
-        if(user.equals("")) {
-            username.setError("Username");
-        } else if (pass.equals("")) {
-            password.setError("password");
-        } else if (pass.equals(databaseHelper.loginUser(user))) {
+//        if(user.equals("")) {
+//            username.setError("Username");
+//        } else if (pass.equals("")) {
+//            password.setError("password");
+//        } else if (pass.equals(databaseHelper.loginUser(user))) {
             Intent i = new Intent(Main.this, MainActivity.class);
-//            i.putExtra("Username", user);
             startActivity(i);
-        } else {
-            Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-        }
+//        } else {
+//            Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+//        }
     }
 }

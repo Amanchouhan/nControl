@@ -146,6 +146,11 @@ public class ndbHelper extends SQLiteOpenHelper {
                 null
         );
     }
+    public Cursor getCategories() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("select distinct category from items", null);
+    }
+
 
 
 }

@@ -25,7 +25,11 @@
 
         </activity>
         <activity android:name="nemi.in.MainActivity"/>
-        <!--<activity android:name="swipe.PosFragmentt"/>-->
+        <activity android:name="nemi.in.PosFragment"/>
+
+        <activity android:name="common.activities.SampleActivityBase"/>
+
+
 
     </application>
 

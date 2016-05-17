@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main_);
 
 		mTitle = mDrawerTitle = getTitle();
 
@@ -135,7 +135,10 @@ public class MainActivity extends Activity {
 		}
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-		case R.id.action_settings:
+		case R.id.logout:
+			Intent in = new Intent(this,Main.class);
+			startActivity(in);
+			finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -149,13 +152,11 @@ public class MainActivity extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		menu.findItem(R.id.menu_toggle_log).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
-	/**
-	 * Diplaying fragment view for selected nav drawer list item
-	 * */
+
 	private void displayView(int position) {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
@@ -178,6 +179,9 @@ public class MainActivity extends Activity {
 		}
 
 		if (fragment != null) {
+
+
+
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
 
@@ -186,6 +190,8 @@ public class MainActivity extends Activity {
 			mDrawerList.setSelection(position);
 			setTitle(navMenuTitles[position]);
 			mDrawerLayout.closeDrawer(mDrawerList);
+
+
 		} else {
 			// error in creating fragment
 			Log.e("nemi.in.MainActivity", "Error in creating fragment");
