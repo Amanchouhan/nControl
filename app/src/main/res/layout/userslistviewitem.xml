@@ -44,7 +44,8 @@
             android:layout_marginLeft="275dp"
             android:layout_height="wrap_content"
             android:layout_weight=".25"
-            android:background="#ffddff"
+            android:background="#607D8B"
+
             android:text="remove"
             />
 
@@ -55,7 +56,7 @@
             android:layout_marginTop="4dp"
             android:layout_weight=".25"
             android:layout_height="wrap_content"
-            android:background="#FFFFDD"
+            android:background="#B0BEC5"
             android:text="update"/>
 
     </TableRow>

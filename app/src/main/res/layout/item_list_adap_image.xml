@@ -46,10 +46,11 @@
 
     <Button
         android:id="@+id/click_here"
+        android:background="#78909C"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="250dp"
-        android:layout_marginEnd="179dp"
-        android:layout_marginRight="179dp"
-        android:text="Click" />
+        android:layout_marginLeft="450dp"
+        android:text="Add to cart" />
 </RelativeLayout>

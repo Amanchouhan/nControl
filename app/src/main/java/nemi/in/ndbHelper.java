@@ -28,7 +28,6 @@ public class ndbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PRICE = "price";
 
 
-
     public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -64,7 +63,7 @@ public class ndbHelper extends SQLiteOpenHelper {
     public boolean checkS() {
         Boolean exists = null;
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, new String[] {"role"}, "role = ?", new String[] {"super"}, null, null, null);
+        Cursor cursor = db.query(TABLE_USERS, new String[]{"role"}, "role = ?", new String[]{"super"}, null, null, null);
         if (cursor.getCount() == 1) {
             exists = true;
         } else {
@@ -85,7 +84,24 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, cv);
         db.close();
     }
-    //Add a user to the db
+    public Cursor getUsers() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(
+                "select * from " + TABLE_USERS,
+                null
+        );
+    }
+     /*------------------remove a user from the db (please remember you'll get the username by touching it in its list view---------------------------------------*/
+
+    public void deleteUser(String username) {
+        int col_id = Integer.parseInt(username);
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
+        db.close();
+    }
+
+    /*------------------------------------Add a user to the db-----------------------------------------------------------------*/
+
     public void addItem(String item, String category, String price) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ITEM, item);
@@ -95,18 +111,37 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, cv);
         db.close();
     }
-    //login
+    public Cursor getItems() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(
+                "select * from " + TABLE_ITEMS,
+                null
+        );
+    }
+      /*------------//remove a item from the db (please remember you'll get the username by touching it in its listview)----------------------*/
+
+    public void deleteItems(String itemname) {
+        int col_id = Integer.parseInt(itemname);
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_ITEMS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
+        db.close();
+    }
+
+
+
+    /*-------------------------------------login-----------------------------------------------------------------*/
+
     public String loginUser(String u) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT " + COLUMN_USERNAME + "," + COLUMN_PASSWORD + " FROM " + TABLE_USERS;
         Cursor cursor = db.rawQuery(query, null);
-        String a,b;
+        String a, b;
         b = "NOT FOUND";
         if (cursor.moveToFirst()) {
             do {
                 a = cursor.getString(0);
                 if (a.equals(u)) {
-                    b=cursor.getString(1);
+                    b = cursor.getString(1);
                     break;
                 }
             } while (cursor.moveToNext());
@@ -116,35 +151,13 @@ public class ndbHelper extends SQLiteOpenHelper {
         return b;
     }
 
-    //remove a user from the db (please remember you'll get the username by touching it in its listview)
-    public void deleteUser(String username) {
-        int col_id= Integer.parseInt(username);
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
-        db.close();
-    }
 
-    public Cursor getUsers() {
-        SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery(
-                "select * from " + TABLE_USERS,
-                null
-        );
-    }
-    //remove a item from the db (please remember you'll get the username by touching it in its listview)
-    public void deleteItems(String itemname) {
-        int col_id= Integer.parseInt(itemname);
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_ITEMS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
-        db.close();
-    }
 
-    public Cursor getItems() {
+
+    /*-------------------------------------------------------Tab categories Fragment-----------------------------------------------------------------*/
+    public Cursor getCategories() {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery(
-                "select * from " + TABLE_ITEMS,
-                null
-        );
+        return db.rawQuery("select distinct category from items", null);
     }
     public Cursor getCategories() {
         SQLiteDatabase db = getReadableDatabase();
@@ -152,5 +165,22 @@ public class ndbHelper extends SQLiteOpenHelper {
     }
 
 
+//    public Cursor getGrocery() {
+//        SQLiteDatabase db = getReadableDatabase();
+//        return db.rawQuery("select * from " + TABLE_ITEMS + " where " + COLUMN_CATEGORY + " = 'Grocery'", null);
+//
+//    }
+//
+//    public Cursor getFruit() {
+//        SQLiteDatabase db = getReadableDatabase();
+//        return db.rawQuery("select * from " + TABLE_ITEMS + " where " + COLUMN_CATEGORY + " = 'fruit'", null);
+//
+//    }
+//
+//    public Cursor getSeafood() {
+//        SQLiteDatabase db = getReadableDatabase();
+//        return db.rawQuery("select * from " + TABLE_ITEMS + " where " + COLUMN_CATEGORY + " = 'seafood'", null);
+//
+//    }
 
 }

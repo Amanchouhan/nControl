@@ -30,6 +30,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#78909C"
         android:text="Login"
         android:id="@+id/button_login"
         android:layout_below="@+id/ed_password_1"
