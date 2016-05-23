@@ -17,12 +17,12 @@
 
             <TextView
                 android:id="@+id/textView1"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="7dp"
-                android:text="User Detail" />
+                android:text="User Detail"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </TableRow>
 
         <LinearLayout
@@ -34,8 +34,8 @@
                 android:id="@+id/usernamefield"
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
-                android:inputType="textNoSuggestions"
-                android:hint="Username">
+                android:hint="Username"
+                android:inputType="textNoSuggestions">
 
                 <requestFocus />
             </EditText>
@@ -54,6 +54,7 @@
                 android:hint="Password"
                 android:inputType="textPassword" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
@@ -74,40 +75,72 @@
 
             <EditText
                 android:id="@+id/rolefield"
-                android:inputType="textNoSuggestions"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:hint="Role" />
+                android:hint="Role"
+                android:inputType="textNoSuggestions" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LinearLayout4"
             android:layout_width="310dp"
-            android:background="#607D8B"
             android:layout_height="wrap_content"
+            android:background="#607D8B"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/addbutton"
-                android:background="#607D8B"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#607D8B"
                 android:text="ADD USER" />
         </LinearLayout>
     </TableLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/l"
+        android:orientation="vertical"
+        android:background="#eee">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#eee">
+            android:layout_height="wrap_content"
+            android:background="#ccc"
+            android:orientation="horizontal">
 
-            <ListView
-                android:id="@+id/userlistview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </ListView>
+            <TextView
+                android:id="@+id/tv_item_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:paddingStart="4dp"
+                android:text="Item"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_price_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="2.5"
+                android:gravity="start"
+                android:text="Price"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/userlistview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </LinearLayout>

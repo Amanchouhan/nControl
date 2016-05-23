@@ -1,9 +1,13 @@
+<?xml version="1.0"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/img"
+        android:layout_marginTop="4dp"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:background="#FFDDFF" />
@@ -19,9 +23,9 @@
 
     <TextView
         android:id="@+id/item_fetch"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:layout_below="@id/fetch"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="1dp"
@@ -29,8 +33,8 @@
 
     <TextView
         android:id="@+id/category_fetch"
-        android:layout_width="wrap_content"
         android:textStyle="italic"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_fetch"
         android:layout_marginLeft="80dp"
@@ -46,5 +50,17 @@
         android:layout_marginTop="1dp"
         android:text="Description" />
 
+    <TextView
+        android:id="@+id/click_here"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="550dp"
+        android:textColor="#ccc"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:text="Touch to Add" />
 
 </RelativeLayout>

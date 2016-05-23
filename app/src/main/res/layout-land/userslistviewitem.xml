@@ -1,62 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:baselineAligned="false"
-    android:orientation="vertical"
-    android:weightSum="1">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="200dp"
+    <TextView
+        android:id="@+id/column_id"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:weightSum="1">
+        android:text="First"
+        android:visibility="invisible" />
 
-        <TextView
-            android:id="@+id/column_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="0dp"
-            android:text="Medium Text"
-            android:visibility="invisible"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <TextView
-            android:id="@+id/column_role"
-            android:layout_width="200dp"
-            android:textSize="20sp"
-            android:layout_height="wrap_content"
-            android:text="Medium Text" />
+    <TextView
+        android:id="@+id/column_role"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:gravity="start"
+        android:text="Second" />
 
-        <TextView
-            android:id="@+id/column_username"
-            android:layout_width="200dp"
-            android:textSize="20sp"
-            android:layout_height="wrap_content"
-            android:text="Medium Text"/>
-        <Button
-            android:id="@+id/dele_id"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:background="#607D8B"
-            android:text="remove"
-            />
+    <TextView
+        android:id="@+id/column_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1"
+        android:gravity="start"
+        android:text="Third" />
 
-        <Button
-            android:id="@+id/update_id"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_weight=".25"
-            android:layout_marginRight="0dp"
-            android:layout_height="wrap_content"
-            android:background="#B0BEC5"
-            android:text="update"/>
+    <Button
+        android:id="@+id/dele_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0.5"
+        android:text="DELETE" />
 
-    </TableRow>
+    <Button
+        android:id="@+id/update_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:text="UPDATE" />
 
-</TableLayout>
+</LinearLayout>

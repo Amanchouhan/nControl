@@ -38,6 +38,13 @@ public class ItemFragment extends Fragment {
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
         final ListView itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
+
+
+
+
+
+
+
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
@@ -160,4 +167,7 @@ public class ItemFragment extends Fragment {
 
 
     }
+
+
+
 }

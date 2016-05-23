@@ -1,7 +1,5 @@
 TODO: Priority-wise
 
-
-- touching each tab shows a list view of items in a particular category
 - touching each listview item of POS adds an item in the bill listview
 - to increase qty of an item in the listview touch multiple times
 - manually set qty of items in sales listview
@@ -90,3 +88,6 @@ DONE:
 
 17/05/2016
 - fill tabs in the swipe tab layout by getting category data from the db
+
+23/05/2016
+- touching each tab shows a list view of items in a particular category

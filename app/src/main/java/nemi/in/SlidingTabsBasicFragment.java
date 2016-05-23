@@ -63,14 +63,15 @@ public class SlidingTabsBasicFragment extends Fragment {
         public Object instantiateItem(ViewGroup container, int position) {
             View view = getActivity().getLayoutInflater().inflate(R.layout.pager_item, container, false);
             container.addView(view);
+            String ourTabName;
             MyCursorAdapter myCursorAdapter;
             databaseHelper = new ndbHelper(getActivity(), null, null, 1);
             final Cursor c = databaseHelper.getCategories();
-            String ourTabName;
+
             String[] TabbyName = new String[c.getCount()];
             c.moveToFirst();
 
-            for(int i=0; i<c.getCount(); i++) {
+            for (int i = 0; i < c.getCount(); i++) {
                 ourTabName = c.getString(0);
                 TabbyName[i] = ourTabName;
                 c.moveToNext();
