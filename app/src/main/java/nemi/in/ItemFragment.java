@@ -1,11 +1,11 @@
 package nemi.in;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +30,6 @@ public class ItemFragment extends Fragment {
     public ItemFragment() {
     }
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//
-//        super.onCreate(savedInstanceState);
-//        databaseHelper = new nemi.in.ndbHelper(getActivity(), null, null, 1);
-//        itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
-//        ViewGroup headerView = (ViewGroup)getActivity().getLayoutInflater().inflate(R.layout.header_listview_adap,itemview,false);
-//        itemview.addHeaderView(headerView);
-//
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,7 +95,6 @@ public class ItemFragment extends Fragment {
             tv_item.setText(cursor.getString(1));
             tv_category.setText(cursor.getString(2));
             tv_price.setText(cursor.getString(3));
-
 
             final String item_columnid = tv_column.getText().toString();
             final String item = tv_item.getText().toString();

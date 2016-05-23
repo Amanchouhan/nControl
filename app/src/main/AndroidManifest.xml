@@ -24,8 +24,8 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="nemi.in.MainActivity"/>
-        <activity android:name="nemi.in.PosFragment"/>
+        <activity android:name="nemi.in.NavDrawer"/>
+        <!--<activity android:name="nemi.in.PosFragment"/>-->
 
         <activity android:name="common.activities.SampleActivityBase"/>
 

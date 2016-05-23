@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,7 @@ public class UserFragment extends Fragment {
             a1.setText(cursor.getString(0));
             a2.setText(cursor.getString(1));
             a3.setText(cursor.getString(2));
+
 
             final String val1 = a1.getText().toString();
             final String val2 = a2.getText().toString();

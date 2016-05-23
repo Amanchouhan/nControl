@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/item_fetch"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fetch"
@@ -29,6 +30,7 @@
     <TextView
         android:id="@+id/category_fetch"
         android:layout_width="wrap_content"
+        android:textStyle="italic"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_fetch"
         android:layout_marginLeft="80dp"
@@ -44,13 +46,5 @@
         android:layout_marginTop="1dp"
         android:text="Description" />
 
-    <Button
-        android:id="@+id/click_here"
-        android:background="#78909C"
-        android:padding="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="450dp"
-        android:text="Add to cart" />
+
 </RelativeLayout>

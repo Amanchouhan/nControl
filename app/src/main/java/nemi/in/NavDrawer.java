@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import in.nemi.ncontrol.R;
 
-public class MainActivity extends Activity {
+public class NavDrawer extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -194,7 +194,7 @@ public class MainActivity extends Activity {
 
 		} else {
 			// error in creating fragment
-			Log.e("nemi.in.MainActivity", "Error in creating fragment");
+			Log.e("nemi.in.NavDrawer", "Error in creating fragment");
 		}
 	}
 

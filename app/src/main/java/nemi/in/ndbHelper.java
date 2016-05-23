@@ -56,6 +56,8 @@ public class ndbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLE_ITEMS);
+
         onCreate(db);
     }
 
@@ -157,30 +159,19 @@ public class ndbHelper extends SQLiteOpenHelper {
     /*-------------------------------------------------------Tab categories Fragment-----------------------------------------------------------------*/
     public Cursor getCategories() {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("select distinct category from items", null);
+        return db.rawQuery("select distinct category from "+ TABLE_ITEMS + "", null);
+        //category :- fruit,food,seafood;
     }
-    public Cursor getCategories() {
+//
+//    public Cursor getCategoriesArray() {
+//        SQLiteDatabase db = getReadableDatabase();
+//        return db.rawQuery("select distinct category from items", null);
+//    }
+    public Cursor getPOSItems(String a) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("select distinct category from items", null);
+//        return db.rawQuery("select * from "+ TABLE_ITEMS + " where category='food'", null);
+        return db.rawQuery("select * from items where " + COLUMN_CATEGORY + "=\"" + a + "\";", null);
+//        return db.rawQuery("select * from items", null);
     }
-
-
-//    public Cursor getGrocery() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        return db.rawQuery("select * from " + TABLE_ITEMS + " where " + COLUMN_CATEGORY + " = 'Grocery'", null);
-//
-//    }
-//
-//    public Cursor getFruit() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        return db.rawQuery("select * from " + TABLE_ITEMS + " where " + COLUMN_CATEGORY + " = 'fruit'", null);
-//
-//    }
-//
-//    public Cursor getSeafood() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        return db.rawQuery("select * from " + TABLE_ITEMS + " where " + COLUMN_CATEGORY + " = 'seafood'", null);
-//
-//    }
 
 }

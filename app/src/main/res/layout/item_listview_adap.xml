@@ -17,6 +17,7 @@
 
         <TextView
             android:id="@+id/tv_item_column_id"
+            android:textSize="20sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="0dp"
@@ -28,7 +29,8 @@
 
         <TextView
             android:id="@+id/tv_item_id"
-            android:layout_width="150dp"
+            android:textSize="20sp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_column="0"
@@ -37,23 +39,24 @@
 
         <TextView
             android:id="@+id/tv_category_id"
-            android:layout_width="150dp"
+            android:textSize="20sp"
+            android:layout_width="130dp"
             android:gravity="center"
             android:layout_column="1"
             android:text="Medium Text" />
 
         <TextView
             android:id="@+id/tv_price_id"
-            android:layout_width="150dp"
+            android:layout_width="70dp"
             android:gravity="center"
+            android:textSize="20sp"
             android:layout_column="2"
             android:text="Medium Text"/>
         <Button
             android:id="@+id/dele_item_id"
           android:layout_marginTop="4dp"
-
             android:layout_width="wrap_content"
-            android:layout_marginLeft="230dp"
+            android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
             android:layout_weight=".25"
             android:background="#607D8B"

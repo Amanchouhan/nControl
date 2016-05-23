@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import in.nemi.ncontrol.R;
 
@@ -78,7 +77,7 @@ public class Main extends Activity {
 //        } else if (pass.equals("")) {
 //            password.setError("password");
 //        } else if (pass.equals(databaseHelper.loginUser(user))) {
-            Intent i = new Intent(Main.this, MainActivity.class);
+            Intent i = new Intent(Main.this, NavDrawer.class);
             startActivity(i);
 //        } else {
 //            Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
