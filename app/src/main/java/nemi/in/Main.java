@@ -51,7 +51,7 @@ public class Main extends Activity {
                     String p = password_super.getText().toString();
                     String conf_pass = confirm_password_super.getText().toString();
 
-                    String r = "super";
+                    String r = "SUPER";
                     if(u.equals("")) {
                         username_super.setError("User name");
                     } else if (p.equals("")) {

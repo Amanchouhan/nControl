@@ -7,6 +7,7 @@
     <TextView
         android:id="@+id/tv_item_column_id"
         android:layout_width="0dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="First"
         android:visibility="invisible" />
@@ -14,6 +15,9 @@
     <TextView
         android:id="@+id/tv_item_id"
         android:layout_width="0dp"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:padding="10dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="start"
@@ -23,6 +27,8 @@
     <TextView
         android:id="@+id/tv_category_id"
         android:layout_width="0dp"
+        android:textSize="20dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_weight="1"
@@ -32,25 +38,33 @@
     <TextView
         android:id="@+id/tv_price_id"
         android:layout_width="0dp"
+        android:layout_gravity="center"
+        android:textSize="20dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_weight="1"
         android:gravity="start"
         android:text="Third" />
 
-    <Button
-        android:id="@+id/dele_item_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="0.5"
-        android:text="DELETE" />
 
-    <Button
+    <ImageButton
         android:id="@+id/update_item_id"
         android:layout_width="0dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_mode_edit_black_48dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight=".25"
         android:text="UPDATE" />
+
+    <ImageButton
+        android:id="@+id/dele_item_id"
+        android:layout_width="0dp"
+        android:layout_gravity="center"
+        android:background="@drawable/ic_delete_black_48dp"
+
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="0.25"
+        android:text="DELETE" />
 
 </LinearLayout>

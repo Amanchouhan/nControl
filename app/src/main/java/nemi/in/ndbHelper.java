@@ -65,7 +65,7 @@ public class ndbHelper extends SQLiteOpenHelper {
     public boolean checkS() {
         Boolean exists = null;
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, new String[]{"role"}, "role = ?", new String[]{"super"}, null, null, null);
+        Cursor cursor = db.query(TABLE_USERS, new String[]{"role"}, "role = ?", new String[]{"SUPER"}, null, null, null);
         if (cursor.getCount() == 1) {
             exists = true;
         } else {
@@ -162,16 +162,9 @@ public class ndbHelper extends SQLiteOpenHelper {
         return db.rawQuery("select distinct category from "+ TABLE_ITEMS + "", null);
         //category :- fruit,food,seafood;
     }
-//
-//    public Cursor getCategoriesArray() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        return db.rawQuery("select distinct category from items", null);
-//    }
     public Cursor getPOSItems(String a) {
         SQLiteDatabase db = getReadableDatabase();
-//        return db.rawQuery("select * from "+ TABLE_ITEMS + " where category='food'", null);
         return db.rawQuery("select * from items where " + COLUMN_CATEGORY + "=\"" + a + "\";", null);
-//        return db.rawQuery("select * from items", null);
     }
 
 }

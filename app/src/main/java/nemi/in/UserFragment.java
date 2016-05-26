@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +49,8 @@ public class UserFragment extends Fragment {
         username = (EditText) rootView.findViewById(R.id.usernamefield);
         password = (EditText) rootView.findViewById(R.id.passwordfield);
         re_enter_password = (EditText) rootView.findViewById(R.id.co_passwordfield);
+
+//        role.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
 
         add = (Button) rootView.findViewById(R.id.addbutton);
         //Add User to db
@@ -88,14 +92,19 @@ public class UserFragment extends Fragment {
         public UsersAdapter(Context context, Cursor cursor) {
             super(context, cursor);
         }
-
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.userslistviewitem, parent, false);
+            return view;
+        }
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             TextView a1 = (TextView) view.findViewById(R.id.column_id);
             TextView a2 = (TextView) view.findViewById(R.id.column_role);
             TextView a3 = (TextView) view.findViewById(R.id.column_username);
-            Button delete = (Button) view.findViewById(R.id.dele_id);
-            Button update = (Button) view.findViewById(R.id.update_id);
+            ImageButton delete = (ImageButton) view.findViewById(R.id.dele_id);
+            ImageButton update = (ImageButton) view.findViewById(R.id.update_id);
 
             a1.setText(cursor.getString(0));
             a2.setText(cursor.getString(1));
@@ -156,11 +165,6 @@ public class UserFragment extends Fragment {
             });
         }
 
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.userslistviewitem, parent, false);
-            return view;
-        }
+
     }
 }

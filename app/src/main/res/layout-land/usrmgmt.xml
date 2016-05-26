@@ -112,11 +112,11 @@
                     android:id="@+id/tv_item_id"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.45"
                     android:gravity="start"
                     android:paddingStart="4dp"
-                    android:text="Item"
-                    android:textSize="25dp"
+                    android:text="USER NAME"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
 
@@ -127,8 +127,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="2"
                     android:gravity="start"
-                    android:text="Price"
-                    android:textSize="25dp"
+                    android:text="ROLE"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
             </LinearLayout>

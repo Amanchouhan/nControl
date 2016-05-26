@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,17 +42,13 @@ public class ItemFragment extends Fragment {
         final ListView itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
 
-
-
-
-
-
-
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
         additem = (Button) rootView.findViewById(R.id.additembutton);
-//Add Item to db
+
+        et_category.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        //Add Item to db
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,8 +106,9 @@ public class ItemFragment extends Fragment {
             final String item = tv_item.getText().toString();
             final String category = tv_category.getText().toString();
             final String price = tv_price.getText().toString();
-            Button delete = (Button) view.findViewById(R.id.dele_item_id);
-            Button update = (Button) view.findViewById(R.id.update_item_id);
+
+            ImageButton delete = (ImageButton) view.findViewById(R.id.dele_item_id);
+            ImageButton update = (ImageButton) view.findViewById(R.id.update_item_id);
 
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,6 +119,7 @@ public class ItemFragment extends Fragment {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     databaseHelper.deleteItems(item_columnid);
+                                    //Refresh cursor
                                     Cursor cursor = databaseHelper.getItems();
                                     itemsAdapter.changeCursor(cursor);
                                 }
