@@ -88,8 +88,6 @@ public class PosFragment extends Fragment {
             @Override
 
             public void bindView(View view, final Context context, final Cursor cursor) {
-//                LayoutInflater inflater = LayoutInflater.from(view.getContext());
-//                View v = inflater.inflate(R.layout.item_view_on_front, (ViewGroup) view, false);
                 TextView tv_column = (TextView) view.findViewById(R.id.fetch);
                 TextView tv_item = (TextView) view.findViewById(R.id.item_fetch);
                 TextView tv_price = (TextView) view.findViewById(R.id.price_fetch);
@@ -97,29 +95,6 @@ public class PosFragment extends Fragment {
                 tv_column.setText(cursor.getString(0));
                 tv_item.setText(cursor.getString(1));
                 tv_price.setText(cursor.getString(3));
-
-                  pos_col_items_id = tv_column.getText().toString();
-                  pos_item_items_id = tv_item.getText().toString();
-                  pos_price_items_id = tv_price.getText().toString();
-//
-//                final TextView tv_fa_id = (TextView) v.findViewById(R.id.fetch_fe);
-//                final TextView tv_it_id = (TextView) v.findViewById(R.id.item_fe);
-//                final TextView tv_pri_id = (TextView) v.findViewById(R.id.price_fe);
-
-
-//
-//                LinearLayout ll = (LinearLayout) view.findViewById(R.id.relativeLayout1);
-//                ll.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Toast.makeText(getActivity(), pos_col_items_id, Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(getActivity(), pos_item_items_id, Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(getActivity(), pos_price_items_id, Toast.LENGTH_SHORT).show();
-////                        tv_fa_id.setText(pos_col_items_id);
-////                        tv_it_id.setText(pos_item_items_id);
-////                        tv_pri_id.setText(pos_price_items_id);
-//                    }
-//                });
             }
 
         }
@@ -167,13 +142,14 @@ public class PosFragment extends Fragment {
                 items_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Toast.makeText(getActivity(),"onItemClick running",Toast.LENGTH_SHORT).show();
-//                        String data=(String)items_list.getItemAtPosition(i);
-//                        Log.e("list view data.........",data);
-//                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-//                                android.R.layout.simple_list_item_1,
-//                                android.R.id.text1, values);
-//                        lv.setAdapter(adapter);
+                        TextView itemfetch = (TextView) view.findViewById(R.id.fetch);
+                        TextView fetchitem = (TextView) view.findViewById(R.id.item_fetch);
+                        TextView pricefetch = (TextView) view.findViewById(R.id.price_fetch);
+                        String itemfetchvar = itemfetch.getText().toString();
+                        String fetchitemvar = fetchitem.getText().toString();
+                        String pricefetchvar = pricefetch.getText().toString();
+                        String[] BillArray = {itemfetchvar,fetchitemvar,pricefetchvar};
+//
                     }
                 });
 
@@ -187,6 +163,7 @@ public class PosFragment extends Fragment {
 
         }
 
+//      <<<<<<<<<<<<<<<<<<<<
 
     }
 

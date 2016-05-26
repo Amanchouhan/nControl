@@ -113,11 +113,9 @@ public class NavDrawer extends Activity {
 	/**
 	 * Slide menu item click listener
 	 * */
-	private class SlideMenuClickListener implements
-			ListView.OnItemClickListener {
+	private class SlideMenuClickListener implements	ListView.OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-								long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
 			// display view for selected nav drawer item
 			displayView(position);
 		}
