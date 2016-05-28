@@ -46,6 +46,7 @@ public class UserFragment extends Fragment {
         usersview.setAdapter(usersAdapter);
 
         role = (EditText) rootView.findViewById(R.id.rolefield);
+        role.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         username = (EditText) rootView.findViewById(R.id.usernamefield);
         password = (EditText) rootView.findViewById(R.id.passwordfield);
         re_enter_password = (EditText) rootView.findViewById(R.id.co_passwordfield);

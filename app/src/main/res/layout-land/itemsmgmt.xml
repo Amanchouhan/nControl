@@ -61,9 +61,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
+            <EditText android:numeric="integer"
                 android:id="@+id/price_id"
-                android:inputType="textNoSuggestions"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:hint="Price" />

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ public class ItemFragment extends Fragment {
     EditText et_item, et_category, et_price;
     Button additem;
     ListView itemview;
+    String item,category, price;
 
     public ItemFragment() {
     }
@@ -45,26 +47,28 @@ public class ItemFragment extends Fragment {
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
-        additem = (Button) rootView.findViewById(R.id.additembutton);
 
+        additem = (Button) rootView.findViewById(R.id.additembutton);
+        et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         et_category.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         //Add Item to db
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String item = et_item.getText().toString();
-                String category = et_category.getText().toString();
-                String price = et_price.getText().toString();
-
+                item = et_item.getText().toString();
+                category = et_category.getText().toString();
+                price = et_price.getText().toString();
+//                getText().toString().length()>0
                 if (item.equals("")) {
                     et_item.setError("Item");
                 } else if (category.equals("")) {
-                    et_item.setError("Category");
+                    et_category.setError("Category");
                 } else if (price.equals("")) {
                     //please look after this before doing anything
-                    et_item.setError("Price");
+                    et_price.setError("Price");
                 } else {
-                    databaseHelper.addItem(item, category, price);
+//                    Integer.parseInt(et_price.getText().toString())
+                    databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()));
 //                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
                     Cursor cursor = databaseHelper.getItems();
                     itemsAdapter.changeCursor(cursor);

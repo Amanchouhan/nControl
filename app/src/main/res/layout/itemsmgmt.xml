@@ -62,10 +62,10 @@
 
             <EditText
                 android:id="@+id/price_id"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:hint="Price"
-                android:inputType="textNoSuggestions" />
+                android:hint="Price"/>
 
         </LinearLayout>
 

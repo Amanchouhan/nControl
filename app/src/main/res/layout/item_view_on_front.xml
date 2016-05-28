@@ -1,40 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
+    android:id="@+id/relativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="25dp">
     <TextView
         android:id="@+id/fetch_fe"
         android:layout_width="0dp"
+        android:layout_gravity="center"
         android:visibility="invisible"
         android:layout_height="wrap_content"
         android:text="Description" />
 
     <TextView
         android:id="@+id/item_fe"
+        android:layout_marginLeft="20dp"
         android:layout_width="0dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.3"
         android:text="Description" />
 
     <TextView
         android:id="@+id/category_fe"
         android:layout_width="0dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="quantity" />
 
     <TextView
         android:id="@+id/price_fe"
+        android:layout_gravity="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:text="Description" />
     <TextView
         android:id="@+id/add_item"
         android:layout_width="0dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Add Item" />

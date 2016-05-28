@@ -24,13 +24,10 @@ public class NavDrawer extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-
 	// nav drawer title
 	private CharSequence mDrawerTitle;
-
 	// used to store app title
 	private CharSequence mTitle;
-
 	// slide menu items
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
@@ -40,13 +37,9 @@ public class NavDrawer extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_);
-
 		mTitle = mDrawerTitle = getTitle();
-
 		// load slide menu items
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
@@ -159,7 +152,7 @@ public class NavDrawer extends Activity {
 
 	private void displayView(int position) {
 		// update the main content by replacing fragments
-		Fragment fragment = null;
+		 Fragment fragment = null;
 		switch (position) {
 		case 0:
 			fragment = new PosFragment();
@@ -197,7 +190,13 @@ public class NavDrawer extends Activity {
 			Log.e("nemi.in.NavDrawer", "Error in creating fragment");
 		}
 	}
-
+//for java.lang.InstantiationException: can't instantiate cla(used onResume)
+	@Override
+	public void onResume()
+	{
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;

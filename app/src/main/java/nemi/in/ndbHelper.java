@@ -66,10 +66,10 @@ public class ndbHelper extends SQLiteOpenHelper {
         Boolean exists = null;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS, new String[]{"role"}, "role = ?", new String[]{"SUPER"}, null, null, null);
-        if (cursor.getCount() == 1) {
-            exists = true;
-        } else {
+        if (cursor.getCount() == 0) {
             exists = false;
+        } else {
+            exists = true;
         }
         cursor.close();
         db.close();
@@ -104,7 +104,7 @@ public class ndbHelper extends SQLiteOpenHelper {
 
     /*------------------------------------Add a user to the db-----------------------------------------------------------------*/
 
-    public void addItem(String item, String category, String price) {
+    public void addItem(String item, String category, int price) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ITEM, item);
         cv.put(COLUMN_CATEGORY, category);
