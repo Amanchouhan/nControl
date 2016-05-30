@@ -132,7 +132,7 @@
                     android:gravity="center"
 
                     android:layout_height="wrap_content"
-                    android:text="Total" />
+                    android:text="TOTAL" />
 
                 <TextView
                     android:id="@+id/total_amo"
@@ -156,7 +156,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:background="#536DFE"
-                    android:text="pay" />
+                    android:text="PAY" />
 
                 <Button
                     android:id="@+id/clear"
@@ -164,7 +164,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="#8C9EFF"
-                    android:text="Clear" />
+                    android:text="CLEAR" />
 
             </LinearLayout>
         </LinearLayout>

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -190,8 +191,6 @@ public class PosFragment extends Fragment {
                                     alist.set(i, new BillItems(itemidfetchvar, fetchitemvar, alist.get(i).getQty() + 1,
                                             pricefetchvar ));
                                     //* alist.get(i).getQty() + pricefetchvar   increment by items
-//                                    total_amo.setText("Rs." + pricefetchvar * alist.get(i).getQty());
-
                                     lv.setAdapter(billAdap);
                                     break;
                                 } else {
@@ -204,7 +203,12 @@ public class PosFragment extends Fragment {
                             }
                         }
 
+                        int total = 0;
 
+                        for(int j=0; j<alist.size(); j++) {
+                            total += alist.get(j).getPrice() * alist.get(j).getQty();
+                            total_amo.setText("INR " + total);
+                        }
                     }
                 });
                 total_amo.setText("");
@@ -225,15 +229,16 @@ public class PosFragment extends Fragment {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 // Get the data item for this position
-                BillItems billItems = getItem(position);
+                final BillItems billItems = getItem(position);
+                Log.e("Hello............",""+billItems);
                 // Check if an existing view is being reused, otherwise inflate the view
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_view_on_front, parent, false);
                 }
                 // Lookup view for data population
-                TextView fetch_col = (TextView) convertView.findViewById(R.id.fetch_fe);
+                final TextView fetch_col = (TextView) convertView.findViewById(R.id.fetch_fe);
                 TextView fetch_item = (TextView) convertView.findViewById(R.id.item_fe);
-                TextView fetch_qty = (TextView) convertView.findViewById(R.id.category_fe);
+                final TextView fetch_qty = (TextView) convertView.findViewById(R.id.category_fe);
                 TextView fetch_price = (TextView) convertView.findViewById(R.id.price_fe);
                btn_addition = (Button)convertView.findViewById(R.id.add_item);
                btn_minus = (Button)convertView.findViewById(R.id.minus_item);
@@ -241,7 +246,7 @@ public class PosFragment extends Fragment {
                 btn_addition.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getActivity(),"+ is going on",Toast.LENGTH_SHORT).show();
+
 
                     }
                 });
@@ -249,7 +254,14 @@ public class PosFragment extends Fragment {
                 btn_minus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getActivity(),"- is going on",Toast.LENGTH_SHORT).show();
+                        billAdap.remove(billItems);
+                        int total = 0;
+
+                        for(int j=0; j<alist.size(); j++) {
+                            total += alist.get(j).getPrice() * alist.get(j).getQty();
+                            total_amo.setText("INR " + total);
+                        }
+
                     }
                 });
 
