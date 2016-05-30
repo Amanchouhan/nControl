@@ -41,6 +41,7 @@ public class NavDrawer extends Activity {
 		setContentView(R.layout.activity_main_);
 		mTitle = mDrawerTitle = getTitle();
 		// load slide menu items
+
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
 		// nav drawer icons from resources
@@ -62,7 +63,6 @@ public class NavDrawer extends Activity {
 		// Communities, Will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
 
-		
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
@@ -195,6 +195,7 @@ public class NavDrawer extends Activity {
 	public void onResume()
 	{
 		// TODO Auto-generated method stub
+
 		super.onResume();
 	}
 	@Override

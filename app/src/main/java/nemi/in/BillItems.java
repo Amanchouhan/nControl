@@ -8,7 +8,7 @@ import java.util.ArrayList;
 class BillItems {
     String id;
     String item;
-    int qty;
+    int qty = 0;
     int price;
 
     public BillItems(String id, String item, int qty, int price) {

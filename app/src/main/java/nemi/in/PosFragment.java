@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,24 +23,24 @@ import in.nemi.ncontrol.R;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PosFragment extends Fragment {
     ListView lv, items_list;
     Button pay_button, clear_button;
-    TextView total_tv;
+    TextView total_amo;
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
-
+    Button btn_addition,btn_minus;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_activity_for_swipe, container, false);
+        View view = inflater.inflate(R.layout.pos, container, false);
         alist = new ArrayList<BillItems>();
         lv = (ListView) view.findViewById(R.id.userlist);
+
         pay_button = (Button) view.findViewById(R.id.pay);
         clear_button = (Button) view.findViewById(R.id.clear);
-        total_tv = (TextView) view.findViewById(R.id.total);
+        total_amo = (TextView) view.findViewById(R.id.total_amo);
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +70,6 @@ public class PosFragment extends Fragment {
             databaseHelper = new ndbHelper(getActivity(), null, null, 1);
             // BillAdapre set here
             billAdap = new BillAdapter(getActivity(), alist);
-            lv.setAdapter(billAdap);
 
 
             return view;
@@ -89,7 +87,6 @@ public class PosFragment extends Fragment {
         //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PagerAdapter >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public class POSCursorAdapter extends CursorAdapter {
 
-            String pos_col_items_id, pos_item_items_id, pos_price_items_id;
 
             public POSCursorAdapter(Context context, Cursor c) {
                 super(context, c);
@@ -117,6 +114,8 @@ public class PosFragment extends Fragment {
         }
 
         class SamplePagerAdapter extends PagerAdapter {
+            String col;
+
             @Override
             public int getCount() {
                 Cursor c = databaseHelper.getCategories();
@@ -135,7 +134,7 @@ public class PosFragment extends Fragment {
             }
 
             @Override
-            public Object instantiateItem(ViewGroup container, final int position) {
+            public Object instantiateItem(final ViewGroup container, final int position) {
                 final View view = getActivity().getLayoutInflater().inflate(R.layout.pager_item, container, false);
 
                 container.addView(view);
@@ -163,27 +162,52 @@ public class PosFragment extends Fragment {
                         billAdap.clear();
                     }
                 });
+
                 items_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                        billAdap.clear();
 
-                        TextView itemfetch = (TextView) view.findViewById(R.id.fetch);
+                        TextView itemidfetch = (TextView) view.findViewById(R.id.fetch);
                         TextView fetchitem = (TextView) view.findViewById(R.id.item_fetch);
                         TextView pricefetch = (TextView) view.findViewById(R.id.price_fetch);
-                        TextView click = (TextView) view.findViewById(R.id.click_here);
 
-                        String itemfetchvar = itemfetch.getText().toString();
+                        String itemidfetchvar = itemidfetch.getText().toString();
                         String fetchitemvar = fetchitem.getText().toString();
-                        final int pricefetchvar = Integer.parseInt(pricefetch.getText().toString());
+                        int pricefetchvar = Integer.parseInt(pricefetch.getText().toString());
 
-                        alist.add(new BillItems(itemfetchvar, fetchitemvar, 1, pricefetchvar));
-                        Log.e("hello.....",alist.toString());
-                      billAdap.addAll(alist);
+                        int qty = 1;
+
+                        if (alist.isEmpty()) {
+                            alist.add(new BillItems(itemidfetchvar, fetchitemvar, 1, pricefetchvar));
+                            lv.setAdapter(billAdap);
+                        } else {
+                            int flag = 0;
+                            for (int i = 0; i < alist.size(); i++) {
+
+                                flag = 0;
+//                                //match _id
+                                if (itemidfetchvar.equalsIgnoreCase(alist.get(i).getId())) {
+                                    alist.set(i, new BillItems(itemidfetchvar, fetchitemvar, alist.get(i).getQty() + 1,
+                                            pricefetchvar ));
+                                    //* alist.get(i).getQty() + pricefetchvar   increment by items
+//                                    total_amo.setText("Rs." + pricefetchvar * alist.get(i).getQty());
+
+                                    lv.setAdapter(billAdap);
+                                    break;
+                                } else {
+                                    flag = 1;
+                                }
+                            }
+                            if (flag == 1) {
+                                alist.add(new BillItems(itemidfetchvar, fetchitemvar, 1, pricefetchvar));
+                                lv.setAdapter(billAdap);
+                            }
+                        }
+
 
                     }
                 });
-
+                total_amo.setText("");
                 return view;
             }
 
@@ -195,7 +219,7 @@ public class PosFragment extends Fragment {
 
         public class BillAdapter extends ArrayAdapter<BillItems> {
             public BillAdapter(Context context, ArrayList<BillItems> alist) {
-                super(context,2,alist);
+                super(context, 0, alist);
             }
 
             @Override
@@ -207,15 +231,35 @@ public class PosFragment extends Fragment {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_view_on_front, parent, false);
                 }
                 // Lookup view for data population
-//                TextView fetch_col = (TextView) convertView.findViewById(R.id.fetch_fe);
+                TextView fetch_col = (TextView) convertView.findViewById(R.id.fetch_fe);
                 TextView fetch_item = (TextView) convertView.findViewById(R.id.item_fe);
-                TextView fetch_price = (TextView) convertView.findViewById(R.id.price_fe);
                 TextView fetch_qty = (TextView) convertView.findViewById(R.id.category_fe);
+                TextView fetch_price = (TextView) convertView.findViewById(R.id.price_fe);
+               btn_addition = (Button)convertView.findViewById(R.id.add_item);
+               btn_minus = (Button)convertView.findViewById(R.id.minus_item);
+
+                btn_addition.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(),"+ is going on",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                btn_minus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(),"- is going on",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
                 // Populate the data into the template view using the data object
-//                fetch_col.setText(billItems.getId());
+                fetch_col.setText(billItems.getId());
                 fetch_item.setText(billItems.getItem());
-                fetch_price.setText(String.valueOf(billItems.getPrice()));
                 fetch_qty.setText(String.valueOf(billItems.getQty()));
+                fetch_price.setText(String.valueOf(billItems.getPrice()));
+
                 // Return the completed view to render on screen
                 return convertView;
             }
