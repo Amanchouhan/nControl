@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="35dp">
+    android:layout_height="40dp">
 
     <TextView
         android:id="@+id/fetch_fe"
@@ -39,24 +39,29 @@
         android:layout_weight="1.1"
         android:text="Price" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/minus_item"
         android:layout_width="0dp"
-        android:id="@+id/line1"
-        android:layout_weight="1"
-        android:layout_height="match_parent">
-        <Button
-            android:id="@+id/add_item"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".1"
-            android:text="+" />
-        <Button
-            android:id="@+id/minus_item"
-            android:layout_marginLeft="0dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".1"
-            android:text="-" />
-    </LinearLayout>
+        android:textSize="10dp"
+        android:textStyle="bold"
+        android:background="#e97c7c"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:paddingBottom="5dp"
+        android:layout_weight=".3"
+        android:text="X" />
+
+    <Button
+        android:id="@+id/qty_item"
+        android:textStyle="bold"
+        android:paddingBottom="5dp"
+        android:layout_width="0dp"
+        android:layout_marginLeft=".3dp"
+        android:background="#615bd1"
+        android:textSize="10dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:text="QTY" />
+
 
 </LinearLayout>

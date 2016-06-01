@@ -1,5 +1,7 @@
 package nemi.in;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,7 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +27,9 @@ import in.nemi.ncontrol.R;
 
 import android.support.annotation.Nullable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PosFragment extends Fragment {
     ListView lv, items_list;
@@ -31,7 +37,11 @@ public class PosFragment extends Fragment {
     TextView total_amo;
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
-    Button btn_addition,btn_minus;
+    Button set_qty_btn, btn_minus;
+    EditText qty_et;
+    String itemidfetchvar, fetchitemvar;
+    int pricefetchvar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,16 +171,17 @@ public class PosFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         billAdap.clear();
+                        total_amo.setText("INR 0");
                     }
                 });
 
                 items_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-
                         TextView itemidfetch = (TextView) view.findViewById(R.id.fetch);
                         TextView fetchitem = (TextView) view.findViewById(R.id.item_fetch);
                         TextView pricefetch = (TextView) view.findViewById(R.id.price_fetch);
+
 
                         String itemidfetchvar = itemidfetch.getText().toString();
                         String fetchitemvar = fetchitem.getText().toString();
@@ -180,16 +191,18 @@ public class PosFragment extends Fragment {
 
                         if (alist.isEmpty()) {
                             alist.add(new BillItems(itemidfetchvar, fetchitemvar, 1, pricefetchvar));
+                            billAdap.notifyDataSetChanged();
                             lv.setAdapter(billAdap);
                         } else {
                             int flag = 0;
                             for (int i = 0; i < alist.size(); i++) {
 
                                 flag = 0;
-//                                //match _id
+                                //                                //match _id
                                 if (itemidfetchvar.equalsIgnoreCase(alist.get(i).getId())) {
                                     alist.set(i, new BillItems(itemidfetchvar, fetchitemvar, alist.get(i).getQty() + 1,
-                                            pricefetchvar ));
+                                            pricefetchvar));
+
                                     //* alist.get(i).getQty() + pricefetchvar   increment by items
                                     lv.setAdapter(billAdap);
                                     break;
@@ -205,13 +218,15 @@ public class PosFragment extends Fragment {
 
                         int total = 0;
 
-                        for(int j=0; j<alist.size(); j++) {
+                        for (int j = 0; j < alist.size(); j++) {
                             total += alist.get(j).getPrice() * alist.get(j).getQty();
                             total_amo.setText("INR " + total);
                         }
+
                     }
                 });
-                total_amo.setText("");
+
+                total_amo.setText("INR 0");
                 return view;
             }
 
@@ -221,32 +236,67 @@ public class PosFragment extends Fragment {
             }
         }
 
-        public class BillAdapter extends ArrayAdapter<BillItems> {
+        public class BillAdapter extends ArrayAdapter<BillItems> implements NumberPicker.OnValueChangeListener {
             public BillAdapter(Context context, ArrayList<BillItems> alist) {
                 super(context, 0, alist);
             }
 
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(final int position, View convertView, ViewGroup parent) {
                 // Get the data item for this position
                 final BillItems billItems = getItem(position);
-                Log.e("Hello............",""+billItems);
+//                Log.e("ibillItems", billItems.toString());
                 // Check if an existing view is being reused, otherwise inflate the view
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_view_on_front, parent, false);
                 }
                 // Lookup view for data population
                 final TextView fetch_col = (TextView) convertView.findViewById(R.id.fetch_fe);
-                TextView fetch_item = (TextView) convertView.findViewById(R.id.item_fe);
+                final TextView fetch_item = (TextView) convertView.findViewById(R.id.item_fe);
                 final TextView fetch_qty = (TextView) convertView.findViewById(R.id.category_fe);
                 TextView fetch_price = (TextView) convertView.findViewById(R.id.price_fe);
-               btn_addition = (Button)convertView.findViewById(R.id.add_item);
-               btn_minus = (Button)convertView.findViewById(R.id.minus_item);
 
-                btn_addition.setOnClickListener(new View.OnClickListener() {
+                btn_minus = (Button) convertView.findViewById(R.id.minus_item);
+                set_qty_btn = (Button) convertView.findViewById(R.id.qty_item);
+
+                set_qty_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
+                        final Dialog d = new Dialog(getActivity());
+                        d.setTitle("Update Quantity !");
+                        d.setContentView(R.layout.dialog);
+                        Button b1 = (Button) d.findViewById(R.id.button1);
+                        Button b2 = (Button) d.findViewById(R.id.button2);
+                        qty_et = (EditText) d.findViewById(R.id.numberPicker1);
+                        qty_et.setText(String.valueOf(billItems.getQty()));
+//                        final int quantity = Integer.parseInt(qty_et.getText().toString());
+                        b1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                int quantity = Integer.parseInt(qty_et.getText().toString());
+                                    alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(), quantity, alist.get(position).getPrice()));
+//                                fetch_qty.setText(String.valueOf(billItems.getQty()));
+                                    Log.e("helllllllll", String.valueOf(quantity));
+                                    lv.setAdapter(billAdap);   // set value
+                                    billAdap.notifyDataSetChanged();
+//                                }
+
+                                int total = 0;
+                                for (int j = 0; j < alist.size(); j++) {
+                                    total += alist.get(j).getPrice() * alist.get(j).getQty();
+                                    total_amo.setText("INR " + total);
+                                }
+                                d.dismiss();
+                            }
+                        });
+                        b2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                d.dismiss();
+                            }
+                        });
+                        d.show();
 
                     }
                 });
@@ -254,10 +304,11 @@ public class PosFragment extends Fragment {
                 btn_minus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        total_amo.setText("0");
                         billAdap.remove(billItems);
                         int total = 0;
 
-                        for(int j=0; j<alist.size(); j++) {
+                        for (int j = 0; j < alist.size(); j++) {
                             total += alist.get(j).getPrice() * alist.get(j).getQty();
                             total_amo.setText("INR " + total);
                         }
@@ -274,6 +325,13 @@ public class PosFragment extends Fragment {
 
                 // Return the completed view to render on screen
                 return convertView;
+            }
+
+
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
+                Log.i("value is", "" + i1);
             }
         }
 

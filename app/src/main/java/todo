@@ -1,15 +1,13 @@
 TODO: Priority-wise
 
-- touching each listview item of POS adds an item in the bill listview
-- to increase qty of an item in the listview touch multiple times
-- manually set qty of items in sales listview
-- automatic(live) totalling of the bill below the bill listview
+
+
 - clicking on pay saved the data in the bill listview to the sales table in ncontrol db
 - create new table in the ncontrol db for sale
 - in settings provide a functionality to add printers
 - print service using printer api(bluetooth)
 - facility in settings to change bill
-- clear button clears the list view for bill
+
 - see sales listview inside the sales fragment
 - modify sales inside the sales fragment
 - delete sales inside the sales fragment
@@ -93,3 +91,25 @@ DONE:
 
 23/05/2016
 - touching each tab shows a list view of items in a particular category
+
+24/05/2016
+- manually set qty of items in sales listview
+
+25/05/16
+- automatic(live) totalling of the bill below the bill listview
+
+26/05/16
+- clear button clears the list view for bill
+
+27/05/2016
+- remove items form bill list and add items in bill list
+
+29/05/2016
+- create button on list view in bill Adapter
+
+30/05/2016
+- touching each listview item of POS adds an item in the bill listview
+- to increase qty of an item in the listview touch multiple times
+
+31/05/16
+- create dialoge box for increasing and decreasing quantity
