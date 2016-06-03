@@ -37,21 +37,15 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.usrmgmt, container, false);
-
         databaseHelper = new ndbHelper(getActivity(), null, null, 1);
-
-
         usersAdapter = new UsersAdapter(getActivity(), databaseHelper.getUsers());
         usersview = (ListView) rootView.findViewById(R.id.userlistview);
         usersview.setAdapter(usersAdapter);
-
         role = (EditText) rootView.findViewById(R.id.rolefield);
         role.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         username = (EditText) rootView.findViewById(R.id.usernamefield);
         password = (EditText) rootView.findViewById(R.id.passwordfield);
         re_enter_password = (EditText) rootView.findViewById(R.id.co_passwordfield);
-
-//        role.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
 
         add = (Button) rootView.findViewById(R.id.addbutton);
         //Add User to db

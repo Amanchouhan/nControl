@@ -1,6 +1,5 @@
 package nemi.in;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
@@ -27,9 +26,7 @@ import in.nemi.ncontrol.R;
 
 import android.support.annotation.Nullable;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PosFragment extends Fragment {
     ListView lv, items_list;
@@ -38,9 +35,9 @@ public class PosFragment extends Fragment {
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
     Button set_qty_btn, btn_minus;
-    EditText qty_et;
-    String itemidfetchvar, fetchitemvar;
-    int pricefetchvar;
+    EditText qty_et, c_name_et, c_contact_et;
+    ndbHelper databaseHelper;
+    BillItems billItems;
 
     @Nullable
     @Override
@@ -48,17 +45,52 @@ public class PosFragment extends Fragment {
         View view = inflater.inflate(R.layout.pos, container, false);
         alist = new ArrayList<BillItems>();
         lv = (ListView) view.findViewById(R.id.userlist);
-
+        total_amo = (TextView) view.findViewById(R.id.total_amo);
+        databaseHelper = new ndbHelper(getActivity(), null, null, 1);
         pay_button = (Button) view.findViewById(R.id.pay);
         clear_button = (Button) view.findViewById(R.id.clear);
-        total_amo = (TextView) view.findViewById(R.id.total_amo);
+        c_name_et = (EditText) view.findViewById(R.id.c_name_id);
+        c_contact_et = (EditText) view.findViewById(R.id.c_number_id);
+
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "payment by case or card", Toast.LENGTH_SHORT).show();
+                if(!alist.isEmpty()) {
+                    String c_name = c_name_et.getText().toString();
+                    String c_contact = c_contact_et.getText().toString();
+                    int a = Integer.parseInt(total_amo.getText().toString());
+                    databaseHelper.bill(c_name, c_contact, a);
+                    c_name_et.setText("");
+                    c_contact_et.setText("");
+
+                    int billnumber = databaseHelper.checkLastBillNumber();
+                    billnumber++;
+                    for (int i = 0; i < alist.size(); i++) {
+                        databaseHelper.sales(billnumber, alist.get(i).getItem(), alist.get(i).getQty(), alist.get(i).getPrice());
+                    }
+
+                    lv.setAdapter(billAdap);   // set value
+                    billAdap.notifyDataSetChanged();
+
+                    int total = 0;
+                    for (int j = 0; j < alist.size(); j++) {
+                        total += alist.get(j).getPrice() * alist.get(j).getQty();
+                        total_amo.setText("" + total);
+                    }
+
+                    billAdap.clear();
+                    total_amo.setText("0");
+                }
             }
         });
 
+        clear_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                billAdap.clear();
+                total_amo.setText("0");
+            }
+        });
         if (savedInstanceState == null) {
             android.app.FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();
@@ -167,13 +199,7 @@ public class PosFragment extends Fragment {
                 posCursorAdapter = new POSCursorAdapter(getActivity(), databaseHelper.getPOSItems(a));
                 items_list = (ListView) view.findViewById(R.id.items_list_id);
                 items_list.setAdapter(posCursorAdapter);
-                clear_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        billAdap.clear();
-                        total_amo.setText("INR 0");
-                    }
-                });
+
 
                 items_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -220,13 +246,11 @@ public class PosFragment extends Fragment {
 
                         for (int j = 0; j < alist.size(); j++) {
                             total += alist.get(j).getPrice() * alist.get(j).getQty();
-                            total_amo.setText("INR " + total);
+                            total_amo.setText("" + total);
                         }
 
                     }
                 });
-
-                total_amo.setText("INR 0");
                 return view;
             }
 
@@ -236,7 +260,7 @@ public class PosFragment extends Fragment {
             }
         }
 
-        public class BillAdapter extends ArrayAdapter<BillItems> implements NumberPicker.OnValueChangeListener {
+        public class BillAdapter extends ArrayAdapter<BillItems>  {
             public BillAdapter(Context context, ArrayList<BillItems> alist) {
                 super(context, 0, alist);
             }
@@ -244,7 +268,7 @@ public class PosFragment extends Fragment {
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
                 // Get the data item for this position
-                final BillItems billItems = getItem(position);
+                billItems = getItem(position);
 //                Log.e("ibillItems", billItems.toString());
                 // Check if an existing view is being reused, otherwise inflate the view
                 if (convertView == null) {
@@ -270,22 +294,21 @@ public class PosFragment extends Fragment {
                         Button b2 = (Button) d.findViewById(R.id.button2);
                         qty_et = (EditText) d.findViewById(R.id.numberPicker1);
                         qty_et.setText(String.valueOf(billItems.getQty()));
-//                        final int quantity = Integer.parseInt(qty_et.getText().toString());
+
                         b1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
                                 int quantity = Integer.parseInt(qty_et.getText().toString());
-                                    alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(), quantity, alist.get(position).getPrice()));
-//                                fetch_qty.setText(String.valueOf(billItems.getQty()));
-                                    Log.e("helllllllll", String.valueOf(quantity));
-                                    lv.setAdapter(billAdap);   // set value
-                                    billAdap.notifyDataSetChanged();
-//                                }
+                                alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
+                                        quantity, alist.get(position).getPrice()));
+                                lv.setAdapter(billAdap);   // set value
+                                billAdap.notifyDataSetChanged();
 
                                 int total = 0;
                                 for (int j = 0; j < alist.size(); j++) {
                                     total += alist.get(j).getPrice() * alist.get(j).getQty();
-                                    total_amo.setText("INR " + total);
+                                    total_amo.setText("" + total);
                                 }
                                 d.dismiss();
                             }
@@ -310,7 +333,7 @@ public class PosFragment extends Fragment {
 
                         for (int j = 0; j < alist.size(); j++) {
                             total += alist.get(j).getPrice() * alist.get(j).getQty();
-                            total_amo.setText("INR " + total);
+                            total_amo.setText("" + total);
                         }
 
                     }
@@ -328,11 +351,7 @@ public class PosFragment extends Fragment {
             }
 
 
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
 
-                Log.i("value is", "" + i1);
-            }
         }
 
     }

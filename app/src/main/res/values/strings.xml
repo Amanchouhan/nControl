@@ -12,6 +12,7 @@
         <item >POS</item>
         <item >Items Management</item>
         <item >Users Management</item>
+        <item >Sales Management</item>
         <item >Logout</item>
     </string-array>
     
@@ -19,6 +20,7 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home</item>
+        <item>@drawable/ic_people_im</item>
         <item>@drawable/ic_people_im</item>
         <item>@drawable/ic_people_im</item>
         <item>@drawable/log_im</item>

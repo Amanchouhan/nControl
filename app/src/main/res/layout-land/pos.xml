@@ -3,7 +3,6 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8EAF6"
     android:gravity="left"
     android:orientation="horizontal">
 
@@ -32,7 +31,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/name_id"
+                    android:id="@+id/c_name_id"
                     android:inputType="textNoSuggestions"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -42,15 +41,39 @@
 
 
                 <EditText
-                    android:id="@+id/contact_id"
+                    android:id="@+id/c_number_id"
                     android:padding="4dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="number"
                     android:layout_height="wrap_content"
                     android:hint="Phone" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/total_linear"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:textStyle="bold"
+                    android:gravity="left"
+                    android:layout_height="40dp"
+                    android:text="TOTAL" />
+
+                <TextView
+                    android:id="@+id/total_amo"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:gravity="left"
+                    android:layout_height="40dp"
+                    android:text="INR 0" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,29 +141,6 @@
                 </ListView>
                 </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/total_linear"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/total"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-
-                    android:layout_height="wrap_content"
-                    android:text="TOTAL" />
-
-                <TextView
-                    android:id="@+id/total_amo"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:text="0.0" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/wwi"

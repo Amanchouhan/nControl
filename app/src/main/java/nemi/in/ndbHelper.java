@@ -27,10 +27,22 @@ public class ndbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_PRICE = "price";
 
+    //sales table vars
+    public static final String TABLE_SALES = "sales";
+    public static final String COLUMN_BILLNUMBER = "billnumber";
+    public static final String COLUMN_QUANTITY = "quantity";
+
+
+    //bill table vars
+    public static final String TABLE_BILL = "bill";
+    public static final String COLUMN_C_NAME = "c_name";
+    public static final String COLUMN_C_CONTACT = "c_contact";
+    public static final String COLUMN_BILL_DATE_TIME = "c_billdatetime";
+    public static final String COLUMN_BILLAMOUNT = "billamount";
 
     public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
     }
 
     @Override
@@ -51,12 +63,30 @@ public class ndbHelper extends SQLiteOpenHelper {
                 ");";
         db.execSQL(itemsquery);
 
+        String salesquery = "create table " + TABLE_SALES + "(" +
+                COLUMN_BILLNUMBER + " integer not null," +
+                COLUMN_ITEM + " text not null," +
+                COLUMN_QUANTITY + " text not null," +
+                COLUMN_PRICE + " integer not null" +
+                ");";
+        db.execSQL(salesquery);
+
+        String billquery = "create table " + TABLE_BILL + "(" +
+                COLUMN_ID + " integer primary key autoincrement," +
+                COLUMN_C_NAME + " text not null," +
+                COLUMN_C_CONTACT + " text not null," +
+                COLUMN_BILL_DATE_TIME + " DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+                COLUMN_BILLAMOUNT + " INTEGER NOT NULL" +
+                ");";
+        db.execSQL(billquery);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLE_BILL);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLE_SALES);
 
         onCreate(db);
     }
@@ -86,6 +116,7 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, cv);
         db.close();
     }
+
     public Cursor getUsers() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery(
@@ -113,6 +144,7 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ITEMS, null, cv);
         db.close();
     }
+
     public Cursor getItems() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery(
@@ -129,7 +161,11 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-
+    public void deleteBill(int billnumber) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_BILL + " WHERE " + COLUMN_ID + "=\"" + billnumber + "\";");
+        db.close();
+    }
 
     /*-------------------------------------login-----------------------------------------------------------------*/
 
@@ -154,17 +190,60 @@ public class ndbHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-    /*-------------------------------------------------------Tab categories Fragment-----------------------------------------------------------------*/
+/*-------------------------------------------------------Tab categories Fragment-----------------------------------------------------------------*/
     public Cursor getCategories() {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("select distinct category from "+ TABLE_ITEMS + "", null);
+        return db.rawQuery("select distinct category from " + TABLE_ITEMS + "", null);
         //category :- fruit,food,seafood;
     }
+
     public Cursor getPOSItems(String a) {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("select * from items where " + COLUMN_CATEGORY + "=\"" + a + "\";", null);
+    }
+
+/*-------------------------------------------------------pos bill-----------------------------------------------------------------*/
+
+    public int checkLastBillNumber() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT billnumber FROM sales ORDER BY billnumber DESC LIMIT 1;", null);
+        int billnumber = 0;
+        if (cursor.moveToFirst()) {
+            billnumber = Integer.parseInt(cursor.getString(0));
+        }
+        cursor.close();
+        db.close();
+        return billnumber;
+    }
+
+    public void sales(int billnumber, String item, int quantity, int price) {
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_BILLNUMBER, billnumber);
+        cv.put(COLUMN_ITEM, item);
+        cv.put(COLUMN_QUANTITY, quantity);
+        cv.put(COLUMN_PRICE, price);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_SALES, null, cv);
+        db.close();
+    }
+    public void bill(String c_name, String c_number, int billamount){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_C_NAME, c_name);
+        cv.put(COLUMN_C_CONTACT, c_number);
+        cv.put(COLUMN_BILLAMOUNT, billamount);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_BILL, null, cv);
+        db.close();
+    }
+    /*----------------------------------------------------------get bill magmt---------------------------------------------------------*/
+    public Cursor getBill() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT _id, c_billdatetime, billamount FROM bill", null);
+    }
+
+    public Cursor getSale(int billnumber) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT item, quantity, price FROM sales WHERE billnumber = " + billnumber, null);
     }
 
 }
