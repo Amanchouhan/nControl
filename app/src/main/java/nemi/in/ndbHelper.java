@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Developer on 21-04-2016.
@@ -13,13 +15,14 @@ public class ndbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ncontrol.db";
+    public static final String COLUMN_ID = "_id";
 
     //users table vars
     public static final String TABLE_USERS = "users";
-    public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ROLE = "role";
     public static final String COLUMN_USERNAME = "username";
     public static final String COLUMN_PASSWORD = "password";
+    public static final String COLUMN_LOGINSTATUS = "loginstatus";
 
     //items table vars
     public static final String TABLE_ITEMS = "items";
@@ -51,7 +54,8 @@ public class ndbHelper extends SQLiteOpenHelper {
                 COLUMN_ID + " integer primary key autoincrement," +
                 COLUMN_ROLE + " text," +
                 COLUMN_USERNAME + " text," +
-                COLUMN_PASSWORD + " text" +
+                COLUMN_PASSWORD + " text," +
+                COLUMN_LOGINSTATUS + " text DEFAULT 'false'" +
                 ");";
         db.execSQL(usersquery);
 
@@ -64,6 +68,7 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.execSQL(itemsquery);
 
         String salesquery = "create table " + TABLE_SALES + "(" +
+                COLUMN_ID + " INTEGER primary key autoincrement," +
                 COLUMN_BILLNUMBER + " integer not null," +
                 COLUMN_ITEM + " text not null," +
                 COLUMN_QUANTITY + " text not null," +
@@ -114,6 +119,16 @@ public class ndbHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PASSWORD, pass);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_USERS, null, cv);
+        db.close();
+    }
+
+    //Change login status
+    public void loginStatus(String loginstatus, String user) {
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_LOGINSTATUS, loginstatus);
+        SQLiteDatabase db = getWritableDatabase();
+        db.update(TABLE_USERS, cv, COLUMN_USERNAME + " = ?",
+                new String[]{user});
         db.close();
     }
 
@@ -190,7 +205,7 @@ public class ndbHelper extends SQLiteOpenHelper {
     }
 
 
-/*-------------------------------------------------------Tab categories Fragment-----------------------------------------------------------------*/
+    /*-------------------------------------------------------Tab categories Fragment-----------------------------------------------------------------*/
     public Cursor getCategories() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("select distinct category from " + TABLE_ITEMS + "", null);
@@ -226,7 +241,8 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_SALES, null, cv);
         db.close();
     }
-    public void bill(String c_name, String c_number, int billamount){
+
+    public void bill(String c_name, String c_number, int billamount) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_C_NAME, c_name);
         cv.put(COLUMN_C_CONTACT, c_number);
@@ -235,15 +251,41 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.insert(TABLE_BILL, null, cv);
         db.close();
     }
+
     /*----------------------------------------------------------get bill magmt---------------------------------------------------------*/
     public Cursor getBill() {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT _id, c_billdatetime, billamount FROM bill", null);
+        return db.rawQuery("SELECT _id, c_billdatetime, billamount FROM bill ORDER BY _id DESC", null);
     }
 
     public Cursor getSale(int billnumber) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT item, quantity, price FROM sales WHERE billnumber = " + billnumber, null);
+        return db.rawQuery("SELECT _id, item, quantity, price FROM sales WHERE billnumber = " + billnumber, null);
     }
 
+    public Cursor getBillInfo(int billnumber) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT _id, c_billdatetime, billamount, c_name, c_contact FROM bill WHERE _id = " + billnumber, null);
+    }
+
+    public String getLoggedInUser() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT username FROM users WHERE loginstatus = 'true'", null);
+        c.moveToFirst();
+        return c.getString(0);
+    }
+
+    public String getLoggedInRole() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT role FROM users WHERE loginstatus = 'true'", null);
+        c.moveToFirst();
+        return c.getString(0);
+    }
+    /*=========================================================Search query here=================================================================*/
+
+    public Cursor serachedBybillnumber(){
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = "select _id, c_billdatetime, billamount from sales where billnumber ";
+        return db.rawQuery(selectQuery,null);
+    }
 }

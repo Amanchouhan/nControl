@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import in.nemi.ncontrol.R;
 
@@ -54,12 +55,12 @@ public class Main extends Activity {
                     String r = "SUPER";
                     if(u.equals("")) {
                         username_super.setError("User name");
-                    } else if (p.equals("")) {
+                    } else if(p.equals("")) {
                         password_super.setError("Password");
 
                     } else if(p.compareTo(conf_pass)!=0) {
                         confirm_password_super.setError("Password is not correct");
-                    }else{
+                    } else{
                         databaseHelper.addUser(r, u, p);
                         d.dismiss();
                     }
@@ -72,15 +73,17 @@ public class Main extends Activity {
     public void login(View v) {
         String user = username.getText().toString();
         String pass = password.getText().toString();
-//        if(user.equals("")) {
-//            username.setError("Username");
-//        } else if (pass.equals("")) {
-//            password.setError("password");
-//        } else if (pass.equals(databaseHelper.loginUser(user))) {
+        if(user.equals("")) {
+            username.setError("Username");
+        } else if (pass.equals("")) {
+            password.setError("password");
+        } else if (pass.equals(databaseHelper.loginUser(user))) {
             Intent i = new Intent(Main.this, NavDrawer.class);
+            //change login status of the logged in user
+            databaseHelper.loginStatus("true", user);
             startActivity(i);
-//        } else {
-//            Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-//        }
+        } else {
+            Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+        }
     }
 }

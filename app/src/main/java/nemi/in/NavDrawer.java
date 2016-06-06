@@ -15,12 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import in.nemi.ncontrol.R;
 
 public class NavDrawer extends Activity {
+    ndbHelper databaseHelper;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -37,6 +39,7 @@ public class NavDrawer extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        databaseHelper = new ndbHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_);
         mTitle = mDrawerTitle = getTitle();
@@ -53,19 +56,27 @@ public class NavDrawer extends Activity {
 
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
+        String role = databaseHelper.getLoggedInRole();
+
+        Toast.makeText(this, "Logged in as: " + role, Toast.LENGTH_SHORT).show();
+
+if(role.equalsIgnoreCase("ADMIN")||role.equalsIgnoreCase("SUPER")) {
+    // POS
+    navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+    // Sales Mgmt
+    navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+    // User Management
+    navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+    // Item Management
+    navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+
+} else {
+    // POS
+    navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+    // Sales Mgmt
+    navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(3, -1)));
+}
         // adding nav drawer items to array
-        // Home
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-
-
         // Recycle the typed array
         navMenuIcons.recycle();
 
@@ -131,6 +142,9 @@ public class NavDrawer extends Activity {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.logout:
+                String user = databaseHelper.getLoggedInUser();
+                databaseHelper.loginStatus("false", user);
+                navDrawerItems.clear();
                 Intent in = new Intent(this, Main.class);
                 startActivity(in);
                 finish();
@@ -160,21 +174,14 @@ public class NavDrawer extends Activity {
                 fragment = new PosFragment();
                 break;
             case 1:
-                fragment = new ItemFragment();
+                fragment = new SalesManagment();
                 break;
             case 2:
                 fragment = new UserFragment();
                 break;
             case 3:
-                fragment = new SalesManagment();
+                fragment = new ItemFragment();
                 break;
-            case 4:
-                Intent in = new Intent(this, Main.class);
-                startActivity(in);
-                finish();
-                break;
-
-
         }
 
         if (fragment != null) {

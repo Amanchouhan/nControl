@@ -7,27 +7,14 @@
     android:orientation="horizontal">
 
     <TableLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btn_search_bill_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Search"
-                android:padding="7dp"
-                android:textSize="18sp" />
-        </TableRow>
 
         <LinearLayout
             android:id="@+id/LinearLayout2"
             android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingStart="5dp">
@@ -35,11 +22,12 @@
             <TextView
                 android:id="@+id/bill_number_id"
                 android:layout_width="0dp"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".75"
-                android:text="Bill Number" />
+                android:text="BILL NUMBER" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_bill_number_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -52,6 +40,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingStart="5dp">
 
@@ -59,9 +48,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".75"
+                android:textSize="20dp"
                 android:text="DATE" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_bill_date_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -74,15 +64,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="5dp"
             android:paddingStart="5dp">
 
             <TextView
                 android:layout_width="0dp"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".75"
                 android:text="MODE" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_bill_mode_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -96,15 +88,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="5dp"
             android:paddingStart="5dp">
 
             <TextView
                 android:layout_width="0dp"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".75"
                 android:text="AMOUNT" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_amount_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -117,17 +111,18 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingStart="5dp">
 
             <TextView
                 android:layout_width="0dp"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".75"
                 android:text="CUSTOMER" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_customer_name_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -140,15 +135,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="5dp"
             android:paddingStart="5dp">
 
             <TextView
                 android:layout_width="0dp"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".75"
                 android:text="CONTACT" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_customer_contact_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -156,117 +153,28 @@
                 android:hint="Customer contact" />
 
         </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:paddingStart="5dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="5dp">
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".75"
-                    android:text="ITEM"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_qty_id"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="QUANTITY"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_price_id"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="PRICE"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/bill_sale_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-
-    </TableLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#eee"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ccc"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_action_id"
+            <Button
+                android:id="@+id/btn_search_id"
                 android:layout_width="0dp"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".75"
-                android:gravity="start"
-                android:paddingStart="4dp"
-                android:text="ACTION"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_bill_num_id"
+                android:text="SEARCH" />
+            <Button
+                android:id="@+id/btn_cancel_id"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:paddingStart="4dp"
-                android:text="BILL NUMBER"
                 android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_bill_da_id"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:paddingStart="4dp"
-                android:text="BILL DATE"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_bill_amount_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="BILL AMOUNT"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:layout_weight=".75"
+                android:text="CANCEL" />
 
         </LinearLayout>
-
-        <ListView
-            android:id="@+id/userlistview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
+    </TableLayout>
 </LinearLayout>
