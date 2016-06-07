@@ -60,22 +60,22 @@ public class NavDrawer extends Activity {
 
         Toast.makeText(this, "Logged in as: " + role, Toast.LENGTH_SHORT).show();
 
-if(role.equalsIgnoreCase("ADMIN")||role.equalsIgnoreCase("SUPER")) {
-    // POS
-    navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-    // Sales Mgmt
-    navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-    // User Management
-    navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-    // Item Management
-    navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        if (role.equalsIgnoreCase("ADMIN") || role.equalsIgnoreCase("SUPER")) {
+            // POS
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+            // Sales Mgmt
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+            // User Management
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+            // Item Management
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
 
-} else {
-    // POS
-    navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-    // Sales Mgmt
-    navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(3, -1)));
-}
+        } else {
+            // POS
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+            // Sales Mgmt
+            navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(3, -1)));
+        }
         // adding nav drawer items to array
         // Recycle the typed array
         navMenuIcons.recycle();

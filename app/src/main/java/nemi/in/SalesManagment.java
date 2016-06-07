@@ -1,37 +1,55 @@
 package nemi.in;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.DatePickerDialog.OnDateSetListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import in.nemi.ncontrol.R;
 
 /**
  * Created by Aman on 6/3/2016.
  */
-public class SalesManagment extends Fragment {
+public class SalesManagment extends Fragment implements View.OnClickListener {
     ndbHelper databaseHelper;
     SalesManagmentAdapter salesManagmentAdapter;
     BillDetailAdapter billDetailAdapter;
     ListView bill_list, bill_details;
-    TextView bill_number_tv2,date_tv,mode_tv,amount_tv,customer_name_tv,customer_contact_tv;
-    Button search_btn,search_button,cancel_button;
-    EditText et_bill_number,et_bill_date,et_bill_mode,et_amount,et_customer_name,et_customer_contact;
+    TextView bill_number_tv2, date_tv, mode_tv, amount_tv, customer_name_tv, customer_contact_tv;
+    Button search_btn, search_button, cancel_button;
+    EditText et_bill_number, et_amount, et_customer_name, et_customer_contact, datefrom, dateto;
+    private EditText fromDateEtxt;
+    private EditText toDateEtxt;
+
+    private DatePickerDialog fromDatePickerDialog;
+    private DatePickerDialog toDatePickerDialog;
+
+    private SimpleDateFormat dateFormatter;
+    Button btn_datepicker;
+    int year_x, month_x, day_x;
+    static final int DIALOG_ID = 0;
 
     public SalesManagment() {
     }
@@ -40,13 +58,15 @@ public class SalesManagment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.salesmgmt, container, false);
         databaseHelper = new ndbHelper(getActivity(), null, null, 1);
-        search_btn =  (Button)rootView.findViewById(R.id.btn_search_bill_id);
-        bill_number_tv2 = (TextView)rootView.findViewById(R.id.tv_bill_number_id);
-        date_tv = (TextView)rootView.findViewById(R.id.tv_bill_date_id);
-        mode_tv = (TextView)rootView.findViewById(R.id.tv_bill_mode_id);
-        amount_tv = (TextView)rootView.findViewById(R.id.tv_amount_id);
-        customer_name_tv = (TextView)rootView.findViewById(R.id.tv_customer_name_id);
-        customer_contact_tv = (TextView)rootView.findViewById(R.id.tv_customer_contact_id);
+        search_btn = (Button) rootView.findViewById(R.id.btn_search_bill_id);
+        bill_number_tv2 = (TextView) rootView.findViewById(R.id.tv_bill_number_id);
+        date_tv = (TextView) rootView.findViewById(R.id.tv_bill_date_id);
+        mode_tv = (TextView) rootView.findViewById(R.id.tv_bill_mode_id);
+        amount_tv = (TextView) rootView.findViewById(R.id.tv_amount_id);
+        customer_name_tv = (TextView) rootView.findViewById(R.id.tv_customer_name_id);
+        customer_contact_tv = (TextView) rootView.findViewById(R.id.tv_customer_contact_id);
+
+
 
 /*================================================SalesManagmentAdapter ========================================================================*/
         salesManagmentAdapter = new SalesManagmentAdapter(getActivity(), databaseHelper.getBill());
@@ -59,7 +79,7 @@ public class SalesManagment extends Fragment {
         bill_details.setAdapter(billDetailAdapter);
 
         int a = databaseHelper.checkLastBillNumber();
-        if(a!=0) {
+        if (a != 0) {
             Cursor c = databaseHelper.getSale(a);
             billDetailAdapter.changeCursor(c);
             Cursor d = databaseHelper.getBillInfo(a);
@@ -79,22 +99,37 @@ public class SalesManagment extends Fragment {
             public void onClick(View view) {
                 final Dialog d = new Dialog(getActivity());
                 d.setContentView(R.layout.dialog_for_search);
-                d.setTitle("Search Bill Detail!");
+                d.setTitle("Search!");
                 d.setCancelable(false);
                 d.show();
                 et_bill_number = (EditText) d.findViewById(R.id.tv_bill_number_id);
-                et_bill_date = (EditText) d.findViewById(R.id.tv_bill_date_id);
-                et_bill_mode = (EditText) d.findViewById(R.id.tv_bill_mode_id);
+                fromDateEtxt = (EditText) d.findViewById(R.id.etxt_fromdate);
+                toDateEtxt = (EditText) d.findViewById(R.id.etxt_todate);
                 et_amount = (EditText) d.findViewById(R.id.tv_amount_id);
                 et_customer_name = (EditText) d.findViewById(R.id.tv_customer_name_id);
                 et_customer_contact = (EditText) d.findViewById(R.id.tv_customer_contact_id);
+
+
                 search_button = (Button) d.findViewById(R.id.btn_search_id);
                 cancel_button = (Button) d.findViewById(R.id.btn_cancel_id);
 
-               search_btn.setOnClickListener(new View.OnClickListener() {
+                dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                findViewsById();
+
+                setDateTimeField();
+                search_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int bill_number = Integer.parseInt(et_bill_number.getText().toString());
+                        String fromDate = fromDateEtxt.getText().toString();
+                        String toDate = toDateEtxt.getText().toString();
+                        int amount = Integer.parseInt(et_amount.getText().toString());
+                        String customer_name = et_customer_name.getText().toString();
+                        String customer_contact = et_customer_contact.getText().toString();
 
+                        Cursor c = databaseHelper.search(fromDate, toDate, bill_number, amount,
+                                customer_name, customer_contact);
+                        salesManagmentAdapter.changeCursor(c);
                     }
                 });
                 cancel_button.setOnClickListener(new View.OnClickListener() {
@@ -106,21 +141,67 @@ public class SalesManagment extends Fragment {
 
             }
         });
+
         /*======================================================================================================================*/
         return rootView;
     }
 
+    private void setDateTimeField() {
+        fromDateEtxt.setOnClickListener(this);
+        toDateEtxt.setOnClickListener(this);
+
+        Calendar newCalendar = Calendar.getInstance();
+        fromDatePickerDialog = new DatePickerDialog(getActivity(), new OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                fromDateEtxt.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        toDatePickerDialog = new DatePickerDialog(getActivity(), new OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                toDateEtxt.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private void findViewsById() {
+        fromDateEtxt.setInputType(InputType.TYPE_NULL);
+        fromDateEtxt.requestFocus();
+
+        toDateEtxt.setInputType(InputType.TYPE_NULL);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == fromDateEtxt) {
+            fromDatePickerDialog.show();
+        } else if (view == toDateEtxt) {
+            toDatePickerDialog.show();
+        }
+    }
+
+    /*========================================================Dialoge DatePicker================================================================*/
     public class SalesManagmentAdapter extends CursorAdapter {
 
         public SalesManagmentAdapter(Context context, Cursor cursor) {
             super(context, cursor);
         }
+
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             View view = inflater.inflate(R.layout.bill_listview_adap, parent, false);
             return view;
         }
+
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             final TextView bill_number_tv = (TextView) view.findViewById(R.id.tv_bill_number_fecth_id);

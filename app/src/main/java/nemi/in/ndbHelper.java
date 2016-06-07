@@ -282,10 +282,12 @@ public class ndbHelper extends SQLiteOpenHelper {
         return c.getString(0);
     }
     /*=========================================================Search query here=================================================================*/
-
-    public Cursor serachedBybillnumber(){
-        SQLiteDatabase db = getReadableDatabase();
-        String selectQuery = "select _id, c_billdatetime, billamount from sales where billnumber ";
-        return db.rawQuery(selectQuery,null);
-    }
+//    public Cursor search(String datefrom, String dateto, int billnumber, int amount, String c_name, String c_contact) {
+//        SQLiteDatabase db = getReadableDatabase();
+//        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE _id = " + billnumber +
+//                " AND billamount = " + amount + " AND c_name = " + c_name + " AND c_contact = " + c_contact +
+//                " AND CAST(c_billdatetime AS DATE) BETWEEN CAST('" + datefrom + "' AS DATE) AND CAST('" +
+//                dateto + "' AS DATE) ORDER BY DATETIME(c_billdatetime) DESC";
+//        return db.rawQuery(qry, null);
+//    }
 }
