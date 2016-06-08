@@ -41,15 +41,15 @@
         android:layout_gravity="center"
         android:layout_width="0dp"
         android:background="@drawable/ic_mode_edit_black_48dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.20" />
+        android:layout_height="40dp"
+        android:layout_weight="0.12" />
 
     <ImageButton
         android:id="@+id/dele_id"
         android:layout_width="0dp"
         android:background="@drawable/ic_delete_black_48dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_weight="0.20" />
+        android:layout_weight="0.12" />
 
 </LinearLayout>

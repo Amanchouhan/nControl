@@ -64,8 +64,8 @@ public class ItemFragment extends Fragment {
 
                                                public void onTextChanged(CharSequence s, int start,
                                                                          int before, int count) {
-                                                   Cursor c = databaseHelper.getCategories();
-                                                   et_category.setText(""+c);
+//                                                   Cursor c = databaseHelper.getCategories();
+//                                                   et_category.setText(""+c);
                                                }
                                            });
         //Add Item to db

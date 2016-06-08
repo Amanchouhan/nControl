@@ -108,8 +108,6 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 et_bill_number = (EditText) d.findViewById(R.id.tv_bill_number_id);
                 fromDateEtxt = (EditText) d.findViewById(R.id.etxt_fromdate);
                 toDateEtxt = (EditText) d.findViewById(R.id.etxt_todate);
-
-
                 et_amount = (EditText) d.findViewById(R.id.tv_amount_id);
                 et_customer_name = (EditText) d.findViewById(R.id.tv_customer_name_id);
                 et_customer_contact = (EditText) d.findViewById(R.id.tv_customer_contact_id);
@@ -126,8 +124,16 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
 
                         int bill_number = Integer.parseInt(et_bill_number.getText().toString());
                         c = databaseHelper.searchByBillNumber(bill_number);
-                        salesManagmentAdapter.changeCursor(c);
-                        d.dismiss();
+                        if (!et_bill_number.equals("")) {
+                            et_bill_number.setError("Give bill number");
+                        } else if (et_bill_number.equals(c)) {
+
+                            salesManagmentAdapter.changeCursor(c);
+                            d.dismiss();
+
+                        } else {
+                            Toast.makeText(getActivity(), "Bill number does not exist", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -136,7 +142,9 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     public void onClick(View view) {
                         String fromDate = fromDateEtxt.getText().toString();
                         String toDate = toDateEtxt.getText().toString();
+//                        Toast.makeText(getActivity(), "Date and Time: " + fromDate + " " + toDate, Toast.LENGTH_SHORT).show();
                         c = databaseHelper.searchByDate(fromDate, toDate);
+//                        c = databaseHelper.searchByDate();
                         salesManagmentAdapter.changeCursor(c);
                         d.dismiss();
                     }
@@ -173,7 +181,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     }
                 });
                 cancel_button = (Button) d.findViewById(R.id.btn_cancel_id);
-                dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS", Locale.US);
+                dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 findViewsById();
                 setDateTimeField();
                 cancel_button.setOnClickListener(new View.OnClickListener() {
@@ -219,7 +227,6 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
     }
-
 
 
     private void findViewsById() {

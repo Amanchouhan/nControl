@@ -52,8 +52,8 @@
         android:layout_width="0dp"
         android:layout_gravity="center"
         android:background="@drawable/ic_mode_edit_black_48dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".25"
+        android:layout_height="40dp"
+        android:layout_weight=".18"
         android:text="UPDATE" />
 
     <ImageButton
@@ -61,10 +61,7 @@
         android:layout_width="0dp"
         android:layout_gravity="center"
         android:background="@drawable/ic_delete_black_48dp"
-
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="0.25"
-        android:text="DELETE" />
+        android:layout_height="40dp"
+        android:layout_weight="0.18" />
 
 </LinearLayout>

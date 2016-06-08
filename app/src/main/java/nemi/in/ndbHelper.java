@@ -301,6 +301,7 @@ public class ndbHelper extends SQLiteOpenHelper {
     }
 
     public Cursor searchByDate(String fdate, String tdate) {
+//    public Cursor searchByDate() {
         SQLiteDatabase db = getReadableDatabase();
 //        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE CAST(c_billdatetime AS DATE) BETWEEN" +
 //                "CAST(" + fdate + " AS DATE) AND CAST(" + tdate + " AS DATE) ORDER BY _id DESC;" ;
@@ -308,9 +309,13 @@ public class ndbHelper extends SQLiteOpenHelper {
 //                "WHERE CAST(c_billdatetime AS DATETIME) BETWEEN CAST(" + fdate + " AS DATETIME) AND CAST(" +
 //                tdate + " AS DATETIME) ORDER BY _id DESC;" ;
 
-        String qry = "SELECT _id, c_billdatetime, billamount FROM bill " +
-                "WHERE CAST(c_billdatetime AS DATETIME) BETWEEN CAST " + fdate + " AND CAST " +
-                tdate + " ORDER BY _id DESC;" ;
+//        String qry = "SELECT _id, c_billdatetime, billamount FROM bill " +
+//                "WHERE CAST(c_billdatetime AS DATETIME) BETWEEN CAST " + fdate + " AND CAST " +
+//                tdate + " ORDER BY _id DESC;" ;
+//        return db.rawQuery(qry, null);
+
+        String qry = "select _id, c_billdatetime, billamount from bill where date(c_billdatetime) BETWEEN " +
+                "date('" + fdate + "') AND date('" + tdate +"') ORDER BY _id DESC" ;
         return db.rawQuery(qry, null);
     }
 
