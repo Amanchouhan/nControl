@@ -34,10 +34,17 @@
                 android:layout_weight="1"
                 android:hint="Bill number" />
 
+            <ImageButton
+                android:id="@+id/billbtn_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:src="@drawable/ic_search_black_24dp" />
+
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/LinearLay2"
+            android:id="@+id/LinearLa2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -47,7 +54,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".15"
+                android:layout_weight=".01"
                 android:text="DATE"
                 android:textSize="20dp" />
 
@@ -58,16 +65,32 @@
                 android:layout_weight=".1"
                 android:hint="@string/from_date" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLay2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:paddingStart="5dp">
+
             <EditText
                 android:id="@+id/etxt_todate"
                 android:layout_width="0dp"
+                android:layout_marginLeft="90dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".1"
+                android:layout_weight=".15"
                 android:hint="@string/to_date" />
 
+            <ImageButton
+                android:id="@+id/datebtn_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".020"
+                android:src="@drawable/ic_search_black_24dp" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -90,6 +113,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="Amount" />
+
+            <ImageButton
+                android:id="@+id/amountbtn_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:src="@drawable/ic_search_black_24dp" />
 
         </LinearLayout>
 
@@ -115,6 +145,13 @@
                 android:layout_weight="1"
                 android:hint="Customer name" />
 
+            <ImageButton
+                android:id="@+id/customernamebtn_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:src="@drawable/ic_search_black_24dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -138,6 +175,13 @@
                 android:layout_weight="1"
                 android:hint="Customer contact" />
 
+            <ImageButton
+                android:id="@+id/customercontactbtn_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".2"
+                android:src="@drawable/ic_search_black_24dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -146,14 +190,6 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingStart="5dp">
-
-            <Button
-                android:id="@+id/btn_search_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".75"
-                android:text="SEARCH"
-                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/btn_cancel_id"

@@ -54,6 +54,7 @@
                 android:textAllCaps="true"
                 android:ems="10"
                 android:hint="Category" />
+
         </LinearLayout>
 
         <LinearLayout

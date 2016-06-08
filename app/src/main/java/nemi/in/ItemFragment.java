@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +53,21 @@ public class ItemFragment extends Fragment {
         additem = (Button) rootView.findViewById(R.id.additembutton);
         et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         et_category.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        et_category.addTextChangedListener(new TextWatcher() {
+
+                                               public void afterTextChanged(Editable s) {
+                                               }
+
+                                               public void beforeTextChanged(CharSequence s, int start,
+                                                                             int count, int after) {
+                                               }
+
+                                               public void onTextChanged(CharSequence s, int start,
+                                                                         int before, int count) {
+                                                   Cursor c = databaseHelper.getCategories();
+                                                   et_category.setText(""+c);
+                                               }
+                                           });
         //Add Item to db
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +85,7 @@ public class ItemFragment extends Fragment {
                     et_price.setError("Price");
                 } else {
 //                    Integer.parseInt(et_price.getText().toString())
+
                     databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()));
 //                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
                     Cursor cursor = databaseHelper.getItems();

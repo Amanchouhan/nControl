@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.app.DatePickerDialog.OnDateSetListener;
 
@@ -39,10 +41,10 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
     ListView bill_list, bill_details;
     TextView bill_number_tv2, date_tv, mode_tv, amount_tv, customer_name_tv, customer_contact_tv;
     Button search_btn, search_button, cancel_button;
-    EditText et_bill_number, et_amount, et_customer_name, et_customer_contact, datefrom, dateto;
-    private EditText fromDateEtxt;
-    private EditText toDateEtxt;
-
+    EditText et_bill_number, et_amount, et_customer_name, et_customer_contact;
+    private EditText fromDateEtxt, toDateEtxt;
+    ImageButton billnumber_btn, date_btn, amount_btn, cname_btn, ccontact_btn;
+    Cursor c = null;
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
 
@@ -50,6 +52,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
     Button btn_datepicker;
     int year_x, month_x, day_x;
     static final int DIALOG_ID = 0;
+    private int mHour, mMinute;
 
     public SalesManagment() {
     }
@@ -105,33 +108,74 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 et_bill_number = (EditText) d.findViewById(R.id.tv_bill_number_id);
                 fromDateEtxt = (EditText) d.findViewById(R.id.etxt_fromdate);
                 toDateEtxt = (EditText) d.findViewById(R.id.etxt_todate);
+
+
                 et_amount = (EditText) d.findViewById(R.id.tv_amount_id);
                 et_customer_name = (EditText) d.findViewById(R.id.tv_customer_name_id);
                 et_customer_contact = (EditText) d.findViewById(R.id.tv_customer_contact_id);
 
+                billnumber_btn = (ImageButton) d.findViewById(R.id.billbtn_id);
+                date_btn = (ImageButton) d.findViewById(R.id.datebtn_id);
+                amount_btn = (ImageButton) d.findViewById(R.id.amountbtn_id);
+                cname_btn = (ImageButton) d.findViewById(R.id.customernamebtn_id);
+                ccontact_btn = (ImageButton) d.findViewById(R.id.customercontactbtn_id);
 
-                search_button = (Button) d.findViewById(R.id.btn_search_id);
-                cancel_button = (Button) d.findViewById(R.id.btn_cancel_id);
-
-                dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                findViewsById();
-
-                setDateTimeField();
-                search_button.setOnClickListener(new View.OnClickListener() {
+                billnumber_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int bill_number = Integer.parseInt(et_bill_number.getText().toString());
-                        String fromDate = fromDateEtxt.getText().toString();
-                        String toDate = toDateEtxt.getText().toString();
-                        int amount = Integer.parseInt(et_amount.getText().toString());
-                        String customer_name = et_customer_name.getText().toString();
-                        String customer_contact = et_customer_contact.getText().toString();
 
-                        Cursor c = databaseHelper.search(fromDate, toDate, bill_number, amount,
-                                customer_name, customer_contact);
+                        int bill_number = Integer.parseInt(et_bill_number.getText().toString());
+                        c = databaseHelper.searchByBillNumber(bill_number);
                         salesManagmentAdapter.changeCursor(c);
+                        d.dismiss();
                     }
                 });
+
+                date_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String fromDate = fromDateEtxt.getText().toString();
+                        String toDate = toDateEtxt.getText().toString();
+                        c = databaseHelper.searchByDate(fromDate, toDate);
+                        salesManagmentAdapter.changeCursor(c);
+                        d.dismiss();
+                    }
+                });
+
+                amount_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int amount = Integer.parseInt(et_amount.getText().toString());
+                        c = databaseHelper.searchByAmount(amount);
+                        salesManagmentAdapter.changeCursor(c);
+                        d.dismiss();
+                    }
+                });
+
+                cname_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String customer_name = et_customer_name.getText().toString();
+                        c = databaseHelper.searchByCustomerName(customer_name);
+                        salesManagmentAdapter.changeCursor(c);
+                        d.dismiss();
+
+                    }
+                });
+
+                ccontact_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String customer_contact = et_customer_contact.getText().toString();
+                        c = databaseHelper.searchByCustomerContact(customer_contact);
+                        salesManagmentAdapter.changeCursor(c);
+                        d.dismiss();
+                    }
+                });
+                cancel_button = (Button) d.findViewById(R.id.btn_cancel_id);
+                dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS", Locale.US);
+                findViewsById();
+                setDateTimeField();
                 cancel_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -149,7 +193,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
     private void setDateTimeField() {
         fromDateEtxt.setOnClickListener(this);
         toDateEtxt.setOnClickListener(this);
-
+/*============================================>>>from date*/
         Calendar newCalendar = Calendar.getInstance();
         fromDatePickerDialog = new DatePickerDialog(getActivity(), new OnDateSetListener() {
 
@@ -161,22 +205,29 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
+/*============================================>>>To date*/
         toDatePickerDialog = new DatePickerDialog(getActivity(), new OnDateSetListener() {
-
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 toDateEtxt.setText(dateFormatter.format(newDate.getTime()));
             }
-
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
     }
+
+
 
     private void findViewsById() {
         fromDateEtxt.setInputType(InputType.TYPE_NULL);
         fromDateEtxt.requestFocus();
 
         toDateEtxt.setInputType(InputType.TYPE_NULL);
+        toDateEtxt.requestFocus();
     }
 
     @Override

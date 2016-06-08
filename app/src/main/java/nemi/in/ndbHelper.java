@@ -8,6 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Developer on 21-04-2016.
  */
@@ -80,7 +84,7 @@ public class ndbHelper extends SQLiteOpenHelper {
                 COLUMN_ID + " integer primary key autoincrement," +
                 COLUMN_C_NAME + " text not null," +
                 COLUMN_C_CONTACT + " text not null," +
-                COLUMN_BILL_DATE_TIME + " DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+                COLUMN_BILL_DATE_TIME + " text NOT NULL," +
                 COLUMN_BILLAMOUNT + " INTEGER NOT NULL" +
                 ");";
         db.execSQL(billquery);
@@ -242,11 +246,19 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
     public void bill(String c_name, String c_number, int billamount) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_C_NAME, c_name);
         cv.put(COLUMN_C_CONTACT, c_number);
         cv.put(COLUMN_BILLAMOUNT, billamount);
+        cv.put(COLUMN_BILL_DATE_TIME, getDateTime());
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_BILL, null, cv);
         db.close();
@@ -282,12 +294,45 @@ public class ndbHelper extends SQLiteOpenHelper {
         return c.getString(0);
     }
     /*=========================================================Search query here=================================================================*/
-//    public Cursor search(String datefrom, String dateto, int billnumber, int amount, String c_name, String c_contact) {
-//        SQLiteDatabase db = getReadableDatabase();
-//        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE _id = " + billnumber +
-//                " AND billamount = " + amount + " AND c_name = " + c_name + " AND c_contact = " + c_contact +
-//                " AND CAST(c_billdatetime AS DATE) BETWEEN CAST('" + datefrom + "' AS DATE) AND CAST('" +
-//                dateto + "' AS DATE) ORDER BY DATETIME(c_billdatetime) DESC";
-//        return db.rawQuery(qry, null);
-//    }
+    public Cursor searchByBillNumber(int billnumber) {
+        SQLiteDatabase db = getReadableDatabase();
+        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE _id = " + billnumber + ";";
+        return db.rawQuery(qry, null);
+    }
+
+    public Cursor searchByDate(String fdate, String tdate) {
+        SQLiteDatabase db = getReadableDatabase();
+//        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE CAST(c_billdatetime AS DATE) BETWEEN" +
+//                "CAST(" + fdate + " AS DATE) AND CAST(" + tdate + " AS DATE) ORDER BY _id DESC;" ;
+//        String qry = "SELECT _id, c_billdatetime, billamount FROM bill " +
+//                "WHERE CAST(c_billdatetime AS DATETIME) BETWEEN CAST(" + fdate + " AS DATETIME) AND CAST(" +
+//                tdate + " AS DATETIME) ORDER BY _id DESC;" ;
+
+        String qry = "SELECT _id, c_billdatetime, billamount FROM bill " +
+                "WHERE CAST(c_billdatetime AS DATETIME) BETWEEN CAST " + fdate + " AND CAST " +
+                tdate + " ORDER BY _id DESC;" ;
+        return db.rawQuery(qry, null);
+    }
+
+    public Cursor searchByAmount(int billamount) {
+        SQLiteDatabase db = getReadableDatabase();
+        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE billamount = " + billamount;
+        return db.rawQuery(qry, null);
+    }
+
+    public Cursor searchByCustomerName(String customername) {
+        SQLiteDatabase db = getReadableDatabase();
+        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE c_name LIKE '" + customername + "'";
+        return db.rawQuery(qry, null);
+    }
+
+    public Cursor searchByCustomerContact(String contact) {
+        SQLiteDatabase db = getReadableDatabase();
+        String qry = "SELECT _id, c_billdatetime, billamount FROM bill WHERE c_contact LIKE '" + contact + "'";
+        return db.rawQuery(qry, null);
+    }
+
+    /*================================================================================================================================*/
+
+
 }

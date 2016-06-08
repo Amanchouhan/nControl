@@ -103,7 +103,6 @@ public class PosFragment extends Fragment {
     public class SlidingTabsBasicFragment extends Fragment {
         ndbHelper databaseHelper;
         static final String LOG_TAG = "SlidingTabsBasicFragment";
-
         private SlidingTabLayout mSlidingTabLayout;
         private ViewPager mViewPager;
 
@@ -113,8 +112,6 @@ public class PosFragment extends Fragment {
             databaseHelper = new ndbHelper(getActivity(), null, null, 1);
             // BillAdapre set here
             billAdap = new BillAdapter(getActivity(), alist);
-
-
             return view;
         }
 
