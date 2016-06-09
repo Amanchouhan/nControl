@@ -13,12 +13,16 @@
         android:visibility="invisible" />
 
     <TextView
+        android:maxLines="1"
+        android:maxLength="10"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:id="@+id/item_fe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
-        android:layout_weight="1.3"
+        android:layout_weight="1.5"
         android:text="Item" />
 
     <TextView
@@ -34,15 +38,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="left"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
-        android:layout_weight="1.1"
+        android:layout_weight="1.2"
         android:text="Price" />
 
     <Button
         android:id="@+id/minus_item"
         android:layout_width="0dp"
         android:textSize="10dp"
+        android:textColor="#fff"
         android:textStyle="bold"
         android:background="#e97c7c"
         android:layout_height="wrap_content"
@@ -54,12 +60,14 @@
     <Button
         android:id="@+id/qty_item"
         android:textStyle="bold"
+        android:textColor="#fff"
         android:paddingBottom="5dp"
         android:layout_width="0dp"
         android:layout_marginLeft=".3dp"
         android:background="#615bd1"
         android:textSize="10dp"
         android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
         android:layout_weight=".5"
         android:text="QTY" />
 

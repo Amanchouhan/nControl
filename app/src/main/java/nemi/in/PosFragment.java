@@ -1,8 +1,10 @@
 package nemi.in;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -34,7 +36,7 @@ public class PosFragment extends Fragment {
     TextView total_amo;
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
-    Button set_qty_btn, btn_minus;
+    Button set_qty_btn, delete_bill_btn;
     EditText qty_et, c_name_et, c_contact_et;
     ndbHelper databaseHelper;
     BillItems billItems;
@@ -55,14 +57,16 @@ public class PosFragment extends Fragment {
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!alist.isEmpty()) {
+
+
+                if (!alist.isEmpty()) {
                     String c_name = c_name_et.getText().toString();
                     String c_contact = c_contact_et.getText().toString();
+
                     int a = Integer.parseInt(total_amo.getText().toString());
                     databaseHelper.bill(c_name, c_contact, a);
                     c_name_et.setText("");
                     c_contact_et.setText("");
-
                     int billnumber = databaseHelper.checkLastBillNumber();
                     billnumber++;
                     for (int i = 0; i < alist.size(); i++) {
@@ -80,6 +84,7 @@ public class PosFragment extends Fragment {
 
                     billAdap.clear();
                     total_amo.setText("0");
+
                 }
             }
         });
@@ -257,7 +262,7 @@ public class PosFragment extends Fragment {
             }
         }
 
-        public class BillAdapter extends ArrayAdapter<BillItems>  {
+        public class BillAdapter extends ArrayAdapter<BillItems> {
             public BillAdapter(Context context, ArrayList<BillItems> alist) {
                 super(context, 0, alist);
             }
@@ -277,7 +282,7 @@ public class PosFragment extends Fragment {
                 final TextView fetch_qty = (TextView) convertView.findViewById(R.id.category_fe);
                 TextView fetch_price = (TextView) convertView.findViewById(R.id.price_fe);
 
-                btn_minus = (Button) convertView.findViewById(R.id.minus_item);
+                delete_bill_btn = (Button) convertView.findViewById(R.id.minus_item);
                 set_qty_btn = (Button) convertView.findViewById(R.id.qty_item);
 
                 set_qty_btn.setOnClickListener(new View.OnClickListener() {
@@ -321,18 +326,32 @@ public class PosFragment extends Fragment {
                     }
                 });
 
-                btn_minus.setOnClickListener(new View.OnClickListener() {
+                delete_bill_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        total_amo.setText("0");
-                        billAdap.remove(billItems);
-                        int total = 0;
 
-                        for (int j = 0; j < alist.size(); j++) {
-                            total += alist.get(j).getPrice() * alist.get(j).getQty();
-                            total_amo.setText("" + total);
-                        }
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                        alertDialogBuilder.setTitle("Please select an action!");
+                        alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        total_amo.setText("0");
+                                        billAdap.remove(billItems);
+                                        int total = 0;
 
+                                        for (int j = 0; j < alist.size(); j++) {
+                                            total += alist.get(j).getPrice() * alist.get(j).getQty();
+                                            total_amo.setText("" + total);
+                                        }
+                                    }
+                                }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
                     }
                 });
 
@@ -346,7 +365,6 @@ public class PosFragment extends Fragment {
                 // Return the completed view to render on screen
                 return convertView;
             }
-
 
 
         }

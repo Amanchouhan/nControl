@@ -6,11 +6,9 @@
     android:orientation="vertical">
 
 
-
-
     <ListView
-        android:layout_width="match_parent"
         android:id="@+id/items_list_id"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </ListView>

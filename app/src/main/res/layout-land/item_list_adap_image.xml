@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:layout_width="50dp"
         android:layout_height="75dp"
-        android:background="#ccc" />
+        android:background="#fdd" />
 
 
     <TextView

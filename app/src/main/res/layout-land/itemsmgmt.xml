@@ -79,7 +79,6 @@
 
             <Button
                 android:id="@+id/additembutton"
-                android:background="#607D8B"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="ADD ITEM" />
@@ -89,13 +88,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#eee">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ccc"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/tv_item_id"
@@ -105,7 +102,7 @@
                 android:paddingStart="4dp"
                 android:gravity="start"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
+                android:layout_weight="1.6"
                 android:text="ITEM"/>
 
             <TextView
@@ -127,7 +124,7 @@
                 android:layout_marginLeft="5dp"
                 android:gravity="start"
                 android:layout_height="wrap_content"
-                android:layout_weight="2.35"
+                android:layout_weight="2.30"
                 android:text="PRICE"/>
 
         </LinearLayout>

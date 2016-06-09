@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".01"
+                android:layout_weight=".062"
                 android:text="DATE"
                 android:textSize="20dp" />
 
@@ -74,20 +74,24 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:paddingStart="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".062"
+                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/etxt_todate"
                 android:layout_width="0dp"
-                android:layout_marginLeft="90dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".15"
+                android:layout_weight=".083"
                 android:hint="@string/to_date" />
 
             <ImageButton
                 android:id="@+id/datebtn_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".020"
+                android:layout_weight=".016"
                 android:src="@drawable/ic_search_black_24dp" />
 
         </LinearLayout>
@@ -195,6 +199,7 @@
                 android:id="@+id/btn_cancel_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:layout_weight=".75"
                 android:text="CANCEL"
                 android:textSize="20dp" />

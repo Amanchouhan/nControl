@@ -53,34 +53,47 @@
             <LinearLayout
                 android:id="@+id/total_linear"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10px"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/total"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".6"
                     android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
                     android:gravity="left"
-                    android:layout_height="40dp"
-                    android:text="TOTAL" />
+                    android:layout_height="50dp"
+                    android:text="TOTAL"
+                    android:textSize="20dp" />
 
+                <TextView
+                    android:id="@+id/total1_amo"
+                    android:layout_width="0dp"
+                    android:layout_weight=".3"
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:layout_height="50dp"
+                    android:text="INR"
+                    android:textSize="20dp" />
                 <TextView
                     android:id="@+id/total_amo"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:gravity="left"
-                    android:layout_height="40dp"
-                    android:text="INR 0" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="50dp"
+                    android:text="0"
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#eee">
+                android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,11 +103,11 @@
                         android:id="@+id/tv_item_id"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="1.5"
                         android:gravity="start"
-                        android:paddingStart="4dp"
-                        android:text="   ITEM"
-                        android:textSize="20dp"
+                        android:paddingStart="20dp"
+                        android:text="Item"
+                        android:textSize="15dp"
                         android:textStyle="bold" />
 
 
@@ -102,22 +115,20 @@
                         android:id="@+id/tv_qty_id"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="    QTY"
-                        android:textSize="20dp"
+                        android:layout_weight=".9"
+                        android:gravity="left"
+                        android:text="Qty"
+                        android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_price_id"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="PRICE"
-                        android:textSize="20dp"
+                        android:gravity="left"
+                        android:text="Price"
+                        android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -126,9 +137,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:gravity="start"
-                        android:text="ACTION"
-                        android:textSize="20dp"
+                        android:gravity="center"
+                        android:text="Action"
+                        android:textSize="15dp"
                         android:textStyle="bold" />
 
 
@@ -154,7 +165,6 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:background="#536DFE"
                     android:text="PAY" />
 
                 <Button
@@ -162,7 +172,6 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="#8C9EFF"
                     android:text="CLEAR" />
 
             </LinearLayout>

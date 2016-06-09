@@ -53,28 +53,28 @@ public class ItemFragment extends Fragment {
         additem = (Button) rootView.findViewById(R.id.additembutton);
         et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         et_category.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-        et_category.addTextChangedListener(new TextWatcher() {
-
-                                               public void afterTextChanged(Editable s) {
-                                               }
-
-                                               public void beforeTextChanged(CharSequence s, int start,
-                                                                             int count, int after) {
-                                               }
-
-                                               public void onTextChanged(CharSequence s, int start,
-                                                                         int before, int count) {
-//                                                   Cursor c = databaseHelper.getCategories();
-//                                                   et_category.setText(""+c);
-                                               }
-                                           });
+//        et_category.addTextChangedListener(new TextWatcher() {
+//
+//                                               public void afterTextChanged(Editable s) {
+//                                               }
+//
+//                                               public void beforeTextChanged(CharSequence s, int start,
+//                                                                             int count, int after) {
+//                                               }
+//
+//                                               public void onTextChanged(CharSequence s, int start,
+//                                                                         int before, int count) {
+////                                                   Cursor c = databaseHelper.getCategories();
+////                                                   et_category.setText(""+c);
+//                                               }
+//                                           });
         //Add Item to db
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item = et_item.getText().toString();
-                category = et_category.getText().toString();
-                price = et_price.getText().toString();
+                item = et_item.getText().toString().replace(' ',' ');
+                category = et_category.getText().toString().trim();
+                price = et_price.getText().toString().trim();
 //                getText().toString().length()>0
                 if (item.equals("")) {
                     et_item.setError("Item");

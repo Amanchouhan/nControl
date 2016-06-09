@@ -70,6 +70,7 @@ public class UserFragment extends Fragment {
                     CursorAdapter adapter = (CursorAdapter) usersview.getAdapter();
                     Cursor cursor = databaseHelper.getUsers();
                     usersAdapter.changeCursor(cursor);
+                    databaseHelper.close();
 
                     username.setText("");
                     password.setText("");
@@ -122,6 +123,7 @@ public class UserFragment extends Fragment {
                                     databaseHelper.deleteUser(val1);
                                     Cursor cursor = databaseHelper.getUsers();
                                     usersAdapter.changeCursor(cursor);
+                                    databaseHelper.close();
                                 }
                             }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
                         @Override
@@ -147,6 +149,7 @@ public class UserFragment extends Fragment {
                                     databaseHelper.deleteUser(val1);
                                     Cursor cursor = databaseHelper.getUsers();
                                     usersAdapter.changeCursor(cursor);
+                                    databaseHelper.close();
                                 }
                             }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
                         @Override

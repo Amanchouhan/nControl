@@ -97,7 +97,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(), "No bills to show!", Toast.LENGTH_SHORT).show();
         }
 /*=========================================================search Button===============================================================*/
-        search_btn.setOnClickListener(new View.OnClickListener() {
+            search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog d = new Dialog(getActivity());
@@ -112,6 +112,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 et_customer_name = (EditText) d.findViewById(R.id.tv_customer_name_id);
                 et_customer_contact = (EditText) d.findViewById(R.id.tv_customer_contact_id);
 
+
                 billnumber_btn = (ImageButton) d.findViewById(R.id.billbtn_id);
                 date_btn = (ImageButton) d.findViewById(R.id.datebtn_id);
                 amount_btn = (ImageButton) d.findViewById(R.id.amountbtn_id);
@@ -121,19 +122,10 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 billnumber_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         int bill_number = Integer.parseInt(et_bill_number.getText().toString());
                         c = databaseHelper.searchByBillNumber(bill_number);
-                        if (!et_bill_number.equals("")) {
-                            et_bill_number.setError("Give bill number");
-                        } else if (et_bill_number.equals(c)) {
-
                             salesManagmentAdapter.changeCursor(c);
                             d.dismiss();
-
-                        } else {
-                            Toast.makeText(getActivity(), "Bill number does not exist", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 });
 
@@ -142,9 +134,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     public void onClick(View view) {
                         String fromDate = fromDateEtxt.getText().toString();
                         String toDate = toDateEtxt.getText().toString();
-//                        Toast.makeText(getActivity(), "Date and Time: " + fromDate + " " + toDate, Toast.LENGTH_SHORT).show();
                         c = databaseHelper.searchByDate(fromDate, toDate);
-//                        c = databaseHelper.searchByDate();
                         salesManagmentAdapter.changeCursor(c);
                         d.dismiss();
                     }
@@ -294,16 +284,32 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
             delete_item_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    databaseHelper.deleteBill(Integer.parseInt(bill_number));
-                    Cursor c = databaseHelper.getBill();
-                    salesManagmentAdapter.changeCursor(c);
-                    bill_number_tv2.setText("");
-                    mode_tv.setText("");
-                    date_tv.setText("");
-                    amount_tv.setText("");
-                    customer_name_tv.setText("");
-                    customer_contact_tv.setText("");
-                    bill_details.setAdapter(null);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                    alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    databaseHelper.deleteBill(Integer.parseInt(bill_number));
+                                    Cursor c = databaseHelper.getBill();
+                                    salesManagmentAdapter.changeCursor(c);
+                                    bill_number_tv2.setText("");
+                                    mode_tv.setText("");
+                                    date_tv.setText("");
+                                    amount_tv.setText("");
+                                    customer_name_tv.setText("");
+                                    customer_contact_tv.setText("");
+                                    bill_details.setAdapter(null);
+                                }
+                            }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
+
                 }
             });
         }

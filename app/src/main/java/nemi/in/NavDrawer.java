@@ -57,9 +57,6 @@ public class NavDrawer extends Activity {
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
         String role = databaseHelper.getLoggedInRole();
-
-        Toast.makeText(this, "Logged in as: " + role, Toast.LENGTH_SHORT).show();
-
         if (role.equalsIgnoreCase("ADMIN") || role.equalsIgnoreCase("SUPER")) {
             // POS
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
