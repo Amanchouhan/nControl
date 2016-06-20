@@ -19,16 +19,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_weight="1.5"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1.6"
         android:text="Item" />
 
     <TextView
         android:id="@+id/category_fe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_gravity="center"
-        android:layout_weight="1"
+        android:layout_weight=".5"
         android:text="quantity" />
 
     <TextView
@@ -36,10 +37,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="left"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
-        android:layout_weight="1.2"
+        android:gravity="center"
+        android:layout_weight="1.6"
         android:text="Price" />
 
     <Button
@@ -51,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:paddingBottom="5dp"
-        android:layout_weight="0.52"
+        android:layout_weight="0.42"
         android:text="X" />
 
     <Button

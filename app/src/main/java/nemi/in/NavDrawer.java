@@ -81,7 +81,7 @@ public class NavDrawer extends Activity {
 
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
-        // setting the nav drawer list adapter
+        // setting_fragment the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
@@ -147,9 +147,13 @@ public class NavDrawer extends Activity {
                 Intent in = new Intent(NavDrawer.this, Main.class);
                 startActivity(in);
                 finish();
-//
-
                 return true;
+            case R.id.menu_toggle_log:
+                Fragment f  = new SettingFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
