@@ -62,6 +62,7 @@ public class PosFragment extends Fragment {
                 if (!alist.isEmpty()) {
                     String c_name = c_name_et.getText().toString();
                     String c_contact = c_contact_et.getText().toString();
+                    {
 
                     int a = Integer.parseInt(total_amo.getText().toString());
                     databaseHelper.bill(c_name, c_contact, a);
@@ -86,7 +87,7 @@ public class PosFragment extends Fragment {
                     total_amo.setText("0");
 
                 }
-            }
+            }}
         });
 
         clear_button.setOnClickListener(new View.OnClickListener() {
@@ -296,12 +297,19 @@ public class PosFragment extends Fragment {
                         Button b2 = (Button) d.findViewById(R.id.button2);
                         qty_et = (EditText) d.findViewById(R.id.numberPicker1);
                         qty_et.setText(String.valueOf(billItems.getQty()));
+                        String sTextFromET = qty_et.getText().toString();
+                        final int qty = new Integer(sTextFromET).intValue();
+
 
                         b1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
 
-                                int quantity = Integer.parseInt(qty_et.getText().toString());
+                                    int quantity = Integer.parseInt(qty_et.getText().toString());
+                                    if(quantity <=0){
+                                        qty_et.setError("Quantity must be greater than 0");
+                                    }
+                                    else{
                                 alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
                                         quantity, alist.get(position).getPrice()));
                                 lv.setAdapter(billAdap);   // set value
@@ -313,8 +321,8 @@ public class PosFragment extends Fragment {
                                     total_amo.setText("" + total);
                                 }
                                 d.dismiss();
-                            }
-                        });
+                            }}}
+                        );
                         b2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -332,13 +340,15 @@ public class PosFragment extends Fragment {
 
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                         alertDialogBuilder.setTitle("Please select an action!");
-                        alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                        alertDialogBuilder.setMessage("Are you sure you want to delete this item?").setCancelable(false)
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        total_amo.setText("0");
-                                        billAdap.remove(billItems);
-                                        int total = 0;
+                                        alist.remove(position);
+                                        lv.setAdapter(billAdap);   // set value
+                                        billAdap.notifyDataSetChanged();
 
+                                        //Total calculation
+                                        int total = 0;
                                         for (int j = 0; j < alist.size(); j++) {
                                             total += alist.get(j).getPrice() * alist.get(j).getQty();
                                             total_amo.setText("" + total);

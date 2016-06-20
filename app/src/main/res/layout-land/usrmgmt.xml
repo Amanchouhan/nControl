@@ -33,7 +33,7 @@
             <EditText
                 android:id="@+id/usernamefield"
                 android:layout_width="fill_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:inputType="textNoSuggestions"
                 android:hint="Username">
 
@@ -49,7 +49,7 @@
             <EditText
                 android:id="@+id/passwordfield"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword" />
@@ -61,7 +61,7 @@
             <EditText
                 android:id="@+id/co_passwordfield"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Re-enter Password"
                 android:inputType="textPassword" />
@@ -76,7 +76,7 @@
                 android:id="@+id/rolefield"
                 android:inputType="textNoSuggestions"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:hint="Role" />
 
         </LinearLayout>

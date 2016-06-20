@@ -47,7 +47,8 @@
                     android:layout_weight="1"
                     android:inputType="number"
                     android:layout_height="wrap_content"
-                    android:hint="Phone" />
+                    android:hint="Phone"
+                    android:maxLength="10"/>
             </LinearLayout>
 
             <LinearLayout

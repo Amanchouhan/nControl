@@ -11,8 +11,8 @@
     <string-array name="nav_drawer_items">
         <item >POS</item>
         <item >Sales Management</item>
-        <item >Users Management</item>
-        <item >Items Management</item>
+        <item >User Management</item>
+        <item >Item Management</item>
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->

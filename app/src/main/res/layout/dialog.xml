@@ -9,7 +9,8 @@
         android:numeric="integer"
         android:hint="QTY"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:maxLength="4"/>
 
     <Button
         android:id="@+id/button2"

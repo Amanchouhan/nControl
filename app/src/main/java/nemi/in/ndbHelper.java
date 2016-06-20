@@ -115,6 +115,26 @@ public class ndbHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    //user name check
+     public boolean checkuser(String user){
+         SQLiteDatabase db = getReadableDatabase();
+         Cursor mCursor= db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE username='"+user+"'",null);
+
+         if (!(mCursor.moveToFirst()) || mCursor.getCount() ==0)
+         {
+             return false;
+    /* record exist */
+         }
+         else
+         {
+             return true;
+    /* record not exist */
+         }
+
+
+
+     }
+
     //Add a user to the db
     public void addUser(String role, String user, String pass) {
         ContentValues cv = new ContentValues();
@@ -148,9 +168,10 @@ public class ndbHelper extends SQLiteOpenHelper {
     public void deleteUser(String username) {
         int col_id = Integer.parseInt(username);
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
-        db.close();
-    }
+
+            db.execSQL("DELETE FROM " + TABLE_USERS + " WHERE " + COLUMN_ID + "=\"" + col_id + "\";");
+            db.close();
+        }
 
     /*------------------------------------Add a user to the db-----------------------------------------------------------------*/
 

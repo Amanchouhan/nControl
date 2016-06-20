@@ -72,7 +72,7 @@ public class ItemFragment extends Fragment {
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item = et_item.getText().toString().replace(' ',' ');
+                item = et_item.getText().toString().replace(' ',' ').trim();
                 category = et_category.getText().toString().trim();
                 price = et_price.getText().toString().trim();
 //                getText().toString().length()>0

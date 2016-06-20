@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
@@ -57,15 +58,22 @@ public class UserFragment extends Fragment {
                 String r = role.getText().toString();
                 String re = re_enter_password.getText().toString();
 
+
                 if (u.equals("")) {
                     username.setError("UserName");
                 } else if (p.equals("")) {
                     password.setError("Password");
-                } else if (p.compareTo(re) != 0) {
+                } else if(databaseHelper.checkuser(u)){
+                    username.setError("user name already exists");
+                }
+                else if (p.compareTo(re) != 0) {
                     re_enter_password.setError("Re-enter password");
                 } else if (r.equals("")) {
                     role.setError("Role");
-                } else {
+                } else if(!r.equalsIgnoreCase("ADMIN")  && (!r.equalsIgnoreCase("USER"))) {
+                    role.setError("user role should be user or admin");
+                }
+                else {
                     databaseHelper.addUser(r, u, p);
                     CursorAdapter adapter = (CursorAdapter) usersview.getAdapter();
                     Cursor cursor = databaseHelper.getUsers();

@@ -1,8 +1,10 @@
 package nemi.in;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -132,19 +134,21 @@ public class NavDrawer extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // toggle nav drawer on selecting action bar app icon/title
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.logout:
-                String user = databaseHelper.getLoggedInUser();
-                databaseHelper.loginStatus("false", user);
-                navDrawerItems.clear();
-                Intent in = new Intent(this, Main.class);
+
+                Intent in = new Intent(NavDrawer.this, Main.class);
                 startActivity(in);
                 finish();
+//
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

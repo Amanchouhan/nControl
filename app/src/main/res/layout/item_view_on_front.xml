@@ -6,22 +6,20 @@
 
     <TextView
         android:id="@+id/fetch_fe"
-        android:layout_width="0dp"
+        android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Description"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:singleLine="true"/>
 
     <TextView
-        android:maxLines="1"
-        android:maxLength="10"
-        android:ellipsize="end"
         android:singleLine="true"
         android:id="@+id/item_fe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="30dp"
         android:layout_weight="1.5"
         android:text="Item" />
 
@@ -48,27 +46,24 @@
         android:id="@+id/minus_item"
         android:layout_width="0dp"
         android:textSize="10dp"
-        android:textColor="#fff"
+        android:textColor="#060505"
         android:textStyle="bold"
-        android:background="#e97c7c"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:paddingBottom="5dp"
-        android:layout_weight=".3"
+        android:layout_weight="0.52"
         android:text="X" />
 
     <Button
         android:id="@+id/qty_item"
         android:textStyle="bold"
-        android:textColor="#fff"
+        android:textColor="#111111"
         android:paddingBottom="5dp"
-        android:layout_width="0dp"
+        android:layout_width="56dp"
         android:layout_marginLeft=".3dp"
-        android:background="#615bd1"
         android:textSize="10dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
-        android:layout_weight=".5"
         android:text="QTY" />
 
 
