@@ -29,4 +29,138 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
 
+
+
+    <!-- DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+    <string name="title_activity_cpudemo">MainActivity</string>
+
+    <string-array name="accordion_sections">
+        <item>Connection</item>
+        <item>Swipe Demo</item>
+        <item>FPS Demo</item>
+        <item>Smart Card Demo</item>
+        <item>Printer Demo</item>
+    </string-array>
+
+    <integer-array name="accordion_visibility">
+        <item>1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <string-array name="swipetimeoutarray">
+        <item>	Infinite	</item>
+        <item>	1	</item>
+        <item>	2	</item>
+        <item>	3	</item>
+        <item>	4	</item>
+        <item>	5	</item>
+        <item>	6	</item>
+        <item>	7	</item>
+        <item>	8	</item>
+        <item>	9	</item>
+        <item>	10	</item>
+        <item>	11	</item>
+        <item>	12	</item>
+        <item>	13	</item>
+        <item>	14	</item>
+        <item>	15	</item>
+        <item>	16	</item>
+        <item>	17	</item>
+        <item>	18	</item>
+        <item>	19	</item>
+        <item>	20	</item>
+        <item>	21	</item>
+        <item>	22	</item>
+        <item>	23	</item>
+        <item>	24	</item>
+        <item>	25	</item>
+        <item>	26	</item>
+        <item>	27	</item>
+        <item>	28	</item>
+        <item>	29	</item>
+        <item>	30	</item>
+        <item>	31	</item>
+        <item>	32	</item>
+        <item>	33	</item>
+        <item>	34	</item>
+        <item>	35	</item>
+        <item>	36	</item>
+        <item>	37	</item>
+        <item>	38	</item>
+        <item>	39	</item>
+        <item>	40	</item>
+        <item>	41	</item>
+        <item>	42	</item>
+        <item>	43	</item>
+        <item>	44	</item>
+        <item>	45	</item>
+        <item>	46	</item>
+        <item>	47	</item>
+        <item>	48	</item>
+        <item>	49	</item>
+        <item>	50	</item>
+        <item>	51	</item>
+        <item>	52	</item>
+        <item>	53	</item>
+        <item>	54	</item>
+        <item>	55	</item>
+        <item>	56	</item>
+        <item>	57	</item>
+        <item>	58	</item>
+        <item>	59	</item>
+        <item>	60	</item>
+    </string-array>
+    <string-array name="scanperfinger">
+        <item>1</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="printslipspinner">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+    </string-array>
+    <string-array name="templateformat">
+        <item>	ISO 19794-2 </item>
+        <item>	DIN V66400 Compact Size	</item>
+        <item>	DIN V66400 Compact Size, ordered by Ascending Angle	</item>
+        <item>	ANSI INCITS 378	</item>
+        <item>	ISO 19794-2, FMC Compact Size	</item>
+        <item>	ISO 19794-2, FMC Compact Size, ordered by Ascending Angle	</item>
+        <item>	ISO 19794-2, FMC Normal Size	</item>
+        <item>	MINEX A	</item>
+        <item>	SAGEM PkComp	</item>
+        <item>	SAGEM PkComp Norm	</item>
+        <item>	SAGEM PkMat	</item>
+        <item>	SAGEM PkMat Norm	</item>
+    </string-array>
+    <string-array name="slotnumber">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="cardtype">
+        <item>CPU</item>
+        <item>MEMORY</item>
+    </string-array>
 </resources>

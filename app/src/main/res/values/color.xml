@@ -6,4 +6,13 @@
     <color name="list_divider">#272727</color>
     <color name="counter_text_bg">#626262</color>
     <color name="counter_text_color">#c5c4c4</color>
+
+
+    <color name="border_color">#dedede</color>
+
+    <color name="header_color">#f6f6f6</color>
+    <color name="header_border_shadow">#ffffff</color>
+
+    <color name="section_color">#f0f0f0</color>
+
 </resources>

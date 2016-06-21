@@ -149,7 +149,7 @@ public class NavDrawer extends Activity {
                 finish();
                 return true;
             case R.id.menu_toggle_log:
-                Fragment f  = new SettingFragment();
+                Fragment f  = new AccordionWidgetDemoActivity();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
                 return true;
