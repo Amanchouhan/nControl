@@ -2359,4 +2359,5 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         // TODO Auto-generated method stub
 
     }
+
 }

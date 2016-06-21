@@ -2,6 +2,8 @@
     package="in.nemi.ncontrol">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ncontrol"
@@ -27,5 +29,6 @@
         </activity>
         <activity android:name="nemi.in.NavDrawer"/>
         <activity android:name="common.activities.SampleActivityBase"/>
+        <activity android:name="nemi.in.DeviceListActivity"/>
     </application>
 </manifest>

@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -143,13 +144,26 @@ public class NavDrawer extends Activity {
         // Handle action bar actions click
         switch (item.getItemId()) {
             case R.id.logout:
-
-                Intent in = new Intent(NavDrawer.this, Main.class);
-                startActivity(in);
-                finish();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("Please select an action!");
+                alertDialogBuilder.setMessage("are you sure ?").setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent in = new Intent(NavDrawer.this, Main.class);
+                                startActivity(in);
+                                finish();
+                            }
+                        }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
                 return true;
             case R.id.menu_toggle_log:
-                Fragment f  = new AccordionWidgetDemoActivity();
+                Fragment f = new AccordionWidgetDemoActivity();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
                 return true;
