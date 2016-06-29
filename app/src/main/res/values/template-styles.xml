@@ -21,8 +21,17 @@
     <style name="Theme.Base" parent="android:Theme.Light" />
 
     <style name="Theme.Sample" parent="Theme.Base" />
-
     <style name="AppTheme" parent="Theme.Sample" />
+
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" >-->
+        <!--<item name="colorPrimary">@color/ColorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/ColorPrimaryDark</item>-->
+    <!--</style>-->
+    <!--<style name="MyActionBar"-->
+        <!--parent="@android:style/Widget.Holo.Light.ActionBar.TabBar">-->
+    <!--&lt;!&ndash;<item name="android:background">@color/ColorPrimary</item>&ndash;&gt;-->
+    <!--</style>-->
+
     <!-- Widget styling -->
 
     <style name="Widget" />

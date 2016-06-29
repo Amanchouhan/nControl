@@ -1,12 +1,20 @@
 package nemi.in;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -19,32 +27,46 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import common.view.SlidingTabLayout;
 import in.nemi.ncontrol.R;
+import mmsl.DeviceUtility.DeviceBluetoothCommunication;
+import mmsl.DeviceUtility.DeviceCallBacks;
 
 import android.support.annotation.Nullable;
-
+import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class PosFragment extends Fragment {
+public class PosFragment extends Fragment implements
+        DeviceCallBacks {
     ListView lv, items_list;
     Button pay_button, clear_button;
     TextView total_amo;
+    static OutputStream outStream;
+
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
     Button set_qty_btn, delete_bill_btn;
     EditText qty_et, c_name_et, c_contact_et;
     ndbHelper databaseHelper;
+
+    DeviceBluetoothCommunication bluetoothCommunication;
+    String data = "00:02:0A:02:E9:9E";
     BillItems billItems;
+    byte FontStyleVal;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(data);
+        bluetoothCommunication = new DeviceBluetoothCommunication();
+        bluetoothCommunication.StartConnection(device, this);
+
         View view = inflater.inflate(R.layout.pos, container, false);
+
         alist = new ArrayList<BillItems>();
         lv = (ListView) view.findViewById(R.id.userlist);
         total_amo = (TextView) view.findViewById(R.id.total_amo);
@@ -53,17 +75,27 @@ public class PosFragment extends Fragment {
         clear_button = (Button) view.findViewById(R.id.clear);
         c_name_et = (EditText) view.findViewById(R.id.c_name_id);
         c_contact_et = (EditText) view.findViewById(R.id.c_number_id);
+//        pay_button.setEnabled(false);
 
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 if (!alist.isEmpty()) {
                     String c_name = c_name_et.getText().toString();
                     String c_contact = c_contact_et.getText().toString();
-                    {
 
+                    //print
+                    bluetoothCommunication.setPrinterFont(FontStyleVal);
+                    String name = "Name : " + c_name;
+                    bluetoothCommunication.SendData(name.getBytes());
+                    bluetoothCommunication.LineFeed();
+                    String amount = "Contact : " + c_contact;
+                    bluetoothCommunication.SendData(amount.getBytes());
+                    bluetoothCommunication.LineFeed();
+                    bluetoothCommunication.LineFeed();
+                    bluetoothCommunication.LineFeed();
+
+                    AccordionWidgetDemoActivity printHelper = new AccordionWidgetDemoActivity();
                     int a = Integer.parseInt(total_amo.getText().toString());
                     databaseHelper.bill(c_name, c_contact, a);
                     c_name_et.setText("");
@@ -73,22 +105,21 @@ public class PosFragment extends Fragment {
                     for (int i = 0; i < alist.size(); i++) {
                         databaseHelper.sales(billnumber, alist.get(i).getItem(), alist.get(i).getQty(), alist.get(i).getPrice());
                     }
-
                     lv.setAdapter(billAdap);   // set value
                     billAdap.notifyDataSetChanged();
-
                     int total = 0;
                     for (int j = 0; j < alist.size(); j++) {
                         total += alist.get(j).getPrice() * alist.get(j).getQty();
                         total_amo.setText("" + total);
                     }
-
                     billAdap.clear();
                     total_amo.setText("0");
 
                 }
-            }}
+            }
+
         });
+
 
         clear_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +128,8 @@ public class PosFragment extends Fragment {
                 total_amo.setText("0");
             }
         });
+
+
         if (savedInstanceState == null) {
             android.app.FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();
@@ -104,7 +137,264 @@ public class PosFragment extends Fragment {
             transaction.commit();
         }
         return view;
+
     }
+
+    @Override
+    public void onConnectComplete() {
+
+    }
+
+    @Override
+    public void onConnectionFailed() {
+
+    }
+
+    @Override
+    public void onPlaceFinger() {
+
+    }
+
+    @Override
+    public void onMoveFingerUP() {
+
+    }
+
+    @Override
+    public void onMoveFingerDown() {
+
+    }
+
+    @Override
+    public void onMoveFingerRight() {
+
+    }
+
+    @Override
+    public void onMoveFingerLeft() {
+
+    }
+
+    @Override
+    public void onPressFingerHard() {
+
+    }
+
+    @Override
+    public void onLatentFingerHard(String s) {
+
+    }
+
+    @Override
+    public void onRemoveFinger() {
+
+    }
+
+    @Override
+    public void onFingeracquisitioncompeted(String s) {
+
+    }
+
+    @Override
+    public void onFingerScanStarted(int i) {
+
+    }
+
+    @Override
+    public void onVerificationSuccessful(int i) {
+
+    }
+
+    @Override
+    public void onVerificationfailed() {
+
+    }
+
+    @Override
+    public void onFalseFingerDetected() {
+
+    }
+
+    @Override
+    public void onCorruptDataRecieved() {
+
+    }
+
+    @Override
+    public void onCorruptDataSent() {
+
+    }
+
+    @Override
+    public void onInternalFPModuleCommunicationerror() {
+
+    }
+
+    @Override
+    public void onFingerTooMoist() {
+
+    }
+
+    @Override
+    public void onNoResponseFromCard() {
+
+    }
+
+    @Override
+    public void onCardNotSupported() {
+
+    }
+
+    @Override
+    public void onCommandNotSupported() {
+
+    }
+
+    @Override
+    public void onInvalidCommand() {
+
+    }
+
+    @Override
+    public void onErrorOccured() {
+
+    }
+
+    @Override
+    public void onParameterOutofRange() {
+
+    }
+
+    @Override
+    public void onFingerPrintTimeout() {
+
+    }
+
+    @Override
+    public void onCancelledCommand() {
+
+    }
+
+    @Override
+    public void onSameFinger() {
+
+    }
+
+    @Override
+    public void onCommandRecievedWhileProcessing() {
+
+    }
+
+    @Override
+    public void onCommandRecievedWhileAnotherRunning() {
+
+    }
+
+    @Override
+    public void onCryptographicError() {
+
+    }
+
+    @Override
+    public void onOperationNotSupported() {
+
+    }
+
+    @Override
+    public void onTemplateRecieved(byte[] bytes) {
+
+    }
+
+    @Override
+    public void onFingerImageRecieved(byte[] bytes) {
+
+    }
+
+    @Override
+    public void onSmartCardDataRecieved(byte[] bytes) {
+
+    }
+
+    @Override
+    public void onCPUSmartCardCommandDataRecieved(byte[] bytes) {
+
+    }
+
+    @Override
+    public void onMSRDataRecieved(String s) {
+
+    }
+
+    @Override
+    public void onNoSmartCardFound() {
+
+    }
+
+    @Override
+    public void onSmartCardPresent() {
+
+    }
+
+    @Override
+    public void onWriteToSmartCardSuccessful() {
+
+    }
+
+    @Override
+    public void onErrorReadingSmartCard() {
+
+    }
+
+    @Override
+    public void onErrorOccuredWhileProccess() {
+
+    }
+
+    @Override
+    public void onErrorWritingSmartCard() {
+
+    }
+
+    @Override
+    public void onNoData() {
+
+    }
+
+    @Override
+    public void onImproveSwipe() {
+
+    }
+
+    @Override
+    public void onOutofPaper() {
+
+    }
+
+    @Override
+    public void onPlatenOpen() {
+
+    }
+
+    @Override
+    public void onHighHeadTemperature() {
+
+    }
+
+    @Override
+    public void onLowHeadTemperature() {
+
+    }
+
+    @Override
+    public void onImproperVoltage() {
+
+    }
+
+    @Override
+    public void onSuccessfulPrintIndication() {
+
+    }
+
 
     public class SlidingTabsBasicFragment extends Fragment {
         ndbHelper databaseHelper;
@@ -302,26 +592,27 @@ public class PosFragment extends Fragment {
 
 
                         b1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+                                                  @Override
+                                                  public void onClick(View view) {
 
-                                    int quantity = Integer.parseInt(qty_et.getText().toString());
-                                    if(quantity <=0){
-                                        qty_et.setError("Quantity must be greater than 0");
-                                    }
-                                    else{
-                                alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
-                                        quantity, alist.get(position).getPrice()));
-                                lv.setAdapter(billAdap);   // set value
-                                billAdap.notifyDataSetChanged();
+                                                      int quantity = Integer.parseInt(qty_et.getText().toString());
+                                                      if (quantity <= 0) {
+                                                          qty_et.setError("Quantity must be greater than 0");
+                                                      } else {
+                                                          alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
+                                                                  quantity, alist.get(position).getPrice()));
+                                                          lv.setAdapter(billAdap);   // set value
+                                                          billAdap.notifyDataSetChanged();
 
-                                int total = 0;
-                                for (int j = 0; j < alist.size(); j++) {
-                                    total += alist.get(j).getPrice() * alist.get(j).getQty();
-                                    total_amo.setText("" + total);
-                                }
-                                d.dismiss();
-                            }}}
+                                                          int total = 0;
+                                                          for (int j = 0; j < alist.size(); j++) {
+                                                              total += alist.get(j).getPrice() * alist.get(j).getQty();
+                                                              total_amo.setText("" + total);
+                                                          }
+                                                          d.dismiss();
+                                                      }
+                                                  }
+                                              }
                         );
                         b2.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -380,5 +671,6 @@ public class PosFragment extends Fragment {
         }
 
     }
+
 
 }

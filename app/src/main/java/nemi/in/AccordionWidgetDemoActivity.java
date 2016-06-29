@@ -40,10 +40,8 @@ import mmsl.DeviceUtility.DeviceCallBacks;
 import mmsl.DeviceUtility.TemplateType;
 import mmsl.GetPrintableImage.GetPrintableImage;
 
-/**
- * Created by Aman on 6/21/2016.
- */
-public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallBacks {
+public class AccordionWidgetDemoActivity extends Fragment implements
+        DeviceCallBacks {
     // private static final String TAG = "AccordionWidgetDemoActivity";
     DeviceBluetoothCommunication bluetoothCommunication;
     int count = 0;
@@ -125,69 +123,77 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
     enum SMSTATUS {
         READ_USERID, READ_USERNAME, WRITE_USERID, WRITE_USERNAME, WRITE_MEMORY, READ_MEMORY, APDU
 
-    };
+    }
+
+    ;
 
     enum SmartCardCommand {
         CreateMF, SelectMF, CreateEF, SelectEF, Write_CPU, Read_CPU
-    };
+    }
+
+    ;
 
     SmartCardCommand smartcardcommand;
     SMSTATUS smstatus;
     TemplateType templateType;
     int numberofscan;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.main_printer);
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_printer,container,false);
-
-
-// final AccordionView v = (AccordionView)
+        View view = inflater.inflate(R.layout.main_printer, container, false);
+        // final AccordionView v = (AccordionView)
         // findViewById(R.id.accordion_view);
-        recievedTextView = (TextView)view.findViewById(R.id.readertextview);
+        recievedTextView = (TextView) view.findViewById(R.id.readertextview);
         Finger_Image = (ImageView) view.findViewById(R.id.Finger_Image);
         connectButton = (Button) view.findViewById(R.id.connect);
-        disconnectButton = (Button)view. findViewById(R.id.disconnect);
-        resetButton = (Button)view. findViewById(R.id.reset);
+        disconnectButton = (Button) view.findViewById(R.id.disconnect);
+        resetButton = (Button) view.findViewById(R.id.reset);
         swipetimeoutSpinner = (Spinner) view.findViewById(R.id.swipespinner);
-        swipestartButton = (Button)view. findViewById(R.id.swipestart);
-        swipestopButton = (Button)view. findViewById(R.id.swipestop);
+        swipestartButton = (Button) view.findViewById(R.id.swipestart);
+        swipestopButton = (Button) view.findViewById(R.id.swipestop);
         mprintslipSpinner = (Spinner) view.findViewById(R.id.printslipnumberspinner);
-        fpsTimeoutSpinner = (Spinner)view. findViewById(R.id.fpstimeoutspinner);
+        fpsTimeoutSpinner = (Spinner) view.findViewById(R.id.fpstimeoutspinner);
         fpsScanperfingerSpinner = (Spinner) view.findViewById(R.id.fpsscancountspinner);
-        disableFingerPrint = (CheckBox)view. findViewById(R.id.disableFingerPrint);
-        fpsTemplateformatSpinner = (Spinner)view. findViewById(R.id.fpstemplatespinner);
-        fpsScanButton = (Button)view. findViewById(R.id.fpsscan);
+        disableFingerPrint = (CheckBox) view.findViewById(R.id.disableFingerPrint);
+        fpsTemplateformatSpinner = (Spinner) view.findViewById(R.id.fpstemplatespinner);
+        fpsScanButton = (Button) view.findViewById(R.id.fpsscan);
         fpsVerifyButton = (Button) view.findViewById(R.id.fpsverify);
-        fpsStopButton = (Button)view. findViewById(R.id.fpsstop);
+        fpsStopButton = (Button) view.findViewById(R.id.fpsstop);
         // smartcardapdu = (Button) findViewById(R.id.smapdu);
-        mPrintSlipButton = (Button)view. findViewById(R.id.printSlip);
-        slotNumberSpinner = (Spinner)view. findViewById(R.id.slotnumberspinner);
-        smartcardTypeSpinner = (Spinner)view. findViewById(R.id.cardtypespinner);
-        userIDEditText = (EditText)view. findViewById(R.id.useridedittext);
-        // userNameEditText = (EditText)view. findViewById(R.id.usernameedittext);
+        mPrintSlipButton = (Button) view.findViewById(R.id.printSlip);
+        slotNumberSpinner = (Spinner) view.findViewById(R.id.slotnumberspinner);
+        smartcardTypeSpinner = (Spinner) view.findViewById(R.id.cardtypespinner);
+        userIDEditText = (EditText) view.findViewById(R.id.useridedittext);
+        // userNameEditText = (EditText) findViewById(R.id.usernameedittext);
         smartcardReadButton = (Button) view.findViewById(R.id.smread);
-        smartcardWriteButton = (Button)view. findViewById(R.id.smwrite);
+        smartcardWriteButton = (Button) view.findViewById(R.id.smwrite);
         smartcardStopButton = (Button) view.findViewById(R.id.smstop);
 
-        mNameEditText = (EditText)view. findViewById(R.id.nameEditText);
-        mAmountEditText = (EditText)view. findViewById(R.id.amountEditText);
-        mPrintButton = (Button)view. findViewById(R.id.printButton);
+        mNameEditText = (EditText) view.findViewById(R.id.nameEditText);
+        mAmountEditText = (EditText) view.findViewById(R.id.amountEditText);
+        mPrintButton = (Button) view.findViewById(R.id.printButton);
         mDisableAutoOffButton = (Button) view.findViewById(R.id.printimageButton);
-        mPrinttestSlipButton = (Button)view. findViewById(R.id.printtestButton);
+        mPrinttestSlipButton = (Button) view.findViewById(R.id.printtestButton);
 
-        m9x24CheckBox = (RadioButton)view. findViewById(R.id.RadioButton9x24);
+        m9x24CheckBox = (RadioButton) view.findViewById(R.id.RadioButton9x24);
         m12x24CheckBox = (RadioButton) view.findViewById(R.id.RadioButton12x24);
         m16x24CheckBox = (RadioButton) view.findViewById(R.id.RadioButton16x24);
-        mBoldCheckBox = (CheckBox)view. findViewById(R.id.boldCheckBox);
+        mBoldCheckBox = (CheckBox) view.findViewById(R.id.boldCheckBox);
         mUnderlineCheckBox = (CheckBox) view.findViewById(R.id.underlineCheckBox01);
-        mDoubleHeightCheckBox = (CheckBox)view. findViewById(R.id.doubleheightCheckBox01);
+        mDoubleHeightCheckBox = (CheckBox) view.findViewById(R.id.doubleheightCheckBox01);
         mDoubleWidthCheckBox = (CheckBox) view.findViewById(R.id.doublewidthCheckBox01);
-        mPrintBarcodeButton = (Button)view. findViewById(R.id.barcodeButton);
-        mPrinterStatusButton = (Button)view. findViewById(R.id.captButton);
+        mPrintBarcodeButton = (Button) view.findViewById(R.id.barcodeButton);
+        mPrinterStatusButton = (Button) view.findViewById(R.id.captButton);
 
-        mMonalisaButton = (Button)view. findViewById(R.id.monalisaButton);
+        mMonalisaButton = (Button) view.findViewById(R.id.monalisaButton);
         mprintslipSpinner.setEnabled(false);
         fpsTimeoutSpinner.setEnabled(false);
         fpsScanperfingerSpinner.setEnabled(false);
@@ -207,7 +213,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         smartcardStopButton.setEnabled(false);
         // smartcardapdu.setEnabled(false);
 
-        mPrintButton.setEnabled(false);
+        mPrintButton.setEnabled(true);
         mDisableAutoOffButton.setEnabled(false);
         mPrinttestSlipButton.setEnabled(false);
         mPrintBarcodeButton.setEnabled(false);
@@ -218,11 +224,10 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         templateType = TemplateType.ANSI_378;
         numberofscan = 1;
         cardType = CardType.CPU;
-        filechooser = (Button)view.findViewById(R.id.filechooser);
-        filepath = (TextView)view. findViewById(R.id.tempfilepath);
+        filechooser = (Button) view.findViewById(R.id.filechooser);
+        filepath = (TextView) view.findViewById(R.id.tempfilepath);
 
-        SharedPreferences preferences = getActivity().getSharedPreferences(
-                "templatepath", 0);
+        SharedPreferences preferences = getActivity().getSharedPreferences("templatepath", 0);
 
         _ChhosenPath = preferences.getString("path", "No path Selected");
 
@@ -388,8 +393,10 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
             }
         });
 
-        mPrintButton.setOnClickListener(new View.OnClickListener() {
 
+
+        mPrintButton.setOnClickListener(new View.OnClickListener() {
+//            homesafe
             @Override
             public void onClick(View arg0) {
                 bluetoothCommunication.setPrinterFont(FontStyleVal);
@@ -404,7 +411,6 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                 bluetoothCommunication.LineFeed();
                 bluetoothCommunication.LineFeed();
                 bluetoothCommunication.LineFeed();
-
             }
         });
 
@@ -413,9 +419,9 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
             @Override
             public void onClick(View v) {
 
-                byte[] val = { 0x1B, 0x39, 0x01, 0x30, 0x31, 0x32, 0x33, 0x34,
+                byte[] val = {0x1B, 0x39, 0x01, 0x30, 0x31, 0x32, 0x33, 0x34,
                         0x35, 0x36, 0x37, 0x38, 0x39, 0x30, 0x31, 0x0A, 0x0A,
-                        0x0A, 0x0A };
+                        0x0A, 0x0A};
                 bluetoothCommunication.SendData(val);
                 bluetoothCommunication.LineFeed();
             }
@@ -521,7 +527,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                 fpsVerifyButton.setEnabled(false);
                 fpsStopButton.setEnabled(false);
 
-                mPrintButton.setEnabled(false);
+                mPrintButton.setEnabled(true);
                 mDisableAutoOffButton.setEnabled(false);
                 mPrinttestSlipButton.setEnabled(false);
                 mPrintBarcodeButton.setEnabled(false);
@@ -565,7 +571,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                 fpsScanButton.setEnabled(false);
                 fpsVerifyButton.setEnabled(false);
                 fpsStopButton.setEnabled(false);
-                mPrintButton.setEnabled(false);
+                mPrintButton.setEnabled(true);
                 mDisableAutoOffButton.setEnabled(false);
                 mPrinttestSlipButton.setEnabled(false);
                 mPrintBarcodeButton.setEnabled(false);
@@ -597,7 +603,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         });
 
 		/*
-		 * smartcardapdu.setOnClickListener(new OnClickListener(){
+         * smartcardapdu.setOnClickListener(new OnClickListener(){
 		 *
 		 * @Override public void onClick(View v) { stub smstatus =
 		 * SMSTATUS.APDU;
@@ -677,7 +683,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                     smartcardWriteButton.setEnabled(false);
                     smartcardStopButton.setEnabled(false);
 
-                    mPrintButton.setEnabled(false);
+                    mPrintButton.setEnabled(true);
                     mDisableAutoOffButton.setEnabled(false);
                     mPrinttestSlipButton.setEnabled(false);
                     mPrintBarcodeButton.setEnabled(false);
@@ -709,7 +715,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                     smartcardWriteButton.setEnabled(false);
                     smartcardStopButton.setEnabled(false);
 
-                    mPrintButton.setEnabled(false);
+                    mPrintButton.setEnabled(true);
                     mDisableAutoOffButton.setEnabled(false);
                     mPrinttestSlipButton.setEnabled(false);
                     mPrintBarcodeButton.setEnabled(false);
@@ -759,7 +765,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                         smartcardWriteButton.setEnabled(false);
                         smartcardStopButton.setEnabled(false);
 
-                        mPrintButton.setEnabled(false);
+                        mPrintButton.setEnabled(true);
                         mDisableAutoOffButton.setEnabled(false);
                         mPrinttestSlipButton.setEnabled(false);
                         mPrintBarcodeButton.setEnabled(false);
@@ -902,7 +908,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                 smartcardWriteButton.setEnabled(false);
                 smartcardStopButton.setEnabled(false);
 
-                mPrintButton.setEnabled(false);
+                mPrintButton.setEnabled(true);
                 mDisableAutoOffButton.setEnabled(false);
                 mPrinttestSlipButton.setEnabled(false);
                 mPrintBarcodeButton.setEnabled(false);
@@ -929,8 +935,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
 
             @Override
             public void onClick(View arg0) {
-
-                Intent i = new Intent(getActivity(),DeviceListActivity.class);
+                Intent i = new Intent(getActivity(), DeviceListActivity.class);
                 startActivityForResult(i, 12);
             }
         });
@@ -961,7 +966,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
                 smartcardWriteButton.setEnabled(false);
                 smartcardStopButton.setEnabled(false);
                 // smartcardapdu.setEnabled(false);
-                mPrintButton.setEnabled(false);
+                mPrintButton.setEnabled(true);
                 mDisableAutoOffButton.setEnabled(false);
                 mPrinttestSlipButton.setEnabled(false);
                 mPrintBarcodeButton.setEnabled(false);
@@ -1023,15 +1028,10 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == getActivity().RESULT_OK) {
             connectButton.setEnabled(false);
-            Toast.makeText(getActivity(),
-                    "Device selected : " + data.getStringExtra("Device"),
-                    Toast.LENGTH_SHORT).show();
-            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
-                    .getDefaultAdapter();
-            BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(data
-                    .getStringExtra("Device"));
+            Toast.makeText(getActivity(),"Device selected : " + data.getStringExtra("Device"), Toast.LENGTH_SHORT).show();
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(data.getStringExtra("Device"));
             bluetoothCommunication = new DeviceBluetoothCommunication();
-
             bluetoothCommunication.StartConnection(device, this);
         }
     }
@@ -1039,8 +1039,8 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (bluetoothCommunication != null)
-            bluetoothCommunication.StopConnection();
+//        if (bluetoothCommunication != null)
+//            bluetoothCommunication.StopConnection();
     }
 
     protected void showFileChooser() {
@@ -1077,9 +1077,9 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
 
     private void CreateMF(int slotnumber) {
 
-        byte[] create_mf_command = { 0x00, (byte) 0xE0, 0x00, 0x00, 0x10, 0x62,
+        byte[] create_mf_command = {0x00, (byte) 0xE0, 0x00, 0x00, 0x10, 0x62,
                 0x0E, (byte) 0x82, 0x01, 0x38, (byte) 0x83, 0x02, 0x3F, 0x00,
-                (byte) 0x84, 0x05, 0x4D, 0x45, 0x54, 0x53, 0x4C };
+                (byte) 0x84, 0x05, 0x4D, 0x45, 0x54, 0x53, 0x4C};
         // mConnection.sendData(create_mf_command, 0);
         bluetoothCommunication.CPUSmartCardCommand(create_mf_command,
                 slotnumber);
@@ -1088,8 +1088,8 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
 
     private void SelectMF(int slotnumber) {
 
-        byte[] Select_MF_Command = { 0x00, (byte) 0xA4, 0x00, 0x00, 0x02, 0x3F,
-                0x00 };
+        byte[] Select_MF_Command = {0x00, (byte) 0xA4, 0x00, 0x00, 0x02, 0x3F,
+                0x00};
         // mConnection.sendData(Select_MF_Command, 0);
         bluetoothCommunication.CPUSmartCardCommand(Select_MF_Command,
                 slotnumber);
@@ -1099,10 +1099,10 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
 
     private void createEF(int slotnumber, int maxbytesinfile, int fileid) {
 
-        byte[] Create_EF_User_ID_Command = { 0x00, (byte) 0xE0, 0x00, 0x00,
+        byte[] Create_EF_User_ID_Command = {0x00, (byte) 0xE0, 0x00, 0x00,
                 0x0E, 0x62, 0x0C, (byte) 0x80, 0x02, 0x00,
                 (byte) maxbytesinfile, (byte) 0x82, 0x02, 0x01, 0x01,
-                (byte) 0x83, 0x02, 0x30, (byte) fileid };
+                (byte) 0x83, 0x02, 0x30, (byte) fileid};
         // mConnection.sendData(Create_EF_User_ID_Command, 0);
         // smartcardcommand = SmartCardCommand.CreateEF ;
         bluetoothCommunication.CPUSmartCardCommand(Create_EF_User_ID_Command,
@@ -1112,8 +1112,8 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
 
     private void SelectEF(int slotnumber, int fileid) {
 
-        byte[] Select_EF_User_ID_Command = { 0x00, (byte) 0xA4, 0x00, 0x00,
-                0x02, 0x30, (byte) fileid };
+        byte[] Select_EF_User_ID_Command = {0x00, (byte) 0xA4, 0x00, 0x00,
+                0x02, 0x30, (byte) fileid};
         // mConnection.sendData(Select_EF_User_ID_Command, 0);
         bluetoothCommunication.CPUSmartCardCommand(Select_EF_User_ID_Command,
                 slotnumber);
@@ -1274,7 +1274,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         smartcardStopButton.setEnabled(false);
         // smartcardapdu.setEnabled(false);
 
-        mPrintButton.setEnabled(false);
+        mPrintButton.setEnabled(true);
         mDisableAutoOffButton.setEnabled(false);
         mPrinttestSlipButton.setEnabled(false);
         mPrintBarcodeButton.setEnabled(false);
@@ -2072,7 +2072,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
 
                 bluetoothCommunication.SendData(CommandImagePrint); // CommandImagePrint.length
 
-                byte[] CommandImagePrint2 = { 0x1B, 0x32 }; // Command to set
+                byte[] CommandImagePrint2 = {0x1B, 0x32}; // Command to set
                 // Default Line
                 // Spacing
 
@@ -2314,7 +2314,7 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         // userNameEditText.setEnabled(true);
         mprintslipSpinner.setEnabled(false);
         mPrinterStatusButton.setEnabled(false);
-        mPrintButton.setEnabled(false);
+        mPrintButton.setEnabled(true);
         mDisableAutoOffButton.setEnabled(false);
         mPrinttestSlipButton.setEnabled(false);
         mPrintBarcodeButton.setEnabled(false);
@@ -2359,5 +2359,4 @@ public class AccordionWidgetDemoActivity extends Fragment implements DeviceCallB
         // TODO Auto-generated method stub
 
     }
-
 }

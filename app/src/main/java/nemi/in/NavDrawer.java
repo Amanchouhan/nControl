@@ -10,12 +10,17 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -40,6 +45,7 @@ public class NavDrawer extends Activity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
+    @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         databaseHelper = new ndbHelper(this, null, null, 1);
@@ -88,8 +94,11 @@ public class NavDrawer extends Activity {
         mDrawerList.setAdapter(adapter);
 
         // enabling action bar app icon and behaving it as toggle button
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        if (getActionBar() != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
+        }
+
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_drawer, //nav menu toggle icon
@@ -97,13 +106,17 @@ public class NavDrawer extends Activity {
                 R.string.app_name // nav drawer close - description for accessibility
         ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                if (getActionBar() != null) {
+                    getActionBar().setTitle(mTitle);
+                }
                 // calling onPrepareOptionsMenu() to show action bar icons
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                if (getActionBar() != null) {
+                    getActionBar().setTitle(mDrawerTitle);
+                }
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
             }
@@ -112,7 +125,9 @@ public class NavDrawer extends Activity {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            displayView(0);
+            if (getActionBar() != null) {
+                displayView(0);
+            }
         }
     }
 
@@ -146,7 +161,7 @@ public class NavDrawer extends Activity {
             case R.id.logout:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle("Please select an action!");
-                alertDialogBuilder.setMessage("are you sure ?").setCancelable(false)
+                alertDialogBuilder.setMessage("are you want to logout ?").setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent in = new Intent(NavDrawer.this, Main.class);
@@ -163,7 +178,10 @@ public class NavDrawer extends Activity {
                 alertDialog.show();
                 return true;
             case R.id.menu_toggle_log:
+//                Intent in = new Intent(NavDrawer.this,AccordionWidgetDemoActivity.class);
+//                startActivity(in);
                 Fragment f = new AccordionWidgetDemoActivity();
+
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
                 return true;
@@ -212,7 +230,9 @@ public class NavDrawer extends Activity {
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
-            setTitle(navMenuTitles[position]);
+            if (getActionBar() != null) {
+                setTitle(navMenuTitles[position]);
+            }
             mDrawerLayout.closeDrawer(mDrawerList);
 
 
@@ -233,7 +253,9 @@ public class NavDrawer extends Activity {
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        if (getActionBar() != null) {
+            getActionBar().setTitle(mTitle);
+        }
     }
 
     @Override
@@ -259,5 +281,6 @@ public class NavDrawer extends Activity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+
 
 }

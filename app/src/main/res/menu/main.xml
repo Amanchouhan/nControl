@@ -1,13 +1,19 @@
-
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_toggle_log"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <item
+        android:id="@+id/menu_toggle_log"
         android:showAsAction="always"
         android:title="@string/action_settings"
         tools:ignore="AppCompatResource" />
-    <item android:id="@+id/logout"
-        android:showAsAction="always"
+    <item
+        android:id="@+id/logout"
         android:icon="@drawable/log_im"
+        android:showAsAction="always"
         android:title="@string/sample_show_log"
         tools:ignore="AppCompatResource" />
 </menu>

@@ -18,7 +18,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_home_white</item>
         <item>@drawable/ic_people_im</item>
         <item>@drawable/ic_people_im</item>
         <item>@drawable/ic_people_im</item>

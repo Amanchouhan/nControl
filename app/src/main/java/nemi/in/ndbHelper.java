@@ -118,7 +118,7 @@ public class ndbHelper extends SQLiteOpenHelper {
     //user name check
      public boolean checkuser(String user){
          SQLiteDatabase db = getReadableDatabase();
-         Cursor mCursor= db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE username='"+user+"'",null);
+         Cursor mCursor= db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE username='" + user + "'",null);
 
          if (!(mCursor.moveToFirst()) || mCursor.getCount() ==0)
          {

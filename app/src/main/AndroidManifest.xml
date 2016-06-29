@@ -29,6 +29,7 @@
         </activity>
         <activity android:name="nemi.in.NavDrawer"/>
         <activity android:name="common.activities.SampleActivityBase"/>
+        <!--<activity android:name="nemi.in.AccordionWidgetDemoActivity"/>-->
         <activity android:name="nemi.in.DeviceListActivity"/>
     </application>
 </manifest>

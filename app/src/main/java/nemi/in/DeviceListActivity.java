@@ -123,8 +123,7 @@ public class DeviceListActivity extends Activity {
 		// If BT is not on, request that it be enabled.
 		// setupChat() will then be called during onActivityResult
 		if (!mBtAdapter.isEnabled()) {
-			Intent enableIntent = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 			// Otherwise, setup the chat session
 		} else {
@@ -168,18 +167,15 @@ public class DeviceListActivity extends Activity {
 				mPairedDevicesArrayAdapter.add(map);
 			}
 		} else {
-			String noDevices = getResources().getText(R.string.none_paired)
-					.toString();
+			String noDevices = getResources().getText(R.string.none_paired).toString();
 			HashMap<String, String> map = null;
 			map = new HashMap<String, String>();
 			map.put(BluetoothListDataBinder.KEY_NAME, noDevices);
 			map.put(BluetoothListDataBinder.KEY_ADDRESS, noDevices);
-
 			mPairedDevicesArrayAdapter.add(map);
 		}
 
-		pairedListView.setAdapter(new BluetoothListDataBinder(this,
-				mPairedDevicesArrayAdapter));
+		pairedListView.setAdapter(new BluetoothListDataBinder(this,mPairedDevicesArrayAdapter));
 	}
 
 	@Override
@@ -221,8 +217,7 @@ public class DeviceListActivity extends Activity {
 
 	// The on-click listener for all devices in the ListViews
 	private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> av, View v, int position,
-				long arg3) {
+		public void onItemClick(AdapterView<?> av, View v, int position,long arg3) {
 			try {
 				if (mBtAdapter.isDiscovering()) {
 					// Cancel discovery because it's costly and we're about to
@@ -234,18 +229,16 @@ public class DeviceListActivity extends Activity {
 
 			String info = "";
 			if (newDevicesListView == (ListView) v.getParent()) {
-				info = mNewDevicesArrayAdapter.get(position).get(
-						BluetoothListDataBinder.KEY_ADDRESS);
+				info = mNewDevicesArrayAdapter.get(position).get(BluetoothListDataBinder.KEY_ADDRESS);
 
 			} else {
-				info = mPairedDevicesArrayAdapter.get(position).get(
-						BluetoothListDataBinder.KEY_ADDRESS);
+				info = mPairedDevicesArrayAdapter.get(position).get(BluetoothListDataBinder.KEY_ADDRESS);
 
 			}
+
 			Device = info;
-			Intent i = new Intent(getApplicationContext(),
-					AccordionWidgetDemoActivity.class);
-			i.putExtra("Device", info);
+			Intent i = new Intent(getApplicationContext(),AccordionWidgetDemoActivity.class);
+			i.putExtra("Device", "00:02:0A:02:E9:9E");
 			setResult(RESULT_OK, i);
 			finish();
 		}
@@ -261,27 +254,22 @@ public class DeviceListActivity extends Activity {
 			// When discovery finds a device
 			if (BluetoothDevice.ACTION_FOUND.equals(action)) {
 				// Get the BluetoothDevice object from the Intent
-				BluetoothDevice device = intent
-						.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 				// If it's already paired, skip it, because it's been listed
 				// already
 				if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
 
 					HashMap<String, String> map = new HashMap<String, String>();
 					map.put(BluetoothListDataBinder.KEY_NAME, device.getName());
-					map.put(BluetoothListDataBinder.KEY_ADDRESS,
-							device.getAddress());
+					map.put(BluetoothListDataBinder.KEY_ADDRESS,device.getAddress());
 					BluetoothClass _BluetoothClass = device.getBluetoothClass();
 					if (_BluetoothClass != null) {
-						map.put(BluetoothListDataBinder.KEY_CLASS, String
-								.valueOf(_BluetoothClass.getMajorDeviceClass()));
+						map.put(BluetoothListDataBinder.KEY_CLASS, String.valueOf(_BluetoothClass.getMajorDeviceClass()));
 					}
 					if (!mNewDevicesArrayAdapter.contains(map)) {
 						mNewDevicesArrayAdapter.add(map);
-						newDevicesListView
-								.setAdapter(new BluetoothListDataBinder(
-										DeviceListActivity.this,
-										mNewDevicesArrayAdapter));
+						newDevicesListView.setAdapter(new BluetoothListDataBinder(DeviceListActivity.this,
+								mNewDevicesArrayAdapter));
 					}
 				}
 				// When discovery is finished, change the Activity title

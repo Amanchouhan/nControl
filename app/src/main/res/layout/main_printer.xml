@@ -25,13 +25,13 @@
             android:textSize="22sp" />
     </ScrollView>
 
-    <!--    <TextView
-            android:id="@+id/imagereceived"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Image Recieved"
-            android:textColor="#000000" />
-    -->
+<!--    <TextView
+        android:id="@+id/imagereceived"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Image Recieved"
+        android:textColor="#000000" />
+-->
     <ImageView
         android:id="@+id/Finger_Image"
         android:layout_width="fill_parent"
@@ -62,6 +62,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
+
 
                 <Button
                     android:id="@+id/connect"
@@ -362,6 +363,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Company : Nemi Radgivning"
+                    android:textColor="#000000" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Address : 3rd Floor, #330,\n
+                     27th Main, Sector 2,\n
+                     HSR Layout,\n
+                     Bangalore-560102,\n
+                     Karnataka, India."
+                    android:textColor="#000000"/>
 
                 <TableRow
                     android:id="@+id/TableRow01"
@@ -525,7 +542,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical" >
-
+<!--print button-->
                             <Button
                                 android:id="@+id/printButton"
                                 android:layout_width="fill_parent"
@@ -605,7 +622,7 @@
                             android:id="@+id/LinearLayout04"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            >
+                           >
 
                             <TextView
                                 android:id="@+id/numberofSlip"

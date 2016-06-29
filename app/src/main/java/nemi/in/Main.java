@@ -67,23 +67,25 @@ public class Main extends Activity {
                 }
             });
         }
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String user = username.getText().toString();
+                String pass = password.getText().toString();
+                if(user.equals("")) {
+                    username.setError("Username");
+                } else if (pass.equals("")) {
+                    password.setError("password");
+                } else if (pass.equals(databaseHelper.loginUser(user))) {
+                    Intent i = new Intent(Main.this, NavDrawer.class);
+                    //change login status of the logged in user
+                    databaseHelper.loginStatus("true", user);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
-    //User Login
-    public void login(View v) {
-        String user = username.getText().toString();
-        String pass = password.getText().toString();
-        if(user.equals("")) {
-            username.setError("Username");
-        } else if (pass.equals("")) {
-            password.setError("password");
-        } else if (pass.equals(databaseHelper.loginUser(user))) {
-            Intent i = new Intent(Main.this, NavDrawer.class);
-            //change login status of the logged in user
-            databaseHelper.loginStatus("true", user);
-            startActivity(i);
-        } else {
-            Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-        }
-    }
 }
