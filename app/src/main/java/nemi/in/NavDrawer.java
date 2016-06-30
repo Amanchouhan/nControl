@@ -180,7 +180,7 @@ public class NavDrawer extends Activity {
             case R.id.menu_toggle_log:
 //                Intent in = new Intent(NavDrawer.this,AccordionWidgetDemoActivity.class);
 //                startActivity(in);
-                Fragment f = new AccordionWidgetDemoActivity();
+                Fragment f = new DeviceListActivity();
 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();

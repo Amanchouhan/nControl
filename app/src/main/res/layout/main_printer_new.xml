@@ -12,7 +12,6 @@
         android:id="@+id/Finger_Image"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
     <ScrollView
@@ -26,29 +25,13 @@
 
 
                 <Button
-                    android:id="@+id/connect"
+                    android:id="@+id/connect_id"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="startService"
-                    android:layout_below="@+id/imageButton"
-                    android:text="Connect" />
+                    android:text="Repair" />
 
-                <Button
-                    android:id="@+id/disconnect"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
 
-                    android:onClick="stopService"
-                    android:text="Disconnect" />
-
-                <Button
-                    android:id="@+id/reset"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Reset" />
             </LinearLayout>
 
     </ScrollView>

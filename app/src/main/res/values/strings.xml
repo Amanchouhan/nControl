@@ -19,9 +19,9 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home_white</item>
+        <item>@drawable/ic_attach_money</item>
         <item>@drawable/ic_people_im</item>
-        <item>@drawable/ic_people_im</item>
-        <item>@drawable/ic_people_im</item>
+        <item>@drawable/ic_move_to_inbox</item>
     </array>
 
     <string name="from_date">From Date</string>

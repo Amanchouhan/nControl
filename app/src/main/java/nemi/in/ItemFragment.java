@@ -4,12 +4,13 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
+import android.provider.MediaStore;
 import android.text.InputFilter;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,10 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import in.nemi.ncontrol.R;
 
@@ -30,9 +33,12 @@ public class ItemFragment extends Fragment {
     ItemsAdapter itemsAdapter;
     ndbHelper databaseHelper;
     EditText et_item, et_category, et_price;
-    Button additem;
+    Button additem, upload;
     ListView itemview;
-    String item,category, price;
+    String item, category, price;
+    private static int RESULT_LOAD_IMG = 1;
+    String imgDecodableString;
+    ImageView imgView;
 
     public ItemFragment() {
     }
@@ -45,34 +51,29 @@ public class ItemFragment extends Fragment {
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
         final ListView itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
-
+        imgView = (ImageView) rootView.findViewById(R.id.imgView);
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
+        upload = (Button) rootView.findViewById(R.id.buttonLoadPicture);
 
         additem = (Button) rootView.findViewById(R.id.additembutton);
         et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-        et_category.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
-//        et_category.addTextChangedListener(new TextWatcher() {
-//
-//                                               public void afterTextChanged(Editable s) {
-//                                               }
-//
-//                                               public void beforeTextChanged(CharSequence s, int start,
-//                                                                             int count, int after) {
-//                                               }
-//
-//                                               public void onTextChanged(CharSequence s, int start,
-//                                                                         int before, int count) {
-////                                                   Cursor c = databaseHelper.getCategories();
-////                                                   et_category.setText(""+c);
-//                                               }
-//                                           });
+        et_category.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create intent to Open Image applications like Gallery, Google Photos
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // Start the Intent
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+            }
+        });
         //Add Item to db
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item = et_item.getText().toString().replace(' ',' ').trim();
+                item = et_item.getText().toString().replace(' ', ' ').trim();
                 category = et_category.getText().toString().trim();
                 price = et_price.getText().toString().trim();
 //                getText().toString().length()>0
@@ -100,11 +101,44 @@ public class ItemFragment extends Fragment {
         return rootView;
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == getActivity().RESULT_OK && null != data) {
+                // Get the Image from data
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                // Get the cursor
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+                // Set the Image in ImageView after decoding the String
+                imgView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
+
+            } else {
+                Toast.makeText(getActivity(), "You haven't picked Image", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     public class ItemsAdapter extends CursorAdapter {
 
         public ItemsAdapter(Context context, Cursor cursor) {
             super(context, cursor);
         }
+
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -112,6 +146,7 @@ public class ItemFragment extends Fragment {
 
             return view;
         }
+
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             TextView tv_column = (TextView) view.findViewById(R.id.tv_item_column_id);
@@ -190,7 +225,6 @@ public class ItemFragment extends Fragment {
 
 
     }
-
 
 
 }
