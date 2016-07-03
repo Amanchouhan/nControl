@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,14 @@ public class ItemFragment extends Fragment {
     ItemsAdapter itemsAdapter;
     ndbHelper databaseHelper;
     EditText et_item, et_category, et_price;
-    Button additem, upload;
+    Button additem, upload_imagepath;
     ListView itemview;
-    String item, category, price;
+    String item, category, price, imagepath;
     private static int RESULT_LOAD_IMG = 1;
     String imgDecodableString;
-    ImageView imgView;
+    ImageView tv_imagepath;
+    String selectedImagePath;
+    private static final int MY_INTENT_CLICK = 302;
 
     public ItemFragment() {
     }
@@ -51,86 +54,77 @@ public class ItemFragment extends Fragment {
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
         final ListView itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
-        imgView = (ImageView) rootView.findViewById(R.id.imgView);
+
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
-        upload = (Button) rootView.findViewById(R.id.buttonLoadPicture);
+        upload_imagepath = (Button) rootView.findViewById(R.id.buttonLoadPicture);
 
         additem = (Button) rootView.findViewById(R.id.additembutton);
         et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         et_category.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
-        upload.setOnClickListener(new View.OnClickListener() {
+        upload_imagepath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create intent to Open Image applications like Gallery, Google Photos
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                // Start the Intent
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                Intent intent = new Intent();
+                intent.setType("*/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select File"), MY_INTENT_CLICK);
             }
         });
-        //Add Item to db
-        additem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                item = et_item.getText().toString().replace(' ', ' ').trim();
-                category = et_category.getText().toString().trim();
-                price = et_price.getText().toString().trim();
-//                getText().toString().length()>0
-                if (item.equals("")) {
-                    et_item.setError("Item");
-                } else if (category.equals("")) {
-                    et_category.setError("Category");
-                } else if (price.equals("")) {
-                    //please look after this before doing anything
-                    et_price.setError("Price");
-                } else {
-//                    Integer.parseInt(et_price.getText().toString())
 
-                    databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()));
-//                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
-                    Cursor cursor = databaseHelper.getItems();
-                    itemsAdapter.changeCursor(cursor);
-
-                    et_item.setText("");
-                    et_category.setText("");
-                    et_price.setText("");
-                }
-            }
-        });
         return rootView;
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            // When an Image is picked
-            if (requestCode == RESULT_LOAD_IMG && resultCode == getActivity().RESULT_OK && null != data) {
-                // Get the Image from data
+        if (resultCode == getActivity().RESULT_OK) {
+            if (requestCode == MY_INTENT_CLICK) {
+                if (null == data) return;
 
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                final Uri selectedImageUri = data.getData();
 
-                // Get the cursor
-                Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-                // Move to first row
-                cursor.moveToFirst();
+                //MEDIA GALLERY
+//                selectedImagePath = ImageFilePath.getPath(getActivity(), selectedImageUri);
+                Log.i("Image File Path", "" + selectedImagePath);
 
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imgDecodableString = cursor.getString(columnIndex);
-                cursor.close();
-                // Set the Image in ImageView after decoding the String
-                imgView.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
+                additem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        item = et_item.getText().toString().replace(' ', ' ').trim();
+                        category = et_category.getText().toString().trim();
+                        price = et_price.getText().toString().trim();
+                        selectedImagePath = ImageFilePath.getPath(getActivity(), selectedImageUri);
 
-            } else {
-                Toast.makeText(getActivity(), "You haven't picked Image", Toast.LENGTH_LONG).show();
+
+                        Toast.makeText(getActivity(), "image path is : " + selectedImagePath, Toast.LENGTH_LONG).show();
+//                getText().toString().length()>0
+                        if (item.equals("")) {
+                            et_item.setError("Item");
+                        } else if (category.equals("")) {
+                            et_category.setError("Category");
+                        } else if (price.equals("")) {
+                            //please look after this before doing anything
+                            et_price.setError("Price");
+                        } else {
+//                    Integer.parseInt(et_price.getText().toString())
+
+                            databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
+//                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
+                            Cursor cursor = databaseHelper.getItems();
+                            itemsAdapter.changeCursor(cursor);
+
+                            et_item.setText("");
+                            et_category.setText("");
+                            et_price.setText("");
+
+
+                        }
+                    }
+                });
+
             }
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
         }
-
     }
 
     public class ItemsAdapter extends CursorAdapter {
@@ -153,12 +147,13 @@ public class ItemFragment extends Fragment {
             TextView tv_item = (TextView) view.findViewById(R.id.tv_item_id);
             TextView tv_category = (TextView) view.findViewById(R.id.tv_category_id);
             TextView tv_price = (TextView) view.findViewById(R.id.tv_price_id);
-
+            tv_imagepath = (ImageView) view.findViewById(R.id.imgView);
             tv_column.setText(cursor.getString(0));
             tv_item.setText(cursor.getString(1));
             tv_category.setText(cursor.getString(2));
             tv_price.setText(cursor.getString(3));
 
+            tv_imagepath.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(4)));
             final String item_columnid = tv_column.getText().toString();
             final String item = tv_item.getText().toString();
             final String category = tv_category.getText().toString();

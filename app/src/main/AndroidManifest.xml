@@ -30,5 +30,6 @@
         </activity>
         <activity android:name="nemi.in.NavDrawer" />
         <activity android:name="common.activities.SampleActivityBase" />
+        <service android:name="printing.DrawerService"/>
     </application>
 </manifest>

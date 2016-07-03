@@ -4,32 +4,33 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import in.nemi.ncontrol.R;
+import printing.DrawerService;
 
 public class NavDrawer extends Activity {
+    PosFragment abc = new PosFragment();
     ndbHelper databaseHelper;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -41,13 +42,16 @@ public class NavDrawer extends Activity {
     // slide menu items
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
-
+    MHandler mHandler;
+    BroadcastReceiver broadcastReceiver;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
-
+  private IntentFilter intentFilter = null;
+    String data = "00:02:0A:02:E9:9E";
     @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         databaseHelper = new ndbHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_);
@@ -129,8 +133,66 @@ public class NavDrawer extends Activity {
                 displayView(0);
             }
         }
+
+        setBluetoothReceiver();
     }
 
+    public void setBluetoothReceiver() {
+        mHandler = new MHandler(this);
+        DrawerService.addHandler(mHandler);
+
+        Intent intent = new Intent(this, DrawerService.class);
+        startService(intent);
+        System.out.println("inside on create");
+        initBroadcast();
+    }
+
+    private void initBroadcast() {
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // TODO Auto-generated method stub
+
+                String action = intent.getAction();
+                BluetoothDevice device = intent
+                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+
+                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+
+
+                    if (device != null && device.getName() != null) {
+                        if (device == null)
+                            return;
+
+
+                        DrawerService.workThread.connectBt(data);
+                        /*try {
+                            PosFragment.bluetoothConnected();
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }*/
+
+                    }
+                }
+
+            }
+
+            ;
+        };
+            intentFilter=new
+
+            IntentFilter();
+
+            intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
+            //  intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+            intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+            // intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+
+            registerReceiver(broadcastReceiver, intentFilter);
+
+    }
     /**
      * Slide menu item click listener
      */
@@ -180,7 +242,7 @@ public class NavDrawer extends Activity {
             case R.id.menu_toggle_log:
 //                Intent in = new Intent(NavDrawer.this,AccordionWidgetDemoActivity.class);
 //                startActivity(in);
-                Fragment f = new DeviceListActivity();
+                Fragment f = new Settings();
 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();

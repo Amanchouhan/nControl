@@ -33,6 +33,8 @@ public class ndbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ITEM = "item";
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_PRICE = "price";
+    public static final String COLUMN_IMAGE_PATH = "imagepath";
+
 
     //sales table vars
     public static final String TABLE_SALES = "sales";
@@ -67,7 +69,8 @@ public class ndbHelper extends SQLiteOpenHelper {
                 COLUMN_ID + " integer primary key autoincrement," +
                 COLUMN_ITEM + " text not null," +
                 COLUMN_CATEGORY + " text not null," +
-                COLUMN_PRICE + " integer not null" +
+                COLUMN_PRICE + " integer not null," +
+                COLUMN_IMAGE_PATH + " text not null" +
                 ");";
         db.execSQL(itemsquery);
 
@@ -175,11 +178,12 @@ public class ndbHelper extends SQLiteOpenHelper {
 
     /*------------------------------------Add a user to the db-----------------------------------------------------------------*/
 
-    public void addItem(String item, String category, int price) {
+    public void addItem(String item, String category, int price,String path) {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ITEM, item);
         cv.put(COLUMN_CATEGORY, category);
         cv.put(COLUMN_PRICE, price);
+        cv.put(COLUMN_IMAGE_PATH, path);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_ITEMS, null, cv);
         db.close();
@@ -239,7 +243,8 @@ public class ndbHelper extends SQLiteOpenHelper {
 
     public Cursor getPOSItems(String a) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("select * from items where " + COLUMN_CATEGORY + "=\"" + a + "\";", null);
+        Cursor c = db.rawQuery("select * from items where " + COLUMN_CATEGORY + "=\"" + a + "\";", null);
+        return c;
     }
 
 /*-------------------------------------------------------pos bill-----------------------------------------------------------------*/

@@ -10,12 +10,14 @@ class BillItems {
     String item;
     int qty = 0;
     int price;
+    String imagepath;
 
-    public BillItems(String id, String item, int qty, int price) {
+    public BillItems(String id, String item, int qty, int price, String imagepath) {
         this.id = id;
         this.item = item;
         this.qty = qty;
         this.price = price;
+        this.imagepath = imagepath;
     }
 
     public String getId() {
@@ -50,8 +52,22 @@ class BillItems {
         this.price = price;
     }
 
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
     @Override
     public String toString() {
-        return "" + item + "," + qty + "," + price;
+        return "BillItems{" +
+                "id='" + id + '\'' +
+                ", item='" + item + '\'' +
+                ", qty=" + qty +
+                ", price=" + price +
+                ", imagepath='" + imagepath + '\'' +
+                '}';
     }
 }
