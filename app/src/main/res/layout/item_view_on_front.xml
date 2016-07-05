@@ -9,27 +9,27 @@
         android:layout_width="10dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:singleLine="true"
         android:text="Description"
-        android:visibility="invisible"
-        android:singleLine="true"/>
+        android:visibility="invisible" />
 
     <TextView
-        android:singleLine="true"
         android:id="@+id/item_fe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="5dp"
         android:layout_weight="1.6"
+        android:singleLine="true"
         android:text="Item" />
 
     <TextView
         android:id="@+id/category_fe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center"
         android:layout_weight=".5"
+        android:gravity="center"
         android:text="quantity" />
 
     <TextView
@@ -39,33 +39,43 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
-        android:gravity="center"
         android:layout_weight="1.6"
+        android:gravity="center"
         android:text="Price" />
 
-    <Button
-        android:id="@+id/minus_item"
-        android:layout_width="0dp"
-        android:textSize="10dp"
-        android:textColor="#060505"
-        android:textStyle="bold"
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:paddingBottom="5dp"
-        android:layout_weight="0.42"
-        android:text="X" />
+        android:background="#ccc"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/qty_item"
-        android:textStyle="bold"
-        android:textColor="#111111"
-        android:paddingBottom="5dp"
-        android:layout_width="56dp"
-        android:layout_marginLeft=".3dp"
-        android:textSize="10dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:text="QTY" />
+
+        <Button
+            android:id="@+id/minus_item"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="0.42"
+            android:background="#ccc"
+            android:text="X"
+            android:textColor="#060505"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/qty_item"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft=".3dp"
+            android:background="#ccc"
+
+            android:text="QTY"
+            android:textColor="#111111"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </LinearLayout>

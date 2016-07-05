@@ -15,9 +15,9 @@
         android:id="@+id/imageView1"
         android:layout_weight=".15"
         android:layout_gravity="center"
+        android:background="@drawable/no_image"
         android:layout_width="50dp"
-        android:layout_height="75dp"
-        android:background="#fdd" />
+        android:layout_height="75dp" />
 
 
     <TextView

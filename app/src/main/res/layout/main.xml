@@ -29,6 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="login"
-        android:text="Login" />
+        android:text="Login"
+        android:textColor="@color/white"
+        android:background="@drawable/button_curved"
+        android:layout_margin="3dp"/>
 
 </LinearLayout>

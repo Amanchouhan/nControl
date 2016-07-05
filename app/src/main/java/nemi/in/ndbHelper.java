@@ -251,7 +251,7 @@ public class ndbHelper extends SQLiteOpenHelper {
 
     public int checkLastBillNumber() {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT billnumber FROM sales ORDER BY billnumber DESC LIMIT 1;", null);
+        Cursor cursor = db.rawQuery("SELECT _id FROM bill ORDER BY _id DESC LIMIT 1;", null);
         int billnumber = 0;
         if (cursor.moveToFirst()) {
             billnumber = Integer.parseInt(cursor.getString(0));
@@ -272,7 +272,7 @@ public class ndbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    private String getDateTime() {
+    public String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();

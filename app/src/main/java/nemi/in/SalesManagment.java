@@ -4,13 +4,11 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.app.DatePickerDialog.OnDateSetListener;
 
@@ -52,6 +49,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
     Button btn_datepicker;
     int year_x, month_x, day_x;
     static final int DIALOG_ID = 0;
+
     private int mHour, mMinute;
 
     public SalesManagment() {
@@ -81,12 +79,12 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
         bill_details = (ListView) rootView.findViewById(R.id.bill_sale_view);
         bill_details.setAdapter(billDetailAdapter);
 
-        int a = databaseHelper.checkLastBillNumber();
-        if (a != 0) {
-            Cursor c = databaseHelper.getSale(a);
+        int bill = databaseHelper.checkLastBillNumber();
+        if (bill != 0) {
+            Cursor c = databaseHelper.getSale(bill);
             billDetailAdapter.changeCursor(c);
-            Cursor d = databaseHelper.getBillInfo(a);
-            bill_number_tv2.setText("" + a);
+            Cursor d = databaseHelper.getBillInfo(bill);
+            bill_number_tv2.setText("" + bill);
             mode_tv.setText("CASH");
             d.moveToFirst();
             date_tv.setText(d.getString(1));
@@ -96,6 +94,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
         } else {
             Toast.makeText(getActivity(), "No bills to show!", Toast.LENGTH_SHORT).show();
         }
+
 /*=========================================================search Button===============================================================*/
             search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,7 +245,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.bill_listview_adap, parent, false);
+            View view = inflater.inflate(R.layout.salesmgmt_bills_listview, parent, false);
             return view;
         }
 
@@ -270,6 +269,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     int a = Integer.parseInt(bill_number);
                     Cursor c = databaseHelper.getSale(a);
                     billDetailAdapter.changeCursor(c);
+                    billDetailAdapter.notifyDataSetChanged();
                     Cursor b = databaseHelper.getBillInfo(a);
                     bill_number_tv2.setText(bill_number);
                     mode_tv.setText("CASH");
@@ -333,7 +333,6 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
             TextView item = (TextView) view.findViewById(R.id.tv_item_view_id);
             TextView qty = (TextView) view.findViewById(R.id.tv_quantity_view_id);
             TextView price = (TextView) view.findViewById(R.id.tv_price_view_id);
-
 
             item.setText(cursor.getString(1));
             qty.setText(cursor.getString(2));

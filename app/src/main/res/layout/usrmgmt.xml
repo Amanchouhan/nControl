@@ -111,6 +111,7 @@
                     android:layout_weight="1.45"
                     android:gravity="start"
                     android:paddingStart="4dp"
+                    android:paddingLeft="4dp"
                     android:text="USER NAME"
                     android:textSize="20dp"
                     android:textStyle="bold" />

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimaryDark">#cb3d3d</color>
+    <color name="pinka200">#FF4091</color>
+    <color name="indigo500">#3F51B5</color>
+    <color name="button">#7B7BC0</color>
+    <color name="button_accent">#a2a2d3</color>
+    <color name="white">#FFFFFF</color>
+    <color name="shadow">#333333</color>
+    <color name="indigoa200">#536DFE</color>
+    <color name="red_warning">#F44336</color>
 </resources>

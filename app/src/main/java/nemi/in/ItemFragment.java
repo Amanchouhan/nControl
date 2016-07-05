@@ -113,12 +113,9 @@ public class ItemFragment extends Fragment {
 //                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
                             Cursor cursor = databaseHelper.getItems();
                             itemsAdapter.changeCursor(cursor);
-
                             et_item.setText("");
                             et_category.setText("");
                             et_price.setText("");
-
-
                         }
                     }
                 });

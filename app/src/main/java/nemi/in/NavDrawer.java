@@ -47,14 +47,15 @@ public class NavDrawer extends Activity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
   private IntentFilter intentFilter = null;
-    String data = "00:02:0A:02:E9:9E";
-    @SuppressWarnings("ResourceType")
+//    String data = "00:02:0A:02:E9:9E";
+    String data = "00:02:0A:03:1D:F5";
+//    String data = "00:12:6F:73:DA:04";  @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         databaseHelper = new ndbHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_);
+        setContentView(R.layout.navdrawer_frame_listview);
         mTitle = mDrawerTitle = getTitle();
         // load slide menu items
 
@@ -241,11 +242,11 @@ public class NavDrawer extends Activity {
                 return true;
             case R.id.menu_toggle_log:
 //                Intent in = new Intent(NavDrawer.this,AccordionWidgetDemoActivity.class);
-//                startActivity(in);
-                Fragment f = new Settings();
-
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
+////                startActivity(in);
+//                Fragment f = new Settings();
+//
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
                 return true;
 
             default:

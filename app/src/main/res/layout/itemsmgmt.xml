@@ -3,7 +3,7 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="left"
+    android:gravity="start"
     android:orientation="horizontal">
 
     <TableLayout
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText android:numeric="integer"
+            <EditText
                 android:id="@+id/price_id"
                 android:inputType="number"
                 android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:hint="Select Imagepath" >
+                android:text="Select Imagepath" >
             </Button>
 
 
@@ -113,12 +113,12 @@
             <TextView
                 android:id="@+id/path"
                 android:layout_width="0dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:paddingStart="4dp"
                 android:gravity="start"
                 android:layout_height="wrap_content"
-                android:layout_weight=".9"/>
+                android:layout_weight=".8"/>
             <TextView
                 android:id="@+id/tv_item_id"
                 android:layout_width="0dp"
@@ -127,7 +127,7 @@
                 android:paddingStart="4dp"
                 android:gravity="start"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
+                android:layout_weight="1.4"
                 android:text="ITEM"/>
 
             <TextView
@@ -135,7 +135,7 @@
                 android:layout_width="0dp"
                 android:layout_marginLeft="5dp"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:gravity="start"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.60"

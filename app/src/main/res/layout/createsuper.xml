@@ -10,8 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#999"
+
         android:gravity="center"
+        android:background="@drawable/button"
         android:text="Create Super"
         android:textSize="25sp" />
 
@@ -48,6 +49,7 @@
 
     <Button
         android:id="@+id/addsuper"
+        android:background="@drawable/button_curved"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
