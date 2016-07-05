@@ -266,6 +266,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
             view_item_id.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     int a = Integer.parseInt(bill_number);
                     Cursor c = databaseHelper.getSale(a);
                     billDetailAdapter.changeCursor(c);
