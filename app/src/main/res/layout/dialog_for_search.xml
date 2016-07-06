@@ -29,6 +29,7 @@
 
             <EditText
                 android:id="@+id/tv_bill_number_id"
+                android:inputType="number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

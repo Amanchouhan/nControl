@@ -96,7 +96,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
         }
 
 /*=========================================================search Button===============================================================*/
-            search_btn.setOnClickListener(new View.OnClickListener() {
+        search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog d = new Dialog(getActivity());
@@ -117,14 +117,23 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 amount_btn = (ImageButton) d.findViewById(R.id.amountbtn_id);
                 cname_btn = (ImageButton) d.findViewById(R.id.customernamebtn_id);
                 ccontact_btn = (ImageButton) d.findViewById(R.id.customercontactbtn_id);
-
+//                if()
                 billnumber_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int bill_number = Integer.parseInt(et_bill_number.getText().toString());
-                        c = databaseHelper.searchByBillNumber(bill_number);
+                        String bill = et_bill_number.getText().toString();
+
+                        if (bill.equals("")) {
+                            et_bill_number.setError("Warrning only numeric value use !");
+                            Toast.makeText(getActivity(), "Don't search by without bill number", Toast.LENGTH_SHORT).show();
+                        } else if((Integer.parseInt(bill))>=0){
+                            c = databaseHelper.searchByBillNumber(Integer.parseInt(bill));
                             salesManagmentAdapter.changeCursor(c);
                             d.dismiss();
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Not valid...", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -133,9 +142,15 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     public void onClick(View view) {
                         String fromDate = fromDateEtxt.getText().toString();
                         String toDate = toDateEtxt.getText().toString();
-                        c = databaseHelper.searchByDate(fromDate, toDate);
-                        salesManagmentAdapter.changeCursor(c);
-                        d.dismiss();
+                        if (fromDate.equals("")) {
+                            Toast.makeText(getActivity(), "Please put FromDate !", Toast.LENGTH_SHORT).show();
+                        } else if (toDate.equals("")) {
+                            Toast.makeText(getActivity(), "Please put ToDate !", Toast.LENGTH_SHORT).show();
+                        } else {
+                            c = databaseHelper.searchByDate(fromDate, toDate);
+                            salesManagmentAdapter.changeCursor(c);
+                            d.dismiss();
+                        }
                     }
                 });
 
@@ -143,9 +158,13 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
                         int amount = Integer.parseInt(et_amount.getText().toString());
-                        c = databaseHelper.searchByAmount(amount);
-                        salesManagmentAdapter.changeCursor(c);
-                        d.dismiss();
+                        if (amount > 0) {
+                            c = databaseHelper.searchByAmount(amount);
+                            salesManagmentAdapter.changeCursor(c);
+                            d.dismiss();
+                        } else {
+                            Toast.makeText(getActivity(), "Please search by valid amount!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -153,10 +172,13 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
                         String customer_name = et_customer_name.getText().toString();
-                        c = databaseHelper.searchByCustomerName(customer_name);
-                        salesManagmentAdapter.changeCursor(c);
-                        d.dismiss();
-
+                        if (customer_name.equals("")) {
+                            Toast.makeText(getActivity(), "Please search by valid name !", Toast.LENGTH_SHORT).show();
+                        } else {
+                            c = databaseHelper.searchByCustomerName(customer_name);
+                            salesManagmentAdapter.changeCursor(c);
+                            d.dismiss();
+                        }
                     }
                 });
 
@@ -164,9 +186,13 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onClick(View view) {
                         String customer_contact = et_customer_contact.getText().toString();
-                        c = databaseHelper.searchByCustomerContact(customer_contact);
-                        salesManagmentAdapter.changeCursor(c);
-                        d.dismiss();
+                        if (customer_contact.equals("")) {
+                            Toast.makeText(getActivity(), "Please search by valid contact number!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            c = databaseHelper.searchByCustomerContact(customer_contact);
+                            salesManagmentAdapter.changeCursor(c);
+                            d.dismiss();
+                        }
                     }
                 });
                 cancel_button = (Button) d.findViewById(R.id.btn_cancel_id);

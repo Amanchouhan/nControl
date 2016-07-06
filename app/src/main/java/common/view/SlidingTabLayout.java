@@ -135,7 +135,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        textView.setWidth(size.x / 5);
+        textView.setWidth(size.x / 8);
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<--End Tab view Resize here-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
