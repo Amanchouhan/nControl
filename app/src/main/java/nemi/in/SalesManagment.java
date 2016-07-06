@@ -143,8 +143,10 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                         String fromDate = fromDateEtxt.getText().toString();
                         String toDate = toDateEtxt.getText().toString();
                         if (fromDate.equals("")) {
+                            fromDateEtxt.setError("Warning select FromDate !");
                             Toast.makeText(getActivity(), "Please put FromDate !", Toast.LENGTH_SHORT).show();
                         } else if (toDate.equals("")) {
+                            toDateEtxt.setError("Warning select ToDate !");
                             Toast.makeText(getActivity(), "Please put ToDate !", Toast.LENGTH_SHORT).show();
                         } else {
                             c = databaseHelper.searchByDate(fromDate, toDate);
@@ -157,13 +159,16 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 amount_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int amount = Integer.parseInt(et_amount.getText().toString());
-                        if (amount > 0) {
-                            c = databaseHelper.searchByAmount(amount);
+                        String amount = et_amount.getText().toString();
+                        if(amount.equals("")){
+                            et_amount.setError("Warrning only numeric value use !");
+                            Toast.makeText(getActivity(), "Don't search by without amount", Toast.LENGTH_SHORT).show();
+                        }else if (Integer.parseInt(amount) > 0) {
+                            c = databaseHelper.searchByAmount(Integer.parseInt(amount));
                             salesManagmentAdapter.changeCursor(c);
                             d.dismiss();
                         } else {
-                            Toast.makeText(getActivity(), "Please search by valid amount!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Please search by valid amount !", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -173,6 +178,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     public void onClick(View view) {
                         String customer_name = et_customer_name.getText().toString();
                         if (customer_name.equals("")) {
+                            et_customer_name.setError("Warning only Alphabet value !");
                             Toast.makeText(getActivity(), "Please search by valid name !", Toast.LENGTH_SHORT).show();
                         } else {
                             c = databaseHelper.searchByCustomerName(customer_name);
@@ -187,6 +193,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                     public void onClick(View view) {
                         String customer_contact = et_customer_contact.getText().toString();
                         if (customer_contact.equals("")) {
+                            et_customer_contact.setError("Warning only numeric value!");
                             Toast.makeText(getActivity(), "Please search by valid contact number!", Toast.LENGTH_SHORT).show();
                         } else {
                             c = databaseHelper.searchByCustomerContact(customer_contact);
