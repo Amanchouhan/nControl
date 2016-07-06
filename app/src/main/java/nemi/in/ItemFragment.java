@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+
 import in.nemi.ncontrol.R;
 
 /**
@@ -39,8 +42,9 @@ public class ItemFragment extends Fragment {
     String item, category, price, imagepath;
     private static int RESULT_LOAD_IMG = 1;
     String imgDecodableString;
+    Uri selectedImageUri;
     ImageView tv_imagepath;
-    String selectedImagePath;
+    String selectedImagePath = "noimageselected";
     private static final int MY_INTENT_CLICK = 302;
 
     public ItemFragment() {
@@ -57,12 +61,14 @@ public class ItemFragment extends Fragment {
 
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         et_category = (EditText) rootView.findViewById(R.id.category_id);
+
         et_price = (EditText) rootView.findViewById(R.id.price_id);
         upload_imagepath = (Button) rootView.findViewById(R.id.buttonLoadPicture);
 
         additem = (Button) rootView.findViewById(R.id.additembutton);
         et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         et_category.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+
         upload_imagepath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +76,37 @@ public class ItemFragment extends Fragment {
                 intent.setType("*/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select File"), MY_INTENT_CLICK);
+            }
+        });
+        additem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item = et_item.getText().toString().replace(' ', ' ').trim();
+                category = et_category.getText().toString();
+                price = et_price.getText().toString().trim();
+                if (item.equals("")) {
+                    et_item.setError("Item");
+                } else if (category.equals("")) {
+                    et_category.setError("Category");
+                } else if (price.equals("")) {
+                    //please look after this before doing anything
+                    et_price.setError("Price");
+                } else if (selectedImagePath.equals("noimageselected")) {
+                    databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
+                    Cursor cursor = databaseHelper.getItems();
+                    itemsAdapter.changeCursor(cursor);
+                    et_item.setText("");
+                    et_category.setText("");
+                    et_price.setText("");
+                    Toast.makeText(getActivity(), "No Image Selected!", Toast.LENGTH_SHORT).show();
+                } else {
+                    databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
+                    Cursor cursor = databaseHelper.getItems();
+                    itemsAdapter.changeCursor(cursor);
+                    et_item.setText("");
+                    et_category.setText("");
+                    et_price.setText("");
+                }
             }
         });
 
@@ -81,47 +118,24 @@ public class ItemFragment extends Fragment {
         if (resultCode == getActivity().RESULT_OK) {
             if (requestCode == MY_INTENT_CLICK) {
                 if (null == data) return;
-
-                final Uri selectedImageUri = data.getData();
-
+                 selectedImageUri = data.getData();
                 //MEDIA GALLERY
-//                selectedImagePath = ImageFilePath.getPath(getActivity(), selectedImageUri);
+                selectedImagePath = ImageFilePath.getPath(getActivity(), selectedImageUri);
                 Log.i("Image File Path", "" + selectedImagePath);
-
-                additem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        item = et_item.getText().toString().replace(' ', ' ').trim();
-                        category = et_category.getText().toString().trim();
-                        price = et_price.getText().toString().trim();
-                        selectedImagePath = ImageFilePath.getPath(getActivity(), selectedImageUri);
-
-
-                        Toast.makeText(getActivity(), "image path is : " + selectedImagePath, Toast.LENGTH_LONG).show();
-//                getText().toString().length()>0
-                        if (item.equals("")) {
-                            et_item.setError("Item");
-                        } else if (category.equals("")) {
-                            et_category.setError("Category");
-                        } else if (price.equals("")) {
-                            //please look after this before doing anything
-                            et_price.setError("Price");
-                        } else {
-//                    Integer.parseInt(et_price.getText().toString())
-
-                            databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
-//                    CursorAdapter adapter = (CursorAdapter) itemview.getAdapter();
-                            Cursor cursor = databaseHelper.getItems();
-                            itemsAdapter.changeCursor(cursor);
-                            et_item.setText("");
-                            et_category.setText("");
-                            et_price.setText("");
-                        }
-                    }
-                });
-
             }
         }
+    }
+
+    // itemAddOn is fuction used in addItem button
+    public void itemAddOn() {
+
+        databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
+        Cursor cursor = databaseHelper.getItems();
+        itemsAdapter.changeCursor(cursor);
+        et_item.setText("");
+        et_category.setText("");
+        et_price.setText("");
+        Toast.makeText(getActivity(), "Item added itemAddOn...", Toast.LENGTH_SHORT).show();
     }
 
     public class ItemsAdapter extends CursorAdapter {

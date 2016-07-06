@@ -240,14 +240,14 @@ public class NavDrawer extends Activity {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
                 return true;
-            case R.id.menu_toggle_log:
+//            case R.id.menu_toggle_log:
 //                Intent in = new Intent(NavDrawer.this,AccordionWidgetDemoActivity.class);
 ////                startActivity(in);
 //                Fragment f = new Settings();
 //
 //                FragmentManager fragmentManager = getFragmentManager();
 //                fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
-                return true;
+//                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -261,7 +261,7 @@ public class NavDrawer extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.menu_toggle_log).setVisible(!drawerOpen);
+//        menu.findItem(R.id.menu_toggle_log).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
