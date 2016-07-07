@@ -1,6 +1,7 @@
 package nemi.in;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,13 +19,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import java.io.ByteArrayOutputStream;
 
@@ -44,9 +49,11 @@ public class ItemFragment extends Fragment {
     String imgDecodableString;
     Uri selectedImageUri;
     ImageView tv_imagepath;
+    RadioGroup radioGroup;
+    RadioButton new_rad, old_rad;
     String selectedImagePath = "noimageselected";
     private static final int MY_INTENT_CLICK = 302;
-
+    int selectedId;
     public ItemFragment() {
     }
 
@@ -60,8 +67,11 @@ public class ItemFragment extends Fragment {
         itemview.setAdapter(itemsAdapter);
 
         et_item = (EditText) rootView.findViewById(R.id.item_id);
-        et_category = (EditText) rootView.findViewById(R.id.category_id);
+        radioGroup = (RadioGroup) rootView.findViewById(R.id.myRadioGroup);
+        new_rad = (RadioButton) rootView.findViewById(R.id.new_rd);
+        old_rad = (RadioButton) rootView.findViewById(R.id.old_rd);
 
+        et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
         upload_imagepath = (Button) rootView.findViewById(R.id.buttonLoadPicture);
 
@@ -78,37 +88,62 @@ public class ItemFragment extends Fragment {
                 startActivityForResult(Intent.createChooser(intent, "Select File"), MY_INTENT_CLICK);
             }
         });
-        additem.setOnClickListener(new View.OnClickListener() {
+        radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
             @Override
-            public void onClick(View v) {
-                item = et_item.getText().toString().replace(' ', ' ').trim();
-                category = et_category.getText().toString();
-                price = et_price.getText().toString().trim();
-                if (item.equals("")) {
-                    et_item.setError("Item");
-                } else if (category.equals("")) {
-                    et_category.setError("Category");
-                } else if (price.equals("")) {
-                    //please look after this before doing anything
-                    et_price.setError("Price");
-                } else if (selectedImagePath.equals("noimageselected")) {
-                    databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
-                    Cursor cursor = databaseHelper.getItems();
-                    itemsAdapter.changeCursor(cursor);
-                    et_item.setText("");
-                    et_category.setText("");
-                    et_price.setText("");
-                    Toast.makeText(getActivity(), "No Image Selected!", Toast.LENGTH_SHORT).show();
-                } else {
-                    databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
-                    Cursor cursor = databaseHelper.getItems();
-                    itemsAdapter.changeCursor(cursor);
-                    et_item.setText("");
-                    et_category.setText("");
-                    et_price.setText("");
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // find which radio button is selected
+                if (checkedId == R.id.new_rd) {
+                    Toast.makeText(getActivity(), "new categroy", Toast.LENGTH_SHORT).show();
+                } else if (checkedId == R.id.old_rd) {
+
+                    Toast.makeText(getActivity(), "old categroy", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        selectedId = radioGroup.getCheckedRadioButtonId();
+        additem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (selectedId == new_rad.getId()) {
+                    item = et_item.getText().toString().replace(' ', ' ').trim();
+                    category = et_category.getText().toString();
+                    price = et_price.getText().toString().trim();
+                    if (item.equals("")) {
+                        et_item.setError("Item");
+                    } else if (category.equals("")) {
+                        et_category.setError("Category");
+                    } else if (price.equals("")) {
+                        //please look after this before doing anything
+                        et_price.setError("Price");
+                    } else if (selectedImagePath.equals("noimageselected")) {
+                        databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
+                        Cursor cursor = databaseHelper.getItems();
+                        itemsAdapter.changeCursor(cursor);
+                        et_item.setText("");
+                        et_category.setText("");
+                        et_price.setText("");
+                        Toast.makeText(getActivity(), "No Image Selected!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
+                        Cursor cursor = databaseHelper.getItems();
+                        itemsAdapter.changeCursor(cursor);
+                        et_item.setText("");
+                        et_category.setText("");
+                        et_price.setText("");
+                    }
+                }else if(selectedId == old_rad.getId()){
+                    final Dialog d = new Dialog(getActivity());
+                    d.setContentView(R.layout.createsuper);
+                    d.setTitle("Super doesn't exist!");
+                    d.setCancelable(false);
+                    d.show();
+                }
+
+            }
+        });
+
 
         return rootView;
     }
@@ -118,7 +153,7 @@ public class ItemFragment extends Fragment {
         if (resultCode == getActivity().RESULT_OK) {
             if (requestCode == MY_INTENT_CLICK) {
                 if (null == data) return;
-                 selectedImageUri = data.getData();
+                selectedImageUri = data.getData();
                 //MEDIA GALLERY
                 selectedImagePath = ImageFilePath.getPath(getActivity(), selectedImageUri);
                 Log.i("Image File Path", "" + selectedImagePath);

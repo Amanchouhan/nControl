@@ -17,12 +17,12 @@
 
             <TextView
                 android:id="@+id/textView1"
-                android:textStyle="bold"
-                android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="7dp"
-                android:text="Item Detail" />
+                android:text="Item Detail"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </TableRow>
 
         <LinearLayout
@@ -32,13 +32,45 @@
 
             <EditText
                 android:id="@+id/item_id"
-                android:inputType="textNoSuggestions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Item">
+                android:hint="Item"
+                android:inputType="textNoSuggestions">
 
                 <requestFocus />
             </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/myRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/new_rd"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/new_rd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="new category" />
+
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/old_rd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="old category" />
+
+
+            </RadioGroup>
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -48,12 +80,12 @@
 
             <EditText
                 android:id="@+id/category_id"
-                android:inputType="textNoSuggestions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAllCaps="true"
                 android:ems="10"
-                android:hint="Category" />
+                android:hint="Category"
+                android:inputType="textNoSuggestions"
+                android:textAllCaps="true" />
 
         </LinearLayout>
 
@@ -64,12 +96,13 @@
 
             <EditText
                 android:id="@+id/price_id"
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Price" />
+                android:hint="Price"
+                android:inputType="number" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,11 +114,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:text="Select Imagepath" >
-            </Button>
+                android:text="Select Imagepath"></Button>
 
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/LinearLayout4"
             android:layout_width="310dp"
@@ -110,54 +143,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/path"
                 android:layout_width="0dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:paddingStart="4dp"
-                android:gravity="start"
                 android:layout_height="wrap_content"
-                android:layout_weight=".8"/>
+                android:layout_weight=".8"
+                android:gravity="start"
+                android:paddingStart="4dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_item_id"
                 android:layout_width="0dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:paddingStart="4dp"
-                android:gravity="start"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.4"
-                android:text="ITEM"/>
+                android:gravity="start"
+                android:paddingStart="4dp"
+                android:text="ITEM"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_category_id"
                 android:layout_width="0dp"
-                android:layout_marginLeft="5dp"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:gravity="start"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1.60"
-                android:text="CATEGORY"/>
+                android:gravity="start"
+                android:text="CATEGORY"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_price_id"
                 android:layout_width="0dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"
-                android:gravity="start"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="2.30"
-                android:text="PRICE"/>
+                android:gravity="start"
+                android:text="PRICE"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
         </LinearLayout>
+
         <ListView
             android:id="@+id/itemlistview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
+            android:layout_height="match_parent"></ListView>
 
     </LinearLayout>
 

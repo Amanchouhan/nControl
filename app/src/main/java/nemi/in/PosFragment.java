@@ -398,12 +398,9 @@ public class PosFragment extends Fragment {
                 }
 
                 String a = TabbyName[position];
-
                 posCursorAdapter = new POSCursorAdapter(getActivity(), databaseHelper.getPOSItems(a));
                 items_list = (ListView) view.findViewById(R.id.items_list_id);
                 items_list.setAdapter(posCursorAdapter);
-
-
                 items_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {

@@ -130,6 +130,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
 
+
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<--Tab view Resize here-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
