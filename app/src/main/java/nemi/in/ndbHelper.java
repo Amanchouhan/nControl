@@ -32,6 +32,7 @@ public class ndbHelper extends SQLiteOpenHelper {
     public static final String TABLE_ITEMS = "items";
     public static final String COLUMN_ITEM = "item";
     public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_ALIAS_CATEGORY = "aliascategory";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_IMAGE_PATH = "imagepath";
 
@@ -178,7 +179,8 @@ public class ndbHelper extends SQLiteOpenHelper {
 
     /*------------------------------------Add a user to the db-----------------------------------------------------------------*/
 
-    public void addItem(String item, String category, int price,String path) {
+    public void addItem(String item, String category,int price,String path) {
+
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ITEM, item);
         cv.put(COLUMN_CATEGORY, category);
@@ -187,6 +189,7 @@ public class ndbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_ITEMS, null, cv);
         db.close();
+
     }
 
     public Cursor getItems() {
@@ -239,6 +242,7 @@ public class ndbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("select distinct category from " + TABLE_ITEMS + "", null);
         //category :- fruit,food,seafood;
+
     }
 
     public Cursor getPOSItems(String a) {

@@ -32,6 +32,8 @@ import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import in.nemi.ncontrol.R;
 
@@ -96,8 +98,15 @@ public class ItemFragment extends Fragment {
                 if (checkedId == R.id.new_rd) {
                     Toast.makeText(getActivity(), "new categroy", Toast.LENGTH_SHORT).show();
                 } else if (checkedId == R.id.old_rd) {
-
-                    Toast.makeText(getActivity(), "old categroy", Toast.LENGTH_SHORT).show();
+                    final Dialog d = new Dialog(getActivity());
+//                  ArrayList<BillItems>billItemses=new ArrayList<BillItems>();
+                    Cursor c = databaseHelper.getCategories();
+                    ListView list = (ListView)d.findViewById(R.id.list_cate_dia_id);
+                    d.setContentView(R.layout.old_category_dialog);
+                    d.setTitle("Select the category from list !");
+                    d.setCancelable(true);
+                    d.show();
+                    Toast.makeText(getActivity(), "old category", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -106,7 +115,6 @@ public class ItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (selectedId == new_rad.getId()) {
                     item = et_item.getText().toString().replace(' ', ' ').trim();
                     category = et_category.getText().toString();
                     price = et_price.getText().toString().trim();
@@ -133,14 +141,6 @@ public class ItemFragment extends Fragment {
                         et_category.setText("");
                         et_price.setText("");
                     }
-                }else if(selectedId == old_rad.getId()){
-                    final Dialog d = new Dialog(getActivity());
-                    d.setContentView(R.layout.createsuper);
-                    d.setTitle("Super doesn't exist!");
-                    d.setCancelable(false);
-                    d.show();
-                }
-
             }
         });
 

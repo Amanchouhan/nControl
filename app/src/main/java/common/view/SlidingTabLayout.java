@@ -177,7 +177,12 @@ public class SlidingTabLayout extends HorizontalScrollView {
             if (tabTitleView == null && TextView.class.isInstance(tabView)) {
                 tabTitleView = (TextView) tabView;
             }
-            tabTitleView.setText(c.getString(0));
+            if(c.getString(0).length() > 12) {
+                tabTitleView.setText(c.getString(0).substring(0,11));
+            } else {
+                tabTitleView.setText(c.getString(0));
+            }
+            Log.e("Error...", c.getString(0));
             tabView.setOnClickListener(tabClickListener);
             mTabStrip.addView(tabView);
             c.moveToNext();
@@ -259,6 +264,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }
 
     }
+
     private class TabClickListener implements OnClickListener {
         @Override
         public void onClick(View v) {

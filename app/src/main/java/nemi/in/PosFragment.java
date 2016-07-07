@@ -103,9 +103,16 @@ public class PosFragment extends Fragment {
                         for (int i = 0; i < alist.size(); i++) {
                             databaseHelper.sales(billnumber, alist.get(i).getItem(), alist.get(i).getQty(), alist.get(i).getPrice());
                             String item = alist.get(i).getItem().replaceAll(" .*", "...");
+                            String item1=null;
+                            if(item.length()>15){
+                                 item1 = item.substring(0,15);
+                            }else if(item.length()<15){
+                                 item1 = item;
+                            }
+
                             String qty = String.valueOf(alist.get(i).getQty());
                             String price = String.valueOf(alist.get(i).getPrice());
-                            printDatap2 += "          " + qty + "            " + item + "       " + price + "\n";
+                            printDatap2 += item1 + "    " + qty + "              " + price + "\n";
                         }
                         for (int j = 0; j < alist.size(); j++) {
                             total += alist.get(j).getPrice() * alist.get(j).getQty();
@@ -398,9 +405,12 @@ public class PosFragment extends Fragment {
                 }
 
                 String a = TabbyName[position];
+
                 posCursorAdapter = new POSCursorAdapter(getActivity(), databaseHelper.getPOSItems(a));
                 items_list = (ListView) view.findViewById(R.id.items_list_id);
                 items_list.setAdapter(posCursorAdapter);
+
+
                 items_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -490,29 +500,12 @@ public class PosFragment extends Fragment {
                         d.setContentView(R.layout.dialog);
                         Button b1 = (Button) d.findViewById(R.id.button1);
                         Button b2 = (Button) d.findViewById(R.id.button2);
-                        Button incre_btn = (Button) d.findViewById(R.id.incre);
-                        Button decre_btn = (Button) d.findViewById(R.id.decre);
 
 
                         qty_et = (EditText) d.findViewById(R.id.numberPicker1);
                         qty_et.setText(String.valueOf(alist.get(position).getQty()));
                         String sTextFromET = qty_et.getText().toString();
                         final int qty = new Integer(sTextFromET);
-
-//                        incre_btn.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//
-//
-//
-//                            }
-//                        });
-//                        decre_btn.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//
-//                            }
-//                        });
 
 
                         b1.setOnClickListener(new View.OnClickListener() {
