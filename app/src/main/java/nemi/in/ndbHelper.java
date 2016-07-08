@@ -32,7 +32,6 @@ public class ndbHelper extends SQLiteOpenHelper {
     public static final String TABLE_ITEMS = "items";
     public static final String COLUMN_ITEM = "item";
     public static final String COLUMN_CATEGORY = "category";
-    public static final String COLUMN_ALIAS_CATEGORY = "aliascategory";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_IMAGE_PATH = "imagepath";
 
@@ -241,6 +240,12 @@ public class ndbHelper extends SQLiteOpenHelper {
     public Cursor getCategories() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("select distinct category from " + TABLE_ITEMS + "", null);
+        //category :- fruit,food,seafood;
+
+    }
+    public Cursor getOldCategories() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("select distinct _id, category from " + TABLE_ITEMS + "", null);
         //category :- fruit,food,seafood;
 
     }

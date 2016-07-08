@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class PosFragment extends Fragment {
     int billnumber;
     String c_name = null;
     String c_contact = null;
+    String item_length_25 ;
 
     @Nullable
     @Override
@@ -102,17 +104,39 @@ public class PosFragment extends Fragment {
                         billnumber++;
                         for (int i = 0; i < alist.size(); i++) {
                             databaseHelper.sales(billnumber, alist.get(i).getItem(), alist.get(i).getQty(), alist.get(i).getPrice());
-                            String item = alist.get(i).getItem().replaceAll(" .*", "...");
-                            String item1=null;
-                            if(item.length()>15){
-                                 item1 = item.substring(0,15);
-                            }else if(item.length()<15){
-                                 item1 = item;
-                            }
-
+                            String item = alist.get(i).getItem();
                             String qty = String.valueOf(alist.get(i).getQty());
                             String price = String.valueOf(alist.get(i).getPrice());
-                            printDatap2 += item1 + "    " + qty + "              " + price + "\n";
+
+                            String blank = " ";
+                            if(item.length()>20){
+                               item =  item.substring(0,20);
+                            }else {
+                                int b = 20 - item.length();
+                                for(int k=0;k<b;k++) {
+                                    item += blank;
+                                }
+                            }
+
+                            if(qty.length()>5){
+                                qty = qty.substring(0,5);
+                            }else {
+                                int c = 5-qty.length();
+                                for(int q=0;q<c;q++){
+                                    qty += blank;
+                                }
+                            }
+
+                            if(price.length()>8){
+                                price = price.substring(0,8);
+                            }else {
+                                int d = 8-price.length();
+                                for(int p=0;p<d;p++) {
+                                    price += blank;
+                                }
+                            }
+
+                            printDatap2 += item + "     " + qty + "     " + price + "\n";
                         }
                         for (int j = 0; j < alist.size(); j++) {
                             total += alist.get(j).getPrice() * alist.get(j).getQty();
@@ -126,19 +150,22 @@ public class PosFragment extends Fragment {
                                 "          HSR Layout,Bangalore-560102,          \n" +
                                 "               Karnataka, India.                \n" +
                                 "------------------------------------------------\n" +
-                                "       Date & Time: " + databaseHelper.getDateTime() + "\n" +
-                                "       BillNumber " + databaseHelper.checkLastBillNumber() + "\n" +
-                                "       Name: " + c_name + "                     \n" +
-                                "       Contact: " + c_contact + "               \n" +
+                                "Date & Time: " + databaseHelper.getDateTime() + "\n" +
+                                "BillNumber " + databaseHelper.checkLastBillNumber() + "\n" +
+                                "Name: " + c_name + "                     \n" +
+                                "Contact: " + c_contact + "               \n" +
                                 "------------------------------------------------\n";
 
                         String printDatap3 = "------------------------------------------------\n" +
-                                "                           TOTAL   " + total_amo.getText().toString() + "\n" +
+                                "TOTAL                              " + total_amo.getText().toString() + "\n" +
                                 "                                                \n" +
                                 "            Thank you for visiting D3           \n" +
                                 "------------------------------------------------\n" +
                                 "            nControl,Powered by nemi            \n" +
-                                "                   www.nemi.in                  \n";
+                                "                   www.nemi.in                  \n"+
+                                "                                                \n"+
+                                "                                                \n"+
+                                "                                                \n";
 
                         String printData = printDatap1 + printDatap2 + printDatap3;
 

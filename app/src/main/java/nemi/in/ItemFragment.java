@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
@@ -45,7 +46,6 @@ public class ItemFragment extends Fragment {
     ndbHelper databaseHelper;
     EditText et_item, et_category, et_price;
     Button additem, upload_imagepath;
-    ListView itemview;
     String item, category, price, imagepath;
     private static int RESULT_LOAD_IMG = 1;
     String imgDecodableString;
@@ -53,9 +53,12 @@ public class ItemFragment extends Fragment {
     ImageView tv_imagepath;
     RadioGroup radioGroup;
     RadioButton new_rad, old_rad;
+//    OldCategoryAdapter oldCategoryAdapter;
+    ListView list;
     String selectedImagePath = "noimageselected";
     private static final int MY_INTENT_CLICK = 302;
     int selectedId;
+    ListView itemview;
     public ItemFragment() {
     }
 
@@ -65,8 +68,12 @@ public class ItemFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.itemsmgmt, container, false);
         databaseHelper = new ndbHelper(getActivity(), null, null, 1);
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
-        final ListView itemview = (ListView) rootView.findViewById(R.id.itemlistview);
+        itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
+
+
+
+
 
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         radioGroup = (RadioGroup) rootView.findViewById(R.id.myRadioGroup);
@@ -98,15 +105,19 @@ public class ItemFragment extends Fragment {
                 if (checkedId == R.id.new_rd) {
                     Toast.makeText(getActivity(), "new categroy", Toast.LENGTH_SHORT).show();
                 } else if (checkedId == R.id.old_rd) {
-                    final Dialog d = new Dialog(getActivity());
-//                  ArrayList<BillItems>billItemses=new ArrayList<BillItems>();
-                    Cursor c = databaseHelper.getCategories();
-                    ListView list = (ListView)d.findViewById(R.id.list_cate_dia_id);
-                    d.setContentView(R.layout.old_category_dialog);
-                    d.setTitle("Select the category from list !");
-                    d.setCancelable(true);
-                    d.show();
-                    Toast.makeText(getActivity(), "old category", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Select Category");
+                    ListView modeList = new ListView(getActivity());
+                    String[] stringArray = new String[] { "Bright Mode", "Normal Mode" };
+                    OldCategoryAdapter oldCategoryAdapter = new OldCategoryAdapter(getActivity(),
+                            databaseHelper.getOldCategories());
+//                    ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(getActivity(),
+//                            android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
+
+                    modeList.setAdapter(oldCategoryAdapter);
+                    builder.setView(modeList);
+                    final Dialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });
@@ -252,20 +263,31 @@ public class ItemFragment extends Fragment {
                             dialogInterface.cancel();
                         }
                     });
-
                     // create alert dialog
                     AlertDialog alertDialog = alertDialogBuilder.create();
-
                     // show it
                     alertDialog.show();
-
                 }
             });
-
+        }
+    }
+    public class OldCategoryAdapter extends CursorAdapter {
+        public OldCategoryAdapter(Context context, Cursor cursor) {
+            super(context, cursor);
+        }
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.old_categroy_adap, parent, false);
+            return view;
         }
 
-
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView tv_column = (TextView) view.findViewById(R.id.tv_item_old_column_id);
+            TextView tv_category = (TextView) view.findViewById(R.id.tv_old_category_id);
+            tv_column.setText(cursor.getString(0));
+            tv_category.setText(cursor.getString(1));
+        }
     }
-
-
 }
