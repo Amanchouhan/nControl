@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -54,15 +55,12 @@ public class ItemFragment extends Fragment {
     RadioGroup radioGroup;
     RadioButton new_rad, old_rad;
 //    OldCategoryAdapter oldCategoryAdapter;
-    ListView list;
     String selectedImagePath = "noimageselected";
     private static final int MY_INTENT_CLICK = 302;
     int selectedId;
     ListView itemview;
     public ItemFragment() {
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.itemsmgmt, container, false);
@@ -70,24 +68,16 @@ public class ItemFragment extends Fragment {
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
         itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
-
-
-
-
-
         et_item = (EditText) rootView.findViewById(R.id.item_id);
         radioGroup = (RadioGroup) rootView.findViewById(R.id.myRadioGroup);
         new_rad = (RadioButton) rootView.findViewById(R.id.new_rd);
         old_rad = (RadioButton) rootView.findViewById(R.id.old_rd);
-
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
         upload_imagepath = (Button) rootView.findViewById(R.id.buttonLoadPicture);
-
         additem = (Button) rootView.findViewById(R.id.additembutton);
         et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         et_category.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
-
         upload_imagepath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,16 +97,21 @@ public class ItemFragment extends Fragment {
                 } else if (checkedId == R.id.old_rd) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Select Category");
-                    ListView modeList = new ListView(getActivity());
-                    String[] stringArray = new String[] { "Bright Mode", "Normal Mode" };
-                    OldCategoryAdapter oldCategoryAdapter = new OldCategoryAdapter(getActivity(),
-                            databaseHelper.getOldCategories());
-//                    ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(getActivity(),
-//                            android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
-
-                    modeList.setAdapter(oldCategoryAdapter);
-                    builder.setView(modeList);
+                    ListView dialogCatList = new ListView(getActivity());
+                    OldCategoryAdapter oldCategoryAdapter = new OldCategoryAdapter(getActivity(),databaseHelper.getOldCategories());
+                    dialogCatList.setAdapter(oldCategoryAdapter);
+                    builder.setView(dialogCatList);
                     final Dialog dialog = builder.create();
+
+                    dialogCatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+                            TextView tv_category = (TextView) view.findViewById(R.id.tv_old_category_id);
+                            String category = tv_category.getText().toString();
+                            et_category.setText(category);
+                            dialog.cancel();
+                        }
+                    });
                     dialog.show();
                 }
             }

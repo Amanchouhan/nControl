@@ -444,6 +444,7 @@ public class PosFragment extends Fragment {
                         TextView itemidfetch = (TextView) view.findViewById(R.id.fetch);
                         TextView fetchitem = (TextView) view.findViewById(R.id.item_fetch);
                         TextView pricefetch = (TextView) view.findViewById(R.id.price_fetch);
+
                         String itemidfetchvar = itemidfetch.getText().toString();
                         String fetchitemvar = fetchitem.getText().toString();
                         int pricefetchvar = Integer.parseInt(pricefetch.getText().toString());
@@ -455,13 +456,11 @@ public class PosFragment extends Fragment {
                         } else {
                             int flag = 0;
                             for (int i = 0; i < alist.size(); i++) {
-
                                 flag = 0;
                                 //                                //match _id
                                 if (itemidfetchvar.equalsIgnoreCase(alist.get(i).getId())) {
                                     alist.set(i, new BillItems(itemidfetchvar, fetchitemvar, alist.get(i).getQty() + 1,
                                             pricefetchvar));
-
                                     //* alist.get(i).getQty() + pricefetchvar   increment by items
                                     lv.setAdapter(billAdap);
                                     break;
