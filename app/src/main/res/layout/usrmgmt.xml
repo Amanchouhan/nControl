@@ -90,6 +90,8 @@
             <Button
                 android:id="@+id/addbutton"
                 android:layout_width="match_parent"
+                android:background="@drawable/button"
+                android:textColor="#fff"
                 android:layout_height="wrap_content"
                 android:text="ADD USER" />
         </LinearLayout>

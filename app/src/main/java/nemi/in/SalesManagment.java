@@ -101,7 +101,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
             public void onClick(View view) {
                 final Dialog d = new Dialog(getActivity());
                 d.setContentView(R.layout.dialog_for_search);
-                d.setTitle("Search!");
+                d.setTitle("Search bill !");
                 d.setCancelable(false);
                 d.show();
                 et_bill_number = (EditText) d.findViewById(R.id.tv_bill_number_id);
@@ -320,7 +320,8 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 public void onClick(View view) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setTitle("Please select an action!");
-                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                    alertDialogBuilder.setIcon(R.drawable.question_mark);
+                    alertDialogBuilder.setMessage("Are you sure you want to delete this bill ?").setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     databaseHelper.deleteBill(Integer.parseInt(bill_number));

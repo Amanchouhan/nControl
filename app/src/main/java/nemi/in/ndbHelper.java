@@ -237,16 +237,17 @@ public class ndbHelper extends SQLiteOpenHelper {
 
 
     /*-------------------------------------------------------Tab categories Fragment-----------------------------------------------------------------*/
+    // all distinct category for tab
     public Cursor getCategories() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("select distinct category from " + TABLE_ITEMS + "", null);
         //category :- fruit,food,seafood;
 
     }
+    //old category for radio button
     public Cursor getOldCategories() {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("select distinct _id, category from " + TABLE_ITEMS + "", null);
-        //category :- fruit,food,seafood;
+        return db.rawQuery("select _id, category from items where _id in (select min(_id) from " + TABLE_ITEMS + " group by category)", null);
 
     }
 

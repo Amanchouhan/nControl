@@ -10,15 +10,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,47 +35,39 @@ import printing.Global;
 
 import android.support.annotation.Nullable;
 
-import java.lang.reflect.Method;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class PosFragment extends Fragment {
     ListView lv, items_list;
     static Button pay_button;
-    Button clear_button;
+    Button clear_button, set_qty_btn, delete_bill_btn,set,cancel;
     TextView total_amo;
-
+    EditText qty_et, c_name_et, c_contact_et;
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
-    Button set_qty_btn, delete_bill_btn;
-    EditText qty_et, c_name_et, c_contact_et;
+    TextView tv_id__pos_column, tv_item_on_pos, tv_price_on_pos;
+    TextView tv_selected_id_on_pos ,tv_selected_item_on_pos ,tv_selected_qty_on_pos,tv_selected_price_on_pos;
+
     ndbHelper databaseHelper;
     private IntentFilter intentFilter = null;
     BroadcastReceiver broadcastReceiver;
 
-
     String data = "00:02:0A:03:1D:F5";
-    public static byte[] buf = null;
-    BillItems billItems;
-
-
-    TextView filepath;
-    ImageView Finger_Image;
-    Button filechooser;
-
-    String _ChhosenPath = null;
-    Context ctx;
-    int total = 0;
-    int billnumber;
     String c_name = null;
     String c_contact = null;
-    String item_length_25 ;
+
+    public static byte[] buf = null;
+    BillItems billItems;
+    int billnumber, total = 0;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pos, container, false);
 
+        tv_id__pos_column = (TextView) view.findViewById(R.id._id_on_pos_id);
+        tv_item_on_pos = (TextView) view.findViewById(R.id.item_on_pos_id);
+        tv_price_on_pos = (TextView) view.findViewById(R.id.price_on_pos_id);
         alist = new ArrayList<BillItems>();
         lv = (ListView) view.findViewById(R.id.userlist);
         total_amo = (TextView) view.findViewById(R.id.total_amo);
@@ -109,29 +97,29 @@ public class PosFragment extends Fragment {
                             String price = String.valueOf(alist.get(i).getPrice());
 
                             String blank = " ";
-                            if(item.length()>20){
-                               item =  item.substring(0,20);
-                            }else {
+                            if (item.length() > 20) {
+                                item = item.substring(0, 20);
+                            } else {
                                 int b = 20 - item.length();
-                                for(int k=0;k<b;k++) {
+                                for (int k = 0; k < b; k++) {
                                     item += blank;
                                 }
                             }
 
-                            if(qty.length()>5){
-                                qty = qty.substring(0,5);
-                            }else {
-                                int c = 5-qty.length();
-                                for(int q=0;q<c;q++){
+                            if (qty.length() > 5) {
+                                qty = qty.substring(0, 5);
+                            } else {
+                                int c = 5 - qty.length();
+                                for (int q = 0; q < c; q++) {
                                     qty += blank;
                                 }
                             }
 
-                            if(price.length()>8){
-                                price = price.substring(0,8);
-                            }else {
-                                int d = 8-price.length();
-                                for(int p=0;p<d;p++) {
+                            if (price.length() > 8) {
+                                price = price.substring(0, 8);
+                            } else {
+                                int d = 8 - price.length();
+                                for (int p = 0; p < d; p++) {
                                     price += blank;
                                 }
                             }
@@ -162,9 +150,9 @@ public class PosFragment extends Fragment {
                                 "            Thank you for visiting D3           \n" +
                                 "------------------------------------------------\n" +
                                 "            nControl,Powered by nemi            \n" +
-                                "                   www.nemi.in                  \n"+
-                                "                                                \n"+
-                                "                                                \n"+
+                                "                   www.nemi.in                  \n" +
+                                "                                                \n" +
+                                "                                                \n" +
                                 "                                                \n";
 
                         String printData = printDatap1 + printDatap2 + printDatap3;
@@ -218,6 +206,7 @@ public class PosFragment extends Fragment {
                 if (!alist.isEmpty()) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setTitle("Please select an action!");
+                    alertDialogBuilder.setIcon(R.drawable.question_mark);
                     alertDialogBuilder.setMessage("Are you sure you want to clear all item !").setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -244,7 +233,6 @@ public class PosFragment extends Fragment {
         return view;
 
     }
-//
 //    @Override
 //    public void onDestroy() {
 //        super.onDestroy();
@@ -252,7 +240,7 @@ public class PosFragment extends Fragment {
 //        alertDialogBuilder.setTitle("Please select an action!");
 //        alertDialogBuilder.setMessage("Are you sure you want to move out of POS. You will lose the current bill?").setCancelable(false)
 //                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
+//                    public void onClick(DialogInterface dialog_for_set_qty, int id) {
 //
 //                    }
 //                }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
@@ -373,20 +361,20 @@ public class PosFragment extends Fragment {
             @Override
             public View newView(Context context, final Cursor cursor, ViewGroup parent) {
                 LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-                View view = inflater.inflate(R.layout.item_list_adap_image, parent, false);
+                View view = inflater.inflate(R.layout.item_view_on_pos, parent, false);
                 return view;
             }
 
             @Override
 
             public void bindView(View view, final Context context, final Cursor cursor) {
-                TextView tv_column = (TextView) view.findViewById(R.id.fetch);
-                TextView tv_item = (TextView) view.findViewById(R.id.item_fetch);
-                TextView tv_price = (TextView) view.findViewById(R.id.price_fetch);
+                tv_id__pos_column = (TextView) view.findViewById(R.id._id_on_pos_id);
+                tv_item_on_pos = (TextView) view.findViewById(R.id.item_on_pos_id);
+                tv_price_on_pos = (TextView) view.findViewById(R.id.price_on_pos_id);
                 ImageView tv_imagepath = (ImageView) view.findViewById(R.id.imageView1);
-                tv_column.setText(cursor.getString(0));
-                tv_item.setText(cursor.getString(1));
-                tv_price.setText(cursor.getString(3));
+                tv_id__pos_column.setText(cursor.getString(0));
+                tv_item_on_pos.setText(cursor.getString(1));
+                tv_price_on_pos.setText(cursor.getString(3));
                 tv_imagepath.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(4)));
             }
 
@@ -441,14 +429,12 @@ public class PosFragment extends Fragment {
                 items_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                        TextView itemidfetch = (TextView) view.findViewById(R.id.fetch);
-                        TextView fetchitem = (TextView) view.findViewById(R.id.item_fetch);
-                        TextView pricefetch = (TextView) view.findViewById(R.id.price_fetch);
-
-                        String itemidfetchvar = itemidfetch.getText().toString();
-                        String fetchitemvar = fetchitem.getText().toString();
-                        int pricefetchvar = Integer.parseInt(pricefetch.getText().toString());
-
+                        tv_id__pos_column = (TextView) view.findViewById(R.id._id_on_pos_id);
+                        tv_item_on_pos = (TextView) view.findViewById(R.id.item_on_pos_id);
+                        tv_price_on_pos = (TextView) view.findViewById(R.id.price_on_pos_id);
+                        String itemidfetchvar = tv_id__pos_column.getText().toString();
+                        String fetchitemvar = tv_item_on_pos.getText().toString();
+                        int pricefetchvar = Integer.parseInt(tv_price_on_pos.getText().toString());
                         if (alist.isEmpty()) {
                             alist.add(new BillItems(itemidfetchvar, fetchitemvar, 1, pricefetchvar));
                             billAdap.notifyDataSetChanged();
@@ -481,6 +467,7 @@ public class PosFragment extends Fragment {
                             total_amo.setText("" + total);
                         }
 
+
                     }
                 });
                 return view;
@@ -505,13 +492,13 @@ public class PosFragment extends Fragment {
 //                Log.e("ibillItems", billItems.toString());
                 // Check if an existing view is being reused, otherwise inflate the view
                 if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_view_on_front, parent, false);
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.selected_itemview_on_pos, parent, false);
                 }
                 // Lookup view for data population
-                final TextView fetch_col = (TextView) convertView.findViewById(R.id.fetch_fe);
-                final TextView fetch_item = (TextView) convertView.findViewById(R.id.item_fe);
-                final TextView fetch_qty = (TextView) convertView.findViewById(R.id.category_fe);
-                TextView fetch_price = (TextView) convertView.findViewById(R.id.price_fe);
+                tv_selected_id_on_pos = (TextView) convertView.findViewById(R.id.selected_id_on_pos);
+                tv_selected_item_on_pos = (TextView) convertView.findViewById(R.id.selected_item_on_pos);
+                tv_selected_qty_on_pos = (TextView) convertView.findViewById(R.id.selected_quantity_on_pos);
+                tv_selected_price_on_pos= (TextView) convertView.findViewById(R.id.selected_price_on_pos);
 
 
                 delete_bill_btn = (Button) convertView.findViewById(R.id.minus_item);
@@ -523,18 +510,16 @@ public class PosFragment extends Fragment {
 
                         final Dialog d = new Dialog(getActivity());
                         d.setTitle("Update Quantity");
-                        d.setContentView(R.layout.dialog);
-                        Button b1 = (Button) d.findViewById(R.id.button1);
-                        Button b2 = (Button) d.findViewById(R.id.button2);
-
-
-                        qty_et = (EditText) d.findViewById(R.id.numberPicker1);
+                        d.setContentView(R.layout.dialog_for_set_qty);
+                        set = (Button) d.findViewById(R.id.set_btn_id);
+                        cancel = (Button) d.findViewById(R.id.cancel_btn_id);
+                        qty_et = (EditText) d.findViewById(R.id.edit_qty_id);
                         qty_et.setText(String.valueOf(alist.get(position).getQty()));
                         String sTextFromET = qty_et.getText().toString();
                         final int qty = new Integer(sTextFromET);
 
 
-                        b1.setOnClickListener(new View.OnClickListener() {
+                        set.setOnClickListener(new View.OnClickListener() {
                                                   @Override
                                                   public void onClick(View view) {
 
@@ -558,7 +543,7 @@ public class PosFragment extends Fragment {
                                                   }
                                               }
                         );
-                        b2.setOnClickListener(new View.OnClickListener() {
+                        cancel.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 d.dismiss();
@@ -575,6 +560,7 @@ public class PosFragment extends Fragment {
 
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                         alertDialogBuilder.setTitle("Please select an action!");
+                        alertDialogBuilder.setIcon(R.drawable.question_mark);
                         alertDialogBuilder.setMessage("Are you sure you want to delete this item ?").setCancelable(false)
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
@@ -583,11 +569,12 @@ public class PosFragment extends Fragment {
                                         billAdap.notifyDataSetChanged();
 
                                         //Total calculation
-                                        int total = 0;
+                                        total = 0;
                                         for (int j = 0; j < alist.size(); j++) {
                                             total += alist.get(j).getPrice() * alist.get(j).getQty();
                                             total_amo.setText("" + total);
                                         }
+
                                     }
                                 }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
                             @Override
@@ -602,10 +589,10 @@ public class PosFragment extends Fragment {
 
 
                 // Populate the data into the template view using the data object
-                fetch_col.setText(billItems.getId());
-                fetch_item.setText(billItems.getItem());
-                fetch_qty.setText(String.valueOf(billItems.getQty()));
-                fetch_price.setText(String.valueOf(billItems.getPrice()));
+                tv_selected_id_on_pos.setText(billItems.getId());
+                tv_selected_item_on_pos.setText(billItems.getItem());
+                tv_selected_qty_on_pos.setText(String.valueOf(billItems.getQty()));
+                tv_selected_price_on_pos.setText(String.valueOf(billItems.getPrice()));
 
                 // Return the completed view to render on screen
                 return convertView;

@@ -1067,7 +1067,7 @@
 //
 //            }
 //        });
-//        // Load directory chooser dialog for initial 'm_chosenDir' directory and
+//        // Load directory chooser dialog_for_set_qty for initial 'm_chosenDir' directory and
 //        // select a required directory.
 //        // The registered callback will be called upon final directory selection
 //        directoryChooserDialog.chooseDirectory("");

@@ -4,7 +4,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/numberPicker1"
+        android:id="@+id/edit_qty_id"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -26,7 +26,9 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/set_btn_id"
+                android:textColor="#fff"
+                android:background="@drawable/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Set" />
@@ -36,13 +38,16 @@
 
         <LinearLayout
             android:layout_width="0dp"
+            android:layout_marginLeft="1dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/cancel_btn_id"
+                android:textColor="#fff"
                 android:layout_width="0dp"
+                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancel" />

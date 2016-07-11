@@ -93,12 +93,15 @@ public class ItemFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // find which radio button is selected
                 if (checkedId == R.id.new_rd) {
+                    et_category.setText("");
+                    et_category.setEnabled(true);
                     Toast.makeText(getActivity(), "new categroy", Toast.LENGTH_SHORT).show();
                 } else if (checkedId == R.id.old_rd) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Select Category");
+                    builder.setTitle("Please select a Category");
                     ListView dialogCatList = new ListView(getActivity());
-                    OldCategoryAdapter oldCategoryAdapter = new OldCategoryAdapter(getActivity(),databaseHelper.getOldCategories());
+                    OldCategoryAdapter oldCategoryAdapter = new OldCategoryAdapter(getActivity()
+                            ,databaseHelper.getOldCategories());
                     dialogCatList.setAdapter(oldCategoryAdapter);
                     builder.setView(dialogCatList);
                     final Dialog dialog = builder.create();
@@ -109,6 +112,7 @@ public class ItemFragment extends Fragment {
                             TextView tv_category = (TextView) view.findViewById(R.id.tv_old_category_id);
                             String category = tv_category.getText().toString();
                             et_category.setText(category);
+                            et_category.setEnabled(false);
                             dialog.cancel();
                         }
                     });
@@ -116,7 +120,6 @@ public class ItemFragment extends Fragment {
                 }
             }
         });
-        selectedId = radioGroup.getCheckedRadioButtonId();
         additem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +142,7 @@ public class ItemFragment extends Fragment {
                         et_category.setText("");
                         et_price.setText("");
                         Toast.makeText(getActivity(), "No Image Selected!", Toast.LENGTH_SHORT).show();
+                        selectedImagePath = "noimageselected";
                     } else {
                         databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
                         Cursor cursor = databaseHelper.getItems();
@@ -146,10 +150,10 @@ public class ItemFragment extends Fragment {
                         et_item.setText("");
                         et_category.setText("");
                         et_price.setText("");
+                        selectedImagePath = "noimageselected";
                     }
             }
         });
-
 
         return rootView;
     }
@@ -169,7 +173,6 @@ public class ItemFragment extends Fragment {
 
     // itemAddOn is fuction used in addItem button
     public void itemAddOn() {
-
         databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
         Cursor cursor = databaseHelper.getItems();
         itemsAdapter.changeCursor(cursor);
@@ -219,7 +222,8 @@ public class ItemFragment extends Fragment {
                 public void onClick(View view) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setTitle("Please select an action!");
-                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                    alertDialogBuilder.setIcon(R.drawable.question_mark);
+                    alertDialogBuilder.setMessage("Are you sure you want to delete this item ?").setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     databaseHelper.deleteItems(item_columnid);
@@ -242,7 +246,8 @@ public class ItemFragment extends Fragment {
                 public void onClick(View view) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setTitle("Please select an action!");
-                    alertDialogBuilder.setMessage("Are you sure ?").setCancelable(false)
+                    alertDialogBuilder.setIcon(R.drawable.question_mark);
+                    alertDialogBuilder.setMessage("Are you sure you want ot update this item ?").setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     et_item.setText(item);
@@ -258,7 +263,7 @@ public class ItemFragment extends Fragment {
                             dialogInterface.cancel();
                         }
                     });
-                    // create alert dialog
+                    // create alert dialog_for_set_qty
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     // show it
                     alertDialog.show();
@@ -285,4 +290,6 @@ public class ItemFragment extends Fragment {
             tv_category.setText(cursor.getString(1));
         }
     }
+
+
 }

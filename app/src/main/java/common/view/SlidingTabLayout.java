@@ -47,6 +47,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         int getIndicatorColor(int position);
 
         int getDividerColor(int position);
+
     }
 
     private static final int TITLE_OFFSET_DIPS = 24;
@@ -155,8 +156,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
         return textView;
     }
 
+    // Tab is creating here
     private void populateTabStrip() {
 //        final PagerAdapter adapter = mViewPager.getAdapter();
+
         final OnClickListener tabClickListener = new TabClickListener();
         databaseHelper = new ndbHelper(getContext(), null, null, 1);
         final Cursor c = databaseHelper.getCategories();
@@ -182,8 +185,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
             } else {
                 tabTitleView.setText(c.getString(0));
             }
+
             Log.e("Error...", c.getString(0));
             tabView.setOnClickListener(tabClickListener);
+//            tabTitleView.setTextColor(getResources().getColorStateList(R.color.cardview_light_background));
             mTabStrip.addView(tabView);
             c.moveToNext();
         }

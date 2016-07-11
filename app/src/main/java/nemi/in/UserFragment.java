@@ -125,7 +125,8 @@ public class UserFragment extends Fragment {
                 public void onClick(View view) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setTitle("Please select an action!");
-                    alertDialogBuilder.setMessage("are you sure ?").setCancelable(false)
+                    alertDialogBuilder.setIcon(R.drawable.question_mark);
+                    alertDialogBuilder.setMessage("Are you sure you want to delete this user or admin ?").setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     databaseHelper.deleteUser(val1);
@@ -148,7 +149,8 @@ public class UserFragment extends Fragment {
                 public void onClick(View view) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setTitle("Please select an action!");
-                    alertDialogBuilder.setMessage("are you sure ?").setCancelable(false)
+                    alertDialogBuilder.setIcon(R.drawable.question_mark);
+                    alertDialogBuilder.setMessage("are you sure you want to update this user or admin ?").setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     role.setText(val2);

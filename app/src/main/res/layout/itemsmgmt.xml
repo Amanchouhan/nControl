@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="7dp"
-                android:text="Item Detail"
+                android:text="Item Details"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </TableRow>
@@ -58,14 +58,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="new category" />
+                    android:text="New" />
 
                 <RadioButton
                     android:layout_weight="1"
                     android:id="@+id/old_rd"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="old category" />
+                    android:text="Existing" />
 
 
             </RadioGroup>
@@ -112,9 +112,10 @@
                 android:id="@+id/buttonLoadPicture"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="#fff"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:text="Select Imagepath"></Button>
+                android:hint="Select Imagepath"/>
 
 
         </LinearLayout>
@@ -123,11 +124,14 @@
             android:id="@+id/LinearLayout4"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
+
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/additembutton"
+                android:textColor="#fff"
                 android:layout_width="fill_parent"
+                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:text="ADD ITEM" />
 

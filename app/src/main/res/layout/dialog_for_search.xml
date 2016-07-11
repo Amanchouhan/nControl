@@ -38,6 +38,7 @@
             <ImageButton
                 android:id="@+id/billbtn_id"
                 android:layout_width="0dp"
+                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
                 android:src="@drawable/ic_search_black_24dp" />
@@ -91,6 +92,7 @@
             <ImageButton
                 android:id="@+id/datebtn_id"
                 android:layout_width="0dp"
+                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:layout_weight=".016"
                 android:src="@drawable/ic_search_black_24dp" />
@@ -123,6 +125,7 @@
                 android:id="@+id/amountbtn_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button"
                 android:layout_weight=".2"
                 android:src="@drawable/ic_search_black_24dp" />
 
@@ -153,6 +156,7 @@
             <ImageButton
                 android:id="@+id/customernamebtn_id"
                 android:layout_width="0dp"
+                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
                 android:src="@drawable/ic_search_black_24dp" />
@@ -184,6 +188,7 @@
                 android:id="@+id/customercontactbtn_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button"
                 android:layout_weight=".2"
                 android:src="@drawable/ic_search_black_24dp" />
 
@@ -193,14 +198,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            android:paddingStart="5dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_cancel_id"
+                android:background="@drawable/button"
                 android:layout_width="0dp"
+                android:textColor="#fff"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:layout_weight=".75"
                 android:text="CANCEL"
                 android:textSize="20dp" />

@@ -108,9 +108,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_weight="1.4"
+                        android:layout_weight="1.2"
                         android:gravity="start"
-                        android:text="Item"
+                        android:text="ITEM"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -119,9 +119,8 @@
                         android:id="@+id/tv_qty_id"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".9"
-
-                        android:text="Qty"
+                        android:layout_weight="1.2"
+                        android:text="QUANTITY"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -130,7 +129,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Price"
+                        android:text="PRICE"
+                        android:gravity="start"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="Action"
+                        android:text="ACTION"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                     android:id="@+id/userlist"
                     android:layout_width="match_parent"
 
-                    android:layout_height="match_parent"></ListView>
+                    android:layout_height="match_parent"/>
             </LinearLayout>
 
 

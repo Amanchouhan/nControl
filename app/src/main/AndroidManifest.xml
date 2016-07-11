@@ -28,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity android:name="nemi.in.Main" />-->
         <activity android:name="nemi.in.NavDrawer" />
         <activity android:name="common.activities.SampleActivityBase" />
         <service android:name="printing.DrawerService"/>

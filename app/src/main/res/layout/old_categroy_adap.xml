@@ -10,7 +10,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/no_image"
         android:text="First"
         android:visibility="invisible"
         tools:ignore="Suspicious0dp" />
