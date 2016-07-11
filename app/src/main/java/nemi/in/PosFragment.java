@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,13 +41,13 @@ import java.util.ArrayList;
 public class PosFragment extends Fragment {
     ListView lv, items_list;
     static Button pay_button;
-    Button clear_button, set_qty_btn, delete_bill_btn,set,cancel;
+    Button clear_button, set_qty_btn, delete_bill_btn, set, cancel;
     TextView total_amo;
     EditText qty_et, c_name_et, c_contact_et;
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
     TextView tv_id__pos_column, tv_item_on_pos, tv_price_on_pos;
-    TextView tv_selected_id_on_pos ,tv_selected_item_on_pos ,tv_selected_qty_on_pos,tv_selected_price_on_pos;
+    TextView tv_selected_id_on_pos, tv_selected_item_on_pos, tv_selected_qty_on_pos, tv_selected_price_on_pos;
 
     ndbHelper databaseHelper;
     private IntentFilter intentFilter = null;
@@ -143,6 +144,8 @@ public class PosFragment extends Fragment {
                                 "Name: " + c_name + "                     \n" +
                                 "Contact: " + c_contact + "               \n" +
                                 "------------------------------------------------\n";
+
+                        Log.e("hello", databaseHelper.getDateTime());
 
                         String printDatap3 = "------------------------------------------------\n" +
                                 "TOTAL                              " + total_amo.getText().toString() + "\n" +
@@ -498,7 +501,7 @@ public class PosFragment extends Fragment {
                 tv_selected_id_on_pos = (TextView) convertView.findViewById(R.id.selected_id_on_pos);
                 tv_selected_item_on_pos = (TextView) convertView.findViewById(R.id.selected_item_on_pos);
                 tv_selected_qty_on_pos = (TextView) convertView.findViewById(R.id.selected_quantity_on_pos);
-                tv_selected_price_on_pos= (TextView) convertView.findViewById(R.id.selected_price_on_pos);
+                tv_selected_price_on_pos = (TextView) convertView.findViewById(R.id.selected_price_on_pos);
 
 
                 delete_bill_btn = (Button) convertView.findViewById(R.id.minus_item);
@@ -520,28 +523,28 @@ public class PosFragment extends Fragment {
 
 
                         set.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
-                                                  public void onClick(View view) {
+                                                   @Override
+                                                   public void onClick(View view) {
 
-                                                      int quantity = Integer.parseInt(qty_et.getText().toString());
-                                                      if (quantity <= 0) {
-                                                          qty_et.setError("Quantity must be greater than 0");
-                                                      } else {
-                                                          alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
-                                                                  quantity, alist.get(position).getPrice()));
-                                                          lv.setAdapter(billAdap);   // set value
-                                                          billAdap.notifyDataSetChanged();
+                                                       int quantity = Integer.parseInt(qty_et.getText().toString());
+                                                       if (quantity <= 0) {
+                                                           qty_et.setError("Quantity must be greater than 0");
+                                                       } else {
+                                                           alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
+                                                                   quantity, alist.get(position).getPrice()));
+                                                           lv.setAdapter(billAdap);   // set value
+                                                           billAdap.notifyDataSetChanged();
 
-                                                          //Re-total
-                                                          int total = 0;
-                                                          for (int j = 0; j < alist.size(); j++) {
-                                                              total += alist.get(j).getPrice() * alist.get(j).getQty();
-                                                              total_amo.setText("" + total);
-                                                          }
-                                                          d.dismiss();
-                                                      }
-                                                  }
-                                              }
+                                                           //Re-total
+                                                           int total = 0;
+                                                           for (int j = 0; j < alist.size(); j++) {
+                                                               total += alist.get(j).getPrice() * alist.get(j).getQty();
+                                                               total_amo.setText("" + total);
+                                                           }
+                                                           d.dismiss();
+                                                       }
+                                                   }
+                                               }
                         );
                         cancel.setOnClickListener(new View.OnClickListener() {
                             @Override

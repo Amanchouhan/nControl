@@ -207,12 +207,15 @@ public class ItemFragment extends Fragment {
             tv_item.setText(cursor.getString(1));
             tv_category.setText(cursor.getString(2));
             tv_price.setText(cursor.getString(3));
-
             tv_imagepath.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(4)));
+
+
             final String item_columnid = tv_column.getText().toString();
             final String item = tv_item.getText().toString();
             final String category = tv_category.getText().toString();
             final String price = tv_price.getText().toString();
+//            final String imagepath = tv_imagepath.
+
 
             ImageButton delete = (ImageButton) view.findViewById(R.id.dele_item_id);
             ImageButton update = (ImageButton) view.findViewById(R.id.update_item_id);
