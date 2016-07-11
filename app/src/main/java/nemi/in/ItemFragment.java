@@ -150,7 +150,8 @@ public class ItemFragment extends Fragment {
                         et_item.setText("");
                         et_category.setText("");
                         et_price.setText("");
-                        selectedImagePath = "noimageselected";
+                        upload_imagepath.setText("");
+                        Toast.makeText(getActivity(),"i am coming here"+selectedImagePath,Toast.LENGTH_SHORT).show();
                     }
             }
         });
@@ -205,6 +206,11 @@ public class ItemFragment extends Fragment {
             tv_imagepath = (ImageView) view.findViewById(R.id.imgView);
 
 
+          /*this is for path update in item mgt*/
+            TextView imagePath = (TextView)view.findViewById(R.id.image_path_id);
+            imagePath.setText(cursor.getString(4));
+            final String imagepath = imagePath.getText().toString();
+
             tv_column.setText(cursor.getString(0));
             tv_item.setText(cursor.getString(1));
             tv_category.setText(cursor.getString(2));
@@ -212,11 +218,13 @@ public class ItemFragment extends Fragment {
             tv_imagepath.setImageBitmap(BitmapFactory.decodeFile(cursor.getString(4)));
 
 
+
             final String item_columnid = tv_column.getText().toString();
+
             final String item = tv_item.getText().toString();
             final String category = tv_category.getText().toString();
             final String price = tv_price.getText().toString();
-//            final String imagepath = tv_imagepath.
+
 
             ImageButton delete = (ImageButton) view.findViewById(R.id.dele_item_id);
             ImageButton update = (ImageButton) view.findViewById(R.id.update_item_id);
@@ -257,7 +265,8 @@ public class ItemFragment extends Fragment {
                                     et_item.setText(item);
                                     et_category.setText(category);
                                     et_price.setText(price);
-//                                    upload_imagepath.setText(imagepath);
+                                    upload_imagepath.setText(imagepath);
+                                    selectedImagePath = imagepath;
                                     databaseHelper.deleteItems(item_columnid);
                                     Cursor cursor = databaseHelper.getItems();
                                     itemsAdapter.changeCursor(cursor);

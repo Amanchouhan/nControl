@@ -14,7 +14,13 @@
         android:background="@drawable/no_image"
         android:visibility="invisible"
         tools:ignore="Suspicious0dp" />
-     
+    <TextView
+        android:id="@+id/image_path_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        tools:ignore="Suspicious0dp" />     
 
     <ImageView
         android:id="@+id/imgView"
