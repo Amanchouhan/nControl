@@ -123,13 +123,14 @@
         <LinearLayout
             android:id="@+id/LinearLayout4"
             android:layout_width="310dp"
-            android:layout_height="wrap_content"
-
+            android:layout_marginTop="1dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/additembutton"
                 android:textColor="#fff"
+                android:layout_gravity="bottom"
                 android:layout_width="fill_parent"
                 android:background="@drawable/button"
                 android:layout_height="wrap_content"

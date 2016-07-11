@@ -84,12 +84,13 @@
         <LinearLayout
             android:id="@+id/LinearLayout4"
             android:layout_width="310dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/addbutton"
                 android:layout_width="match_parent"
+                android:layout_gravity="bottom"
                 android:background="@drawable/button"
                 android:textColor="#fff"
                 android:layout_height="wrap_content"

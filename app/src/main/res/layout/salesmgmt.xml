@@ -10,30 +10,13 @@
         android:layout_width="300dp"
         android:layout_height="match_parent">
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btn_search_bill_id"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Search"
-                android:textColor="#ffffff"
-                android:background="@drawable/button_curved"
-                android:padding="7dp"
-                android:textSize="18sp" />
-        </TableRow>
-
         <LinearLayout
             android:id="@+id/LinearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingStart="5dp"
-            android:paddingLeft="5dp">
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp">
 
             <TextView
                 android:id="@+id/bill_number_id"
@@ -198,10 +181,27 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/bill_sale_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/bill_sale_view"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+
+                <Button
+                    android:id="@+id/btn_search_bill_id"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:text="Search"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_curved"
+                    android:layout_width="match_parent" />
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -254,11 +254,11 @@
                 android:id="@+id/tv_bill_amount_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:gravity="start"
                 android:text="BILL AMOUNT"
+                android:textColor="#fff"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 

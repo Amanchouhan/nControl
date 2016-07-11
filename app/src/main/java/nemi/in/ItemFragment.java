@@ -203,6 +203,8 @@ public class ItemFragment extends Fragment {
             TextView tv_category = (TextView) view.findViewById(R.id.tv_category_id);
             TextView tv_price = (TextView) view.findViewById(R.id.tv_price_id);
             tv_imagepath = (ImageView) view.findViewById(R.id.imgView);
+
+
             tv_column.setText(cursor.getString(0));
             tv_item.setText(cursor.getString(1));
             tv_category.setText(cursor.getString(2));
@@ -215,7 +217,6 @@ public class ItemFragment extends Fragment {
             final String category = tv_category.getText().toString();
             final String price = tv_price.getText().toString();
 //            final String imagepath = tv_imagepath.
-
 
             ImageButton delete = (ImageButton) view.findViewById(R.id.dele_item_id);
             ImageButton update = (ImageButton) view.findViewById(R.id.update_item_id);
@@ -256,6 +257,7 @@ public class ItemFragment extends Fragment {
                                     et_item.setText(item);
                                     et_category.setText(category);
                                     et_price.setText(price);
+//                                    upload_imagepath.setText(imagepath);
                                     databaseHelper.deleteItems(item_columnid);
                                     Cursor cursor = databaseHelper.getItems();
                                     itemsAdapter.changeCursor(cursor);

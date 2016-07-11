@@ -573,11 +573,15 @@ public class PosFragment extends Fragment {
 
                                         //Total calculation
                                         total = 0;
-                                        for (int j = 0; j < alist.size(); j++) {
-                                            total += alist.get(j).getPrice() * alist.get(j).getQty();
-                                            total_amo.setText("" + total);
+                                        if(alist.size()>0) {
+                                            for (int j = 0; j < alist.size(); j++) {
+                                                total += alist.get(j).getPrice() * alist.get(j).getQty();
+                                                total_amo.setText("" + total);
+                                            }
+                                        }else {
+                                            total = 0;
+                                            total_amo.setText("0");
                                         }
-
                                     }
                                 }).setCancelable(false).setNeutralButton("No", new DialogInterface.OnClickListener() {
                             @Override
