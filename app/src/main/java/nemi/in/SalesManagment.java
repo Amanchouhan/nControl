@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.DatePicker;
@@ -111,6 +112,31 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                 et_customer_name = (EditText) d.findViewById(R.id.tv_customer_name_id);
                 et_customer_contact = (EditText) d.findViewById(R.id.tv_customer_contact_id);
 
+                et_bill_number.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Please select a Bill number");
+                        ListView dialogCatList = new ListView(getActivity());
+                        OldBillNumberAdapter oldBillNumberAdapter = new OldBillNumberAdapter(getActivity()
+                                ,databaseHelper.getOldBillNumber());
+                        dialogCatList.setAdapter(oldBillNumberAdapter);
+                        builder.setView(dialogCatList);
+                        final Dialog dialog = builder.create();
+
+                        dialogCatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+                                TextView tv_billnumber = (TextView) view.findViewById(R.id.tv_old_billnumber_id);
+                                String billnumber = tv_billnumber.getText().toString();
+                                et_bill_number.setText(billnumber);
+                                et_bill_number.setEnabled(false);
+                                dialog.cancel();
+                            }
+                        });
+                        dialog.show();
+                    }
+                });
 
                 billnumber_btn = (ImageButton) d.findViewById(R.id.billbtn_id);
                 date_btn = (ImageButton) d.findViewById(R.id.datebtn_id);
@@ -131,7 +157,7 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
                             salesManagmentAdapter.changeCursor(c);
                             d.dismiss();
                         }
-                        else {
+                        else if(Integer.parseInt(bill)<0){
                             Toast.makeText(getActivity(), "Not valid...", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -372,6 +398,25 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
             item.setText(cursor.getString(1));
             qty.setText(cursor.getString(2));
             price.setText(cursor.getString(3));
+        }
+    }
+    public class OldBillNumberAdapter extends CursorAdapter {
+        public OldBillNumberAdapter(Context context, Cursor cursor) {
+            super(context, cursor);
+        }
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.old_billnumber_adap, parent, false);
+            return view;
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            TextView tv_column = (TextView) view.findViewById(R.id.tv_sale_old_column_id);
+            TextView tv_category = (TextView) view.findViewById(R.id.tv_old_billnumber_id);
+            tv_column.setText(cursor.getString(0));
+            tv_category.setText(cursor.getString(1));
         }
     }
 }

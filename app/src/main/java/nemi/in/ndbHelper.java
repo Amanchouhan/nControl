@@ -245,11 +245,18 @@ public class ndbHelper extends SQLiteOpenHelper {
 
     }
     //old category for radio button
-    public Cursor getOldCategories() {
+       public Cursor getOldCategories() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("select _id, category from items where _id in (select min(_id) from " + TABLE_ITEMS + " group by category)", null);
 
     }
+    public Cursor getOldBillNumber() {
+        SQLiteDatabase db = getReadableDatabase();
+//        return db.rawQuery("select distinct _id,billnumber from " + TABLE_SALES + "", null);
+        return db.rawQuery("select _id,billnumber from sales where _id in (select min(_id) from sales group by billnumber)", null);
+
+    }
+
 
     public Cursor getPOSItems(String a) {
         SQLiteDatabase db = getReadableDatabase();

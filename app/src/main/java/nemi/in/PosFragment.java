@@ -84,7 +84,7 @@ public class PosFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!alist.isEmpty()) {
-                    if (DrawerService.workThread.isConnected()) {
+//                    if (DrawerService.workThread.isConnected()) {
 
                         c_name = c_name_et.getText().toString();
                         c_contact = c_contact_et.getText().toString();
@@ -161,7 +161,7 @@ public class PosFragment extends Fragment {
                         String printData = printDatap1 + printDatap2 + printDatap3;
 
 
-                        buf = printData.getBytes();
+//                        buf = printData.getBytes();
 
                         int a = Integer.parseInt(total_amo.getText().toString());
                         databaseHelper.bill(c_name, c_contact, a);
@@ -170,11 +170,11 @@ public class PosFragment extends Fragment {
 
 
 //                        Print
-                        Bundle data = new Bundle();
-                        data.putByteArray(Global.BYTESPARA1, PosFragment.buf);
-                        data.putInt(Global.INTPARA1, 0);
-                        data.putInt(Global.INTPARA2, buf.length);
-                        DrawerService.workThread.handleCmd(Global.CMD_POS_WRITE, data);
+//                        Bundle data = new Bundle();
+//                        data.putByteArray(Global.BYTESPARA1, PosFragment.buf);
+//                        data.putInt(Global.INTPARA1, 0);
+//                        data.putInt(Global.INTPARA2, buf.length);
+//                        DrawerService.workThread.handleCmd(Global.CMD_POS_WRITE, data);
 
 
                         lv.setAdapter(billAdap);   // set value
@@ -185,21 +185,21 @@ public class PosFragment extends Fragment {
                         }
                         billAdap.clear();
                         total_amo.setText("0");
-                    } else {
-                        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-                        if (null == adapter) {
-                            // break;
-                        }
-                        if (!adapter.isEnabled()) {
-                            if (adapter.enable()) {
-                                while (!adapter.isEnabled()) ;
-                            } else {
-                                //break;
-                            }
-                        }
-                        adapter.cancelDiscovery();
-                        adapter.startDiscovery();
-                    }
+//                    } else {
+//                        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+//                        if (null == adapter) {
+//                            // break;
+//                        }
+//                        if (!adapter.isEnabled()) {
+//                            if (adapter.enable()) {
+//                                while (!adapter.isEnabled()) ;
+//                            } else {
+//                                //break;
+//                            }
+//                        }
+//                        adapter.cancelDiscovery();
+//                        adapter.startDiscovery();
+//                    }
                 }
             }
         });
