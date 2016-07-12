@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Item"
+                android:maxLength="20"
                 android:inputType="textNoSuggestions">
 
                 <requestFocus />
@@ -82,7 +83,7 @@
                 android:id="@+id/category_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:maxLength="20"
                 android:hint="Category"
                 android:inputType="textNoSuggestions"
                 android:textAllCaps="true" />
@@ -98,6 +99,7 @@
                 android:id="@+id/price_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="5"
                 android:hint="Price"
                 android:inputType="number" />
 

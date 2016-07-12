@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username"
+                android:maxLength="15"
                 android:inputType="textNoSuggestions">
 
                 <requestFocus />
@@ -50,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:ems="10"
+                android:maxLength="10"
                 android:inputType="textPassword">
 
             </EditText>
@@ -64,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Re-enter Password"
-                android:ems="10"
+                android:maxLength="10"
                 android:inputType="textPassword"/>
 
 
@@ -79,6 +80,7 @@
                 android:id="@+id/rolefield"
                 android:inputType="textNoSuggestions"
                 android:layout_width="match_parent"
+                android:ems="10"
                 android:layout_height="wrap_content"
                 android:hint="Role" />
 
@@ -86,7 +88,7 @@
 
         <LinearLayout
             android:id="@+id/LinearLayout4"
-            android:layout_width="310dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 

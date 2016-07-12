@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,6 @@ public class NavDrawer extends Activity {
 //    String data = "00:12:6F:73:DA:04";  @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         databaseHelper = new ndbHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navdrawer_frame_listview);
@@ -67,11 +67,11 @@ public class NavDrawer extends Activity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-
         navDrawerItems = new ArrayList<NavDrawerItem>();
+        String LoggedInRole = databaseHelper.getLoggedInRole();
 
-        String role = databaseHelper.getLoggedInRole();
-        if (role.equalsIgnoreCase("ADMIN") || role.equalsIgnoreCase("SUPER")) {
+        Toast.makeText(NavDrawer.this,"Logged in as : " + LoggedInRole,Toast.LENGTH_SHORT).show();
+        if (LoggedInRole.equalsIgnoreCase("ADMIN") || LoggedInRole.equalsIgnoreCase("SUPER")) {
             // POS
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
             // Sales Mgmt
@@ -224,9 +224,12 @@ public class NavDrawer extends Activity {
             case R.id.logout:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle("Please select an action!");
-                alertDialogBuilder.setMessage("are you want to logout ?").setCancelable(false)
+                alertDialogBuilder.setIcon(R.drawable.question_mark);
+                alertDialogBuilder.setMessage("Are you sure you want to logout?").setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                String user = databaseHelper.getLoggedInUser();
+                                databaseHelper.loginStatus("false", user);
                                 Intent in = new Intent(NavDrawer.this, Main.class);
                                 startActivity(in);
                                 finish();
@@ -240,15 +243,6 @@ public class NavDrawer extends Activity {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
                 return true;
-//            case R.id.menu_toggle_log:
-//                Intent in = new Intent(NavDrawer.this,AccordionWidgetDemoActivity.class);
-////                startActivity(in);
-//                Fragment f = new Settings();
-//
-//                FragmentManager fragmentManager = getFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.frame_container, f).commit();
-//                return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

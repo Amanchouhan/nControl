@@ -260,7 +260,6 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:text="BILL AMOUNT"
-                android:textColor="#fff"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 

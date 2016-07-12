@@ -84,48 +84,58 @@ public class PosFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!alist.isEmpty()) {
-//                    if (DrawerService.workThread.isConnected()) {
+                    if (DrawerService.workThread.isConnected()) {
 
                         c_name = c_name_et.getText().toString();
                         c_contact = c_contact_et.getText().toString();
                         String printDatap2 = "";
                         billnumber = databaseHelper.checkLastBillNumber();
+
                         billnumber++;
+                        Toast.makeText(getActivity(), "Billnumber is : " + billnumber, Toast.LENGTH_SHORT).show();
                         for (int i = 0; i < alist.size(); i++) {
                             databaseHelper.sales(billnumber, alist.get(i).getItem(), alist.get(i).getQty(), alist.get(i).getPrice());
                             String item = alist.get(i).getItem();
                             String qty = String.valueOf(alist.get(i).getQty());
                             String price = String.valueOf(alist.get(i).getPrice());
-
+                            //this is code for substring of String
                             String blank = " ";
-                            if (item.length() > 20) {
-                                item = item.substring(0, 20);
+                            if (item.length() > 15) {
+                                item = item.substring(0, 15);
                             } else {
-                                int b = 20 - item.length();
+                                int b = 15 - item.length();
                                 for (int k = 0; k < b; k++) {
                                     item += blank;
                                 }
                             }
 
-                            if (qty.length() > 5) {
-                                qty = qty.substring(0, 5);
+                            if (qty.length() > 4) {
+                                qty = qty.substring(0, 4);
                             } else {
-                                int c = 5 - qty.length();
+                                int c = 4 - qty.length();
                                 for (int q = 0; q < c; q++) {
                                     qty += blank;
                                 }
                             }
 
-                            if (price.length() > 8) {
-                                price = price.substring(0, 8);
+                            if (price.length() > 4) {
+                                price = price.substring(0, 4);
                             } else {
-                                int d = 8 - price.length();
+                                int d = 4 - price.length();
                                 for (int p = 0; p < d; p++) {
                                     price += blank;
                                 }
                             }
-
-                            printDatap2 += item + "     " + qty + "     " + price + "\n";
+                            String multQty = String.valueOf(alist.get(i).getQty() * alist.get(i).getPrice());
+                            if (multQty.length() > 5) {
+                                multQty = multQty.substring(0, 5);
+                            } else {
+                                int m = 5 - multQty.length();
+                                for (int p = 0; p < m; p++) {
+                                    multQty = blank + multQty;
+                                }
+                            }
+                            printDatap2 += item + " -  " + price + "        " + qty + "     " + multQty + "\n";
                         }
                         for (int j = 0; j < alist.size(); j++) {
                             total += alist.get(j).getPrice() * alist.get(j).getQty();
@@ -140,15 +150,15 @@ public class PosFragment extends Fragment {
                                 "               Karnataka, India.                \n" +
                                 "------------------------------------------------\n" +
                                 "Date & Time: " + databaseHelper.getDateTime() + "\n" +
-                                "BillNumber " + databaseHelper.checkLastBillNumber() + "\n" +
+                                "BillNumber: " + billnumber + "\n" +
                                 "Name: " + c_name + "                     \n" +
                                 "Contact: " + c_contact + "               \n" +
-                                "------------------------------------------------\n";
+                                "------------------------------------------------\n" +
+                                "ITEM               PRICE       QTY     AMOUNT   ";
 
-                        Log.e("hello", databaseHelper.getDateTime());
 
                         String printDatap3 = "------------------------------------------------\n" +
-                                "TOTAL                              " + total_amo.getText().toString() + "\n" +
+                                "TOTAL                                    " + total_amo.getText().toString() + "\n" +
                                 "                                                \n" +
                                 "            Thank you for visiting D3           \n" +
                                 "------------------------------------------------\n" +
@@ -158,10 +168,11 @@ public class PosFragment extends Fragment {
                                 "                                                \n" +
                                 "                                                \n";
 
+
                         String printData = printDatap1 + printDatap2 + printDatap3;
 
 
-//                        buf = printData.getBytes();
+                        buf = printData.getBytes();
 
                         int a = Integer.parseInt(total_amo.getText().toString());
                         databaseHelper.bill(c_name, c_contact, a);
@@ -170,11 +181,11 @@ public class PosFragment extends Fragment {
 
 
 //                        Print
-//                        Bundle data = new Bundle();
-//                        data.putByteArray(Global.BYTESPARA1, PosFragment.buf);
-//                        data.putInt(Global.INTPARA1, 0);
-//                        data.putInt(Global.INTPARA2, buf.length);
-//                        DrawerService.workThread.handleCmd(Global.CMD_POS_WRITE, data);
+                        Bundle data = new Bundle();
+                        data.putByteArray(Global.BYTESPARA1, PosFragment.buf);
+                        data.putInt(Global.INTPARA1, 0);
+                        data.putInt(Global.INTPARA2, buf.length);
+                        DrawerService.workThread.handleCmd(Global.CMD_POS_WRITE, data);
 
 
                         lv.setAdapter(billAdap);   // set value
@@ -185,21 +196,21 @@ public class PosFragment extends Fragment {
                         }
                         billAdap.clear();
                         total_amo.setText("0");
-//                    } else {
-//                        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-//                        if (null == adapter) {
-//                            // break;
-//                        }
-//                        if (!adapter.isEnabled()) {
-//                            if (adapter.enable()) {
-//                                while (!adapter.isEnabled()) ;
-//                            } else {
-//                                //break;
-//                            }
-//                        }
-//                        adapter.cancelDiscovery();
-//                        adapter.startDiscovery();
-//                    }
+                    } else {
+                        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+                        if (null == adapter) {
+                            // break;
+                        }
+                        if (!adapter.isEnabled()) {
+                            if (adapter.enable()) {
+                                while (!adapter.isEnabled()) ;
+                            } else {
+                                //break;
+                            }
+                        }
+                        adapter.cancelDiscovery();
+                        adapter.startDiscovery();
+                    }
                 }
             }
         });
@@ -573,12 +584,12 @@ public class PosFragment extends Fragment {
 
                                         //Total calculation
                                         total = 0;
-                                        if(alist.size()>0) {
+                                        if (alist.size() > 0) {
                                             for (int j = 0; j < alist.size(); j++) {
                                                 total += alist.get(j).getPrice() * alist.get(j).getQty();
                                                 total_amo.setText("" + total);
                                             }
-                                        }else {
+                                        } else {
                                             total = 0;
                                             total_amo.setText("0");
                                         }

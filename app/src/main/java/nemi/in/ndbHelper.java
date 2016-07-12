@@ -154,8 +154,7 @@ public class ndbHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_LOGINSTATUS, loginstatus);
         SQLiteDatabase db = getWritableDatabase();
-        db.update(TABLE_USERS, cv, COLUMN_USERNAME + " = ?",
-                new String[]{user});
+        db.update(TABLE_USERS, cv, COLUMN_USERNAME + " = ?",new String[]{user});
         db.close();
     }
 
