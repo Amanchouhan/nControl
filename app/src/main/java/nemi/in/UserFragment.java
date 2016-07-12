@@ -1,6 +1,7 @@
 package nemi.in;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -43,11 +46,38 @@ public class UserFragment extends Fragment {
         usersAdapter = new UsersAdapter(getActivity(), databaseHelper.getUsers());
         usersview = (ListView) rootView.findViewById(R.id.userlistview);
         usersview.setAdapter(usersAdapter);
-        role = (EditText) rootView.findViewById(R.id.rolefield);
-        role.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         username = (EditText) rootView.findViewById(R.id.usernamefield);
         password = (EditText) rootView.findViewById(R.id.passwordfield);
         re_enter_password = (EditText) rootView.findViewById(R.id.co_passwordfield);
+        role = (EditText) rootView.findViewById(R.id.rolefield);
+        role.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+
+       role.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+               builder.setTitle("Please select a Role");
+               ListView dialogCatList = new ListView(getActivity());
+//
+               final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                       android.R.layout.simple_list_item_1);
+               arrayAdapter.add("USER");
+               arrayAdapter.add("ADMIN");
+                dialogCatList.setAdapter(arrayAdapter);
+               builder.setView(dialogCatList);
+               final Dialog dialog = builder.create();
+               dialogCatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                   @Override
+                   public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+                       String strName = arrayAdapter.getItem(position);
+                       role.setText(strName);
+                       role.setEnabled(false);
+                       dialog.cancel();
+                   }
+               });
+               dialog.show();
+           }
+       });
         final String LoggedInRole = databaseHelper.getLoggedInRole();
 
         add = (Button) rootView.findViewById(R.id.addbutton);
@@ -57,9 +87,8 @@ public class UserFragment extends Fragment {
             public void onClick(View v) {
                 String u = username.getText().toString();
                 String p = password.getText().toString();
-                String r = role.getText().toString();
                 String re = re_enter_password.getText().toString();
-
+                String r = role.getText().toString();
 
                 if (u.equals("")) {
                     username.setError("UserName");
@@ -184,4 +213,5 @@ public class UserFragment extends Fragment {
 
 
     }
+
 }
