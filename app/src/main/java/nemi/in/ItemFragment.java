@@ -141,6 +141,7 @@ public class ItemFragment extends Fragment {
                         et_item.setText("");
                         et_category.setText("");
                         et_price.setText("");
+                        upload_imagepath.setText("");
                         Toast.makeText(getActivity(), "No Image Selected!", Toast.LENGTH_SHORT).show();
                         selectedImagePath = "noimageselected";
                     } else {

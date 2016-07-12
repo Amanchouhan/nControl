@@ -145,8 +145,8 @@ public class PosFragment extends Fragment {
                         String printDatap1 = "                     *PAID*                     \n" +
                                 "------------------------------------------------\n" +
                                 "                       D3                       \n" +
-                                "      III Floor, #330,27th Main, Sector 2,      \n" +
-                                "          HSR Layout,Bangalore-560102,          \n" +
+                                "      III Floor, #330, 27th Main, Sector 2,     \n" +
+                                "          HSR Layout, Bangalore-560102,         \n" +
                                 "               Karnataka, India.                \n" +
                                 "------------------------------------------------\n" +
                                 "Date & Time: " + databaseHelper.getDateTime() + "\n" +
@@ -162,7 +162,7 @@ public class PosFragment extends Fragment {
                                 "                                                \n" +
                                 "            Thank you for visiting D3           \n" +
                                 "------------------------------------------------\n" +
-                                "            nControl,Powered by nemi            \n" +
+                                "            nControl, Powered by nemi           \n" +
                                 "                   www.nemi.in                  \n" +
                                 "                                                \n" +
                                 "                                                \n" +
