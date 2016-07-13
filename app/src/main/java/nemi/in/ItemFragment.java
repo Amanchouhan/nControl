@@ -7,11 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,9 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -33,10 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import in.nemi.ncontrol.R;
 
 /**
@@ -44,7 +36,7 @@ import in.nemi.ncontrol.R;
  */
 public class ItemFragment extends Fragment {
     ItemsAdapter itemsAdapter;
-    ndbHelper databaseHelper;
+    NdbHelper databaseHelper;
     EditText et_item, et_category, et_price;
     Button additem, upload_imagepath;
     String item, category, price, imagepath;
@@ -64,7 +56,7 @@ public class ItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.itemsmgmt, container, false);
-        databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
         itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);
@@ -177,15 +169,8 @@ public class ItemFragment extends Fragment {
     }
 
     // itemAddOn is fuction used in addItem button
-    public void itemAddOn() {
-        databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
-        Cursor cursor = databaseHelper.getItems();
-        itemsAdapter.changeCursor(cursor);
-        et_item.setText("");
-        et_category.setText("");
-        et_price.setText("");
-        Toast.makeText(getActivity(), "Item added itemAddOn...", Toast.LENGTH_SHORT).show();
-    }
+//
+
 
     public class ItemsAdapter extends CursorAdapter {
 

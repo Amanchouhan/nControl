@@ -15,7 +15,7 @@ import java.util.Locale;
 /**
  * Created by Developer on 21-04-2016.
  */
-public class ndbHelper extends SQLiteOpenHelper {
+public class NdbHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ncontrol.db";
@@ -49,7 +49,7 @@ public class ndbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BILL_DATE_TIME = "c_billdatetime";
     public static final String COLUMN_BILLAMOUNT = "billamount";
 
-    public ndbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public NdbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = getReadableDatabase();
     }

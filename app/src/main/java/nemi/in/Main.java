@@ -17,7 +17,7 @@ import in.nemi.ncontrol.R;
  */
 public class Main extends Activity {
 
-    ndbHelper databaseHelper;
+    NdbHelper databaseHelper;
     EditText username_super, password_super, confirm_password_super,username, password;
     Button add,login;
 
@@ -28,7 +28,7 @@ public class Main extends Activity {
         username = (EditText)findViewById(R.id.ed_username_1);
         password = (EditText)findViewById(R.id.ed_password_1);
         login = (Button) findViewById(R.id.button_login);
-        databaseHelper = new ndbHelper(this, null, null, 1);
+        databaseHelper = new NdbHelper(this, null, null, 1);
 
         //check for superuser
         Boolean a = databaseHelper.checkS();

@@ -32,7 +32,7 @@ import printing.DrawerService;
 
 public class NavDrawer extends Activity {
     PosFragment abc = new PosFragment();
-    ndbHelper databaseHelper;
+    NdbHelper databaseHelper;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -53,7 +53,7 @@ public class NavDrawer extends Activity {
 //    String data = "00:12:6F:73:DA:04";  @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        databaseHelper = new ndbHelper(this, null, null, 1);
+        databaseHelper = new NdbHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navdrawer_frame_listview);
         mTitle = mDrawerTitle = getTitle();

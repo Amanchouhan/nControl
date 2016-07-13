@@ -6,11 +6,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,11 +29,12 @@ import in.nemi.ncontrol.R;
  * Created by Aman on 5/3/2016.
  */
 public class UserFragment extends Fragment {
-    ndbHelper databaseHelper;
+    NdbHelper databaseHelper;
     EditText role, username, password, re_enter_password;
     Button add;
     UsersAdapter usersAdapter;
     ListView usersview;
+    String loggedInRole;
 
     public UserFragment() {
     }
@@ -42,7 +42,7 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.usrmgmt, container, false);
-        databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
         usersAdapter = new UsersAdapter(getActivity(), databaseHelper.getUsers());
         usersview = (ListView) rootView.findViewById(R.id.userlistview);
         usersview.setAdapter(usersAdapter);
@@ -51,10 +51,64 @@ public class UserFragment extends Fragment {
         re_enter_password = (EditText) rootView.findViewById(R.id.co_passwordfield);
         role = (EditText) rootView.findViewById(R.id.rolefield);
         role.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
-        String loggedInRole = databaseHelper.getLoggedInRole();
-        if(!loggedInRole.equals("SUPER")) {
-            role.setEnabled(false);
+        loggedInRole = databaseHelper.getLoggedInRole();
+
+        if (!loggedInRole.equals("SUPER")) {
+            role.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Please select a Role ADMIN OR USER");
+                    ListView dialogCatList = new ListView(getActivity());
+
+                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_list_item_1);
+                    arrayAdapter.add("USER");
+                    arrayAdapter.add("ADMIN");
+                    dialogCatList.setAdapter(arrayAdapter);
+                    builder.setView(dialogCatList);
+                    final Dialog dialog = builder.create();
+                    dialogCatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String strName = arrayAdapter.getItem(position);
+                            role.setText(strName);
+                            role.setEnabled(false);
+                            dialog.cancel();
+                        }
+                    });
+                    dialog.show();
+                    return false;
+                }
+            });
+//            role.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                    builder.setTitle("Please select a Role ADMIN OR USER");
+//                    ListView dialogCatList = new ListView(getActivity());
+//
+//                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+//                            android.R.layout.simple_list_item_1);
+//                    arrayAdapter.add("USER");
+//                    arrayAdapter.add("ADMIN");
+//                    dialogCatList.setAdapter(arrayAdapter);
+//                    builder.setView(dialogCatList);
+//                    final Dialog dialog = builder.create();
+//                    dialogCatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                            String strName = arrayAdapter.getItem(position);
+//                            role.setText(strName);
+//                            role.setEnabled(false);
+//                            dialog.cancel();
+//                        }
+//                    });
+//                    dialog.show();
+//                }
+//            });
         }
+
         role.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +135,6 @@ public class UserFragment extends Fragment {
                 dialog.show();
             }
         });
-        final String LoggedInRole = databaseHelper.getLoggedInRole();
 
         add = (Button) rootView.findViewById(R.id.addbutton);
         //Add User to db
@@ -92,7 +145,6 @@ public class UserFragment extends Fragment {
                 String p = password.getText().toString();
                 String re = re_enter_password.getText().toString();
                 String r = role.getText().toString();
-
                 if (u.equals("")) {
                     username.setError("UserName");
                 } else if (p.equals("")) {
@@ -103,8 +155,8 @@ public class UserFragment extends Fragment {
                     re_enter_password.setError("Re-enter password");
                 } else if (r.equals("")) {
                     role.setError("Role");
-                } else if (!LoggedInRole.equals("SUPER") && !r.equalsIgnoreCase("ADMIN") && (!r.equalsIgnoreCase("USER"))) {
-                    role.setError("User role can only be either USER or ADMIN");
+                } else if (!loggedInRole.equals("SUPER") && !r.equalsIgnoreCase("ADMIN") && (!r.equalsIgnoreCase("USER"))) {
+                    role.setError("Admin role can only create either USER or ADMIN !");
                 } else {
                     databaseHelper.addUser(r, u, p);
                     CursorAdapter adapter = (CursorAdapter) usersview.getAdapter();

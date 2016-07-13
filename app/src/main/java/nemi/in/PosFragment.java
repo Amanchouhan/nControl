@@ -15,7 +15,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,14 +47,15 @@ public class PosFragment extends Fragment {
     ArrayList<BillItems> alist;
     TextView tv_id__pos_column, tv_item_on_pos, tv_price_on_pos;
     TextView tv_selected_id_on_pos, tv_selected_item_on_pos, tv_selected_qty_on_pos, tv_selected_price_on_pos;
-
-    ndbHelper databaseHelper;
+    int decre = 0;
+    NdbHelper databaseHelper;
     private IntentFilter intentFilter = null;
     BroadcastReceiver broadcastReceiver;
 
     String data = "00:02:0A:03:1D:F5";
     String c_name = null;
     String c_contact = null;
+    int flag;
 
     public static byte[] buf = null;
     BillItems billItems;
@@ -72,7 +72,7 @@ public class PosFragment extends Fragment {
         alist = new ArrayList<BillItems>();
         lv = (ListView) view.findViewById(R.id.userlist);
         total_amo = (TextView) view.findViewById(R.id.total_amo);
-        databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
         pay_button = (Button) view.findViewById(R.id.pay);
         clear_button = (Button) view.findViewById(R.id.clear);
         c_name_et = (EditText) view.findViewById(R.id.c_name_id);
@@ -341,7 +341,7 @@ public class PosFragment extends Fragment {
     };
 
     public class SlidingTabsBasicFragment extends Fragment {
-        ndbHelper databaseHelper;
+        NdbHelper databaseHelper;
         static final String LOG_TAG = "SlidingTabsBasicFragment";
         private SlidingTabLayout mSlidingTabLayout;
         private ViewPager mViewPager;
@@ -349,7 +349,7 @@ public class PosFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_sample, container, false);
-            databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+            databaseHelper = new NdbHelper(getActivity(), null, null, 1);
             // BillAdapre set here
             billAdap = new BillAdapter(getActivity(), alist);
             return view;
@@ -421,7 +421,7 @@ public class PosFragment extends Fragment {
                 container.addView(view);
                 String ourTabName;
                 POSCursorAdapter posCursorAdapter;
-                databaseHelper = new ndbHelper(getActivity(), null, null, 1);
+                databaseHelper = new NdbHelper(getActivity(), null, null, 1);
                 final Cursor c = databaseHelper.getCategories();
 
                 String[] TabbyName = new String[c.getCount()];
@@ -449,6 +449,7 @@ public class PosFragment extends Fragment {
                         String itemidfetchvar = tv_id__pos_column.getText().toString();
                         String fetchitemvar = tv_item_on_pos.getText().toString();
                         int pricefetchvar = Integer.parseInt(tv_price_on_pos.getText().toString());
+
                         if (alist.isEmpty()) {
                             alist.add(new BillItems(itemidfetchvar, fetchitemvar, 1, pricefetchvar));
                             billAdap.notifyDataSetChanged();
@@ -517,6 +518,32 @@ public class PosFragment extends Fragment {
 
                 delete_bill_btn = (Button) convertView.findViewById(R.id.minus_item);
                 set_qty_btn = (Button) convertView.findViewById(R.id.qty_item);
+                final Button decrease = (Button) convertView.findViewById(R.id.decrease_id);
+
+                for (int i = 0; i < alist.size(); i++) {
+                     flag = 0;
+                    decre = alist.get(i).getQty();
+                }
+                decrease.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        decre--;
+                        if (decre > 0) {
+                            alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
+                                    decre, alist.get(position).getPrice()));
+                            lv.setAdapter(billAdap);   // set value
+                            billAdap.notifyDataSetChanged();
+                        }else{
+                             flag = 0;
+                        }
+                        int total = 0;
+                        for (int j = 0; j < alist.size(); j++) {
+                            total += alist.get(j).getPrice() * alist.get(j).getQty();
+                            total_amo.setText("" + total);
+                        }
+                    }
+                });
+
 
                 set_qty_btn.setOnClickListener(new View.OnClickListener() {
                     @Override

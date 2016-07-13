@@ -31,6 +31,7 @@
         android:layout_weight="1.1"
         android:text="quantity" />
 
+
     <TextView
         android:id="@+id/selected_price_on_pos"
         android:layout_width="0dp"
@@ -42,30 +43,40 @@
         android:text="Price" />
 
 
+    <Button
+        android:id="@+id/minus_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_weight=".4"
+        android:background="@drawable/button_rounded_warning"
+        android:text="X"
+        android:textColor="#ffffff"
+        android:textSize="10dp"
+        android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/qty_item"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft=".3dp"
+        android:background="@drawable/button_curved"
+        android:text="QTY"
+        android:textColor="#ffffff"
+        android:textSize="10dp"
+        android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/minus_item"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:background="@drawable/button_rounded_warning"
-            android:layout_weight=".4"
-            android:text="X"
-            android:textColor="#ffffff"
-            android:textSize="10dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/qty_item"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft=".3dp"
-            android:background="@drawable/button_curved"
-            android:text="QTY"
-            android:textColor="#ffffff"
-            android:textSize="10dp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/decrease_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".4"
+        android:layout_marginLeft=".3dp"
+        android:background="@drawable/button_curved"
+        android:text="-"
+        android:textColor="#ffffff"
+        android:textSize="10dp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>
