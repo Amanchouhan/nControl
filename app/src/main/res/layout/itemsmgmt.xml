@@ -117,7 +117,7 @@
                 android:background="#fff"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:hint="Select Imagepath"/>
+                android:hint="Select Image"/>
 
 
         </LinearLayout>

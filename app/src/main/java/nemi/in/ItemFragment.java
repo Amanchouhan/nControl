@@ -130,23 +130,23 @@ public class ItemFragment extends Fragment {
                         databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
                         Cursor cursor = databaseHelper.getItems();
                         itemsAdapter.changeCursor(cursor);
+                        databaseHelper.close();
                         et_item.setText("");
                         et_category.setText("");
                         et_price.setText("");
                         upload_imagepath.setText("");
                         Toast.makeText(getActivity(), "No Image Selected!", Toast.LENGTH_SHORT).show();
-                        databaseHelper.close();
-
                     } else {
                         databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
                         Cursor cursor = databaseHelper.getItems();
                         itemsAdapter.changeCursor(cursor);
+                        databaseHelper.close();
                         et_item.setText("");
                         et_category.setText("");
                         et_price.setText("");
                         upload_imagepath.setText("");
-                        databaseHelper.close();
                         Toast.makeText(getActivity(),"i am coming here"+selectedImagePath,Toast.LENGTH_SHORT).show();
+                        selectedImagePath = "noimageselected";
                     }
                 upload_imagepath.setText("");
             }

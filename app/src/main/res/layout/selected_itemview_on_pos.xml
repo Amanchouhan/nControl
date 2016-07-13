@@ -18,18 +18,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="1.8"
+        android:layout_weight="1.7"
         android:singleLine="true"
         android:text="Item" />
-
-    <TextView
-        android:id="@+id/selected_quantity_on_pos"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1.1"
-        android:text="quantity" />
 
 
     <TextView
@@ -39,8 +30,23 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         android:text="Price" />
+    <TextView
+        android:id="@+id/selected_quantity_on_pos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="quantity" />
+
+    <TextView
+        android:id="@+id/selected_amount_on_pos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="Amount" />
 
 
     <Button

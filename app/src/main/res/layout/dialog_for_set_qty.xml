@@ -10,6 +10,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:hint="QTY"
+        android:selectAllOnFocus="true"
         android:maxLength="3"
         android:numeric="integer" />
 

@@ -46,7 +46,7 @@ public class PosFragment extends Fragment {
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
     TextView tv_id__pos_column, tv_item_on_pos, tv_price_on_pos;
-    TextView tv_selected_id_on_pos, tv_selected_item_on_pos, tv_selected_qty_on_pos, tv_selected_price_on_pos;
+    TextView tv_selected_id_on_pos, tv_selected_item_on_pos, tv_selected_qty_on_pos, tv_selected_price_on_pos, tv_selected_amount_on_pos;
     int decre = 0;
     NdbHelper databaseHelper;
     private IntentFilter intentFilter = null;
@@ -56,7 +56,7 @@ public class PosFragment extends Fragment {
     String c_name = null;
     String c_contact = null;
     int flag;
-
+    Button decrease;
     public static byte[] buf = null;
     BillItems billItems;
     int billnumber, total = 0;
@@ -514,27 +514,28 @@ public class PosFragment extends Fragment {
                 tv_selected_item_on_pos = (TextView) convertView.findViewById(R.id.selected_item_on_pos);
                 tv_selected_qty_on_pos = (TextView) convertView.findViewById(R.id.selected_quantity_on_pos);
                 tv_selected_price_on_pos = (TextView) convertView.findViewById(R.id.selected_price_on_pos);
+                tv_selected_amount_on_pos = (TextView) convertView.findViewById(R.id.selected_amount_on_pos);
 
 
                 delete_bill_btn = (Button) convertView.findViewById(R.id.minus_item);
                 set_qty_btn = (Button) convertView.findViewById(R.id.qty_item);
-                final Button decrease = (Button) convertView.findViewById(R.id.decrease_id);
+                decrease = (Button) convertView.findViewById(R.id.decrease_id);
 
-                for (int i = 0; i < alist.size(); i++) {
-                     flag = 0;
-                    decre = alist.get(i).getQty();
-                }
+//                for (int i = 0; i < alist.size(); i++) {
+//                    flag = 0;
+//                    decre = alist.get(i).getQty();
+//                }
                 decrease.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        decre--;
-                        if (decre > 0) {
+//                        decre--;
+                        if (alist.get(position).getQty() > 1) {
+                            int quantity = alist.get(position).getQty();
+                            quantity--;
                             alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
-                                    decre, alist.get(position).getPrice()));
+                                    quantity, alist.get(position).getPrice()));
                             lv.setAdapter(billAdap);   // set value
                             billAdap.notifyDataSetChanged();
-                        }else{
-                             flag = 0;
                         }
                         int total = 0;
                         for (int j = 0; j < alist.size(); j++) {
@@ -555,6 +556,7 @@ public class PosFragment extends Fragment {
                         set = (Button) d.findViewById(R.id.set_btn_id);
                         cancel = (Button) d.findViewById(R.id.cancel_btn_id);
                         qty_et = (EditText) d.findViewById(R.id.edit_qty_id);
+//                        qty_et.
                         qty_et.setText(String.valueOf(alist.get(position).getQty()));
                         String sTextFromET = qty_et.getText().toString();
                         final int qty = new Integer(sTextFromET);
@@ -636,9 +638,10 @@ public class PosFragment extends Fragment {
                 // Populate the data into the template view using the data object
                 tv_selected_id_on_pos.setText(billItems.getId());
                 tv_selected_item_on_pos.setText(billItems.getItem());
-                tv_selected_qty_on_pos.setText(String.valueOf(billItems.getQty()));
                 tv_selected_price_on_pos.setText(String.valueOf(billItems.getPrice()));
-
+                tv_selected_qty_on_pos.setText(String.valueOf(billItems.getQty()));
+                int t = billItems.getPrice() * billItems.getQty();
+                tv_selected_amount_on_pos.setText(String.valueOf(t));
                 // Return the completed view to render on screen
                 return convertView;
             }
