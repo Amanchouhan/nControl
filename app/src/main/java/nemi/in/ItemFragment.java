@@ -143,7 +143,8 @@ public class ItemFragment extends Fragment {
                         et_price.setText("");
                         upload_imagepath.setText("");
                         Toast.makeText(getActivity(), "No Image Selected!", Toast.LENGTH_SHORT).show();
-                        selectedImagePath = "noimageselected";
+                        databaseHelper.close();
+
                     } else {
                         databaseHelper.addItem(item, category, Integer.parseInt(et_price.getText().toString()), selectedImagePath);
                         Cursor cursor = databaseHelper.getItems();
@@ -152,8 +153,10 @@ public class ItemFragment extends Fragment {
                         et_category.setText("");
                         et_price.setText("");
                         upload_imagepath.setText("");
+                        databaseHelper.close();
                         Toast.makeText(getActivity(),"i am coming here"+selectedImagePath,Toast.LENGTH_SHORT).show();
                     }
+                upload_imagepath.setText("");
             }
         });
 
