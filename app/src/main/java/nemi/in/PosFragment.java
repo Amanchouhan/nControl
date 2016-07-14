@@ -40,13 +40,13 @@ import java.util.ArrayList;
 public class PosFragment extends Fragment {
     ListView lv, items_list;
     static Button pay_button;
-    Button clear_button, set_qty_btn, delete_bill_btn, set, cancel;
+    Button clear_button, set_qty_btn, delete_bill_btn, set, cancel,tv_selected_qty_on_pos;
     TextView total_amo;
     EditText qty_et, c_name_et, c_contact_et;
     ArrayAdapter<BillItems> billAdap;
     ArrayList<BillItems> alist;
     TextView tv_id__pos_column, tv_item_on_pos, tv_price_on_pos;
-    TextView tv_selected_id_on_pos, tv_selected_item_on_pos, tv_selected_qty_on_pos, tv_selected_price_on_pos, tv_selected_amount_on_pos;
+    TextView tv_selected_id_on_pos, tv_selected_item_on_pos,  tv_selected_price_on_pos, tv_selected_amount_on_pos;
     int decre = 0;
     NdbHelper databaseHelper;
     private IntentFilter intentFilter = null;
@@ -512,23 +512,17 @@ public class PosFragment extends Fragment {
                 // Lookup view for data population
                 tv_selected_id_on_pos = (TextView) convertView.findViewById(R.id.selected_id_on_pos);
                 tv_selected_item_on_pos = (TextView) convertView.findViewById(R.id.selected_item_on_pos);
-                tv_selected_qty_on_pos = (TextView) convertView.findViewById(R.id.selected_quantity_on_pos);
+                tv_selected_qty_on_pos = (Button) convertView.findViewById(R.id.selected_quantity_on_pos);
                 tv_selected_price_on_pos = (TextView) convertView.findViewById(R.id.selected_price_on_pos);
                 tv_selected_amount_on_pos = (TextView) convertView.findViewById(R.id.selected_amount_on_pos);
 
 
                 delete_bill_btn = (Button) convertView.findViewById(R.id.minus_item);
                 set_qty_btn = (Button) convertView.findViewById(R.id.qty_item);
-                decrease = (Button) convertView.findViewById(R.id.decrease_id);
-
-//                for (int i = 0; i < alist.size(); i++) {
-//                    flag = 0;
-//                    decre = alist.get(i).getQty();
-//                }
-                decrease.setOnClickListener(new View.OnClickListener() {
+//                decrease = (Button) convertView.findViewById(R.id.decrease_id);
+                tv_selected_qty_on_pos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        decre--;
                         if (alist.get(position).getQty() > 1) {
                             int quantity = alist.get(position).getQty();
                             quantity--;
@@ -544,6 +538,24 @@ public class PosFragment extends Fragment {
                         }
                     }
                 });
+//                decrease.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if (alist.get(position).getQty() > 1) {
+//                            int quantity = alist.get(position).getQty();
+//                            quantity--;
+//                            alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
+//                                    quantity, alist.get(position).getPrice()));
+//                            lv.setAdapter(billAdap);   // set value
+//                            billAdap.notifyDataSetChanged();
+//                        }
+//                        int total = 0;
+//                        for (int j = 0; j < alist.size(); j++) {
+//                            total += alist.get(j).getPrice() * alist.get(j).getQty();
+//                            total_amo.setText("" + total);
+//                        }
+//                    }
+//                });
 
 
                 set_qty_btn.setOnClickListener(new View.OnClickListener() {

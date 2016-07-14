@@ -18,7 +18,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1.7"
+        android:layout_weight="1.3"
         android:singleLine="true"
         android:text="Item" />
 
@@ -30,21 +30,25 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="1dp"
-        android:layout_weight="1.2"
+        android:layout_weight=".9"
         android:text="Price" />
-    <TextView
+    <Button
         android:id="@+id/selected_quantity_on_pos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:text="quantity" />
+        android:layout_weight=".5"
+        android:background="@drawable/button_curved"
+        android:textColor="#ffffff"
+        android:textSize="10dp"
+        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/selected_amount_on_pos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_weight="1"
         android:text="Amount" />
 
@@ -67,22 +71,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft=".3dp"
         android:background="@drawable/button_curved"
+        android:layout_marginRight="10dp"
         android:text="QTY"
         android:textColor="#ffffff"
         android:textSize="10dp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/decrease_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".4"
-        android:layout_marginLeft=".3dp"
-        android:background="@drawable/button_curved"
-        android:text="-"
-        android:textColor="#ffffff"
-        android:textSize="10dp"
-        android:textStyle="bold" />
 
 
 </LinearLayout>

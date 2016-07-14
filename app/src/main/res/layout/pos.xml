@@ -118,7 +118,7 @@
                         android:id="@+id/tv_price_id"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
+                        android:layout_weight=".8"
                         android:text="PRICE"
                         android:gravity="start"
                         android:textSize="15dp"
@@ -135,7 +135,7 @@
                         android:id="@+id/tv_amount_id"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".6"
+                        android:layout_weight=".5"
                         android:text="AMT"
                         android:textSize="15dp"
                         android:textStyle="bold" />
