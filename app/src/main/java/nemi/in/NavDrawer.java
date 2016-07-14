@@ -49,7 +49,9 @@ public class NavDrawer extends Activity {
     private NavDrawerListAdapter adapter;
   private IntentFilter intentFilter = null;
 //    String data = "00:02:0A:02:E9:9E";
-    String data = "00:02:0A:03:1D:F5";
+
+//    String data = "00:02:0A:03:1D:F5";
+    String data = "88:68:2E:00:31:4A";
 //    String data = "00:12:6F:73:DA:04";  @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

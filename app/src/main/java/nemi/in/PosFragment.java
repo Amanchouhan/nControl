@@ -157,10 +157,10 @@ public class PosFragment extends Fragment {
            String printDatap1 = "             *PAID*             \n" +
                                 "--------------------------------\n" +
                                 "               D3               \n" +
-                                "   III Floor, #330,27th Main,   \n" +
-                                "      Sector 2,HSR Layout,      \n" +
+                                "   III Floor, #330, 27th Main,  \n" +
+                                "      Sector 2, HSR Layout,     \n" +
                                 "       Bangalore-560102,        \n" +
-                                "        Karnataka,India.        \n" +
+                                "       Karnataka, INDIA.        \n" +
                                 "--------------------------------\n" +
                                 "Date & Time: " + databaseHelper.getDateTime() + "\n" +
                                 "BillNumber: " + billnumber + "  \n" +
