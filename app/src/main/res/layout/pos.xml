@@ -37,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint=" Name"
+                    android:maxLength="14"
                     android:inputType="textNoSuggestions"
                     android:padding="4dp" />
 

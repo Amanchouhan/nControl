@@ -80,7 +80,7 @@
                 android:id="@+id/rolefield"
                 android:inputType="textNoSuggestions"
                 android:layout_width="match_parent"
-                android:ems="10"
+                android:maxLength="12"
                 android:layout_height="wrap_content"
                 android:hint="Role" />
 
