@@ -114,10 +114,10 @@
                 android:id="@+id/buttonLoadPicture"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="#fff"
                 android:layout_gravity="center"
                 android:layout_weight="0"
-                android:hint="Select Image"/>
+                android:hint="Select Image"
+                android:text="Select Image"/>
 
 
         </LinearLayout>

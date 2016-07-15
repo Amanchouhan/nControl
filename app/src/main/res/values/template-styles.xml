@@ -21,7 +21,10 @@
     <style name="Theme.Base" parent="android:Theme.Light" />
 
     <style name="Theme.Sample" parent="Theme.Base" />
+    <!-- This is action bar theme below -->
     <style name="AppTheme" parent="Theme.Sample" />
+    <!-- This is swipe delete and undo view theme below -->
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" />-->
 
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" >-->
         <!--<item name="colorPrimary">@color/ColorPrimary</item>-->

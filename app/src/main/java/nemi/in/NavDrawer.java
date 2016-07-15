@@ -149,52 +149,28 @@ public class NavDrawer extends Activity {
         System.out.println("inside on create");
         initBroadcast();
     }
-
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
-
             @Override
             public void onReceive(Context context, Intent intent) {
                 // TODO Auto-generated method stub
-
                 String action = intent.getAction();
-                BluetoothDevice device = intent
-                        .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-
-
                     if (device != null && device.getName() != null) {
                         if (device == null)
                             return;
-
-
                         DrawerService.workThread.connectBt(data);
-                        /*try {
-                            PosFragment.bluetoothConnected();
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }*/
-
                     }
                 }
-
-            }
-
-            ;
+            };
         };
-            intentFilter=new
-
-            IntentFilter();
-
+            intentFilter=new  IntentFilter();
             intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
             //  intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
             intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
             // intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-
             registerReceiver(broadcastReceiver, intentFilter);
-
     }
     /**
      * Slide menu item click listener
@@ -244,6 +220,12 @@ public class NavDrawer extends Activity {
                 });
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
+                return true;
+            case R.id.settingbtn:
+                Fragment fragment = new SettingFragments();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+                Toast.makeText(getApplicationContext(),"This is settting",Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

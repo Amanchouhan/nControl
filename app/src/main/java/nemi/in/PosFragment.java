@@ -1,5 +1,6 @@
 package nemi.in;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -15,6 +16,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import adapter.OnItemClickListener;
+import adapter.RecyclerViewAdapter;
+import adapter.SwipeToDismissTouchListener;
+import adapter.SwipeableItemClickListener;
 import common.view.SlidingTabLayout;
 import in.nemi.ncontrol.R;
 import printing.DrawerService;
@@ -36,6 +43,9 @@ import printing.Global;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class PosFragment extends Fragment {
     ListView lv, items_list;
@@ -63,12 +73,12 @@ public class PosFragment extends Fragment {
     public static byte[] buf = null;
     BillItems billItems;
     int billnumber, total = 0;
+    private static final int TIME_TO_AUTOMATICALLY_DISMISS_ITEM = 3000;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pos, container, false);
-
         tv_id__pos_column = (TextView) view.findViewById(R.id._id_on_pos_id);
         tv_item_on_pos = (TextView) view.findViewById(R.id.item_on_pos_id);
         tv_price_on_pos = (TextView) view.findViewById(R.id.price_on_pos_id);
@@ -286,6 +296,7 @@ public class PosFragment extends Fragment {
         return view;
 
     }
+
 //    @Override
 //    public void onDestroy() {
 //        super.onDestroy();
@@ -536,6 +547,7 @@ public class PosFragment extends Fragment {
         }
 
         public class BillAdapter extends ArrayAdapter<BillItems> {
+
             public BillAdapter(Context context, ArrayList<BillItems> alist) {
                 super(context, 0, alist);
             }
@@ -580,25 +592,6 @@ public class PosFragment extends Fragment {
                         }
                     }
                 });
-//                decrease.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        if (alist.get(position).getQty() > 1) {
-//                            int quantity = alist.get(position).getQty();
-//                            quantity--;
-//                            alist.set(position, new BillItems(alist.get(position).getId(), alist.get(position).getItem(),
-//                                    quantity, alist.get(position).getPrice()));
-//                            lv.setAdapter(billAdap);   // set value
-//                            billAdap.notifyDataSetChanged();
-//                        }
-//                        int total = 0;
-//                        for (int j = 0; j < alist.size(); j++) {
-//                            total += alist.get(j).getPrice() * alist.get(j).getQty();
-//                            total_amo.setText("" + total);
-//                        }
-//                    }
-//                });
-
 
                 set_qty_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -687,8 +680,6 @@ public class PosFragment extends Fragment {
                         alertDialog.show();
                     }
                 });
-
-
                 // Populate the data into the template view using the data object
                 tv_selected_id_on_pos.setText(billItems.getId());
                 tv_selected_item_on_pos.setText(billItems.getItem());
@@ -699,11 +690,9 @@ public class PosFragment extends Fragment {
                 // Return the completed view to render on screen
                 return convertView;
             }
-
-
         }
-
     }
+
 
     /*public static void enablePayButton(){
         if (DrawerService.workThread.isConnected() && pay_button != null) {
@@ -711,13 +700,10 @@ public class PosFragment extends Fragment {
             pay_button.setEnabled(true);
         }
     }
-
     public static void disblePayButton(){
         if(pay_button != null){
             Log.e("", "Thread DisConnected");
             pay_button.setEnabled(false);
         }
-
     }*/
-
 }

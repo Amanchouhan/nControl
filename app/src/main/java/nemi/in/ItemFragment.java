@@ -67,6 +67,7 @@ public class ItemFragment extends Fragment {
         et_category = (EditText) rootView.findViewById(R.id.category_id);
         et_price = (EditText) rootView.findViewById(R.id.price_id);
         upload_imagepath = (Button) rootView.findViewById(R.id.buttonLoadPicture);
+
         additem = (Button) rootView.findViewById(R.id.additembutton);
         et_price.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         et_category.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
@@ -145,7 +146,6 @@ public class ItemFragment extends Fragment {
                         et_category.setText("");
                         et_price.setText("");
                         upload_imagepath.setText("");
-                        Toast.makeText(getActivity(),"i am coming here"+selectedImagePath,Toast.LENGTH_SHORT).show();
                         selectedImagePath = "noimageselected";
                     }
                 upload_imagepath.setText("");
@@ -254,7 +254,7 @@ public class ItemFragment extends Fragment {
                                     et_item.setText(item);
                                     et_category.setText(category);
                                     et_price.setText(price);
-                                    upload_imagepath.setText(imagepath);
+//                                    upload_imagepath.setText(imagepath);
                                     selectedImagePath = imagepath;
                                     databaseHelper.deleteItems(item_columnid);
                                     Cursor cursor = databaseHelper.getItems();

@@ -13,6 +13,7 @@
         android:icon="@drawable/ncontrol"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:screenOrientation="landscape"
         android:theme="@style/AppTheme">
         <receiver android:name="nemi.in.BootReciever">
             <intent-filter>
@@ -29,8 +30,12 @@
             </intent-filter>
         </activity>
         <!--<activity android:name="nemi.in.Main" />-->
-        <activity android:name="nemi.in.NavDrawer" />
-        <activity android:name="common.activities.SampleActivityBase" />
-        <service android:name="printing.DrawerService"/>
+        <activity android:name="nemi.in.NavDrawer"
+            android:screenOrientation="landscape"/>
+        <activity android:name="common.activities.SampleActivityBase"
+            android:screenOrientation="landscape"/>
+        <service android:name="printing.DrawerService"
+            android:screenOrientation="landscape"
+            />
     </application>
 </manifest>
