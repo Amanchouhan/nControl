@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -47,32 +48,38 @@ public class NavDrawer extends Activity {
     BroadcastReceiver broadcastReceiver;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
-  private IntentFilter intentFilter = null;
-//    String data = "00:02:0A:02:E9:9E";
+    private IntentFilter intentFilter = null;
+//        String data = "00:02:0A:02:E9:9E";
+    String value;
+    //    String data = "00:02:0A:03:1D:F5";
+//    String data = "88:68:2E:00:31:4A";
+    public static final String MyPREFERENCES = "MyPrefs";
+    public static final String address = "Bluetooth_address";
 
-//    String data = "00:02:0A:03:1D:F5";
-    String data = "88:68:2E:00:31:4A";
-//    String data = "00:12:6F:73:DA:04";  @SuppressWarnings("ResourceType")
+    //    String data = "00:12:6F:73:DA:04";  @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         databaseHelper = new NdbHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
+
+        // We are using shared preferences for printer address
+        SharedPreferences settings = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        // Reading from SharedPreferences
+        value = settings.getString(SettingFragments.BLUETOOTH_KEY, null);
+//        Toast.makeText(NavDrawer.this, "This is navDrawer  : " + value, Toast.LENGTH_SHORT).show();
+
         setContentView(R.layout.navdrawer_frame_listview);
         mTitle = mDrawerTitle = getTitle();
         // load slide menu items
-
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-
         // nav drawer icons from resources
         navMenuIcons = getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
         navDrawerItems = new ArrayList<NavDrawerItem>();
         String LoggedInRole = databaseHelper.getLoggedInRole();
-
-        Toast.makeText(NavDrawer.this,"Logged in as : " + LoggedInRole,Toast.LENGTH_SHORT).show();
+        Toast.makeText(NavDrawer.this, "Logged in as : " + LoggedInRole, Toast.LENGTH_SHORT).show();
         if (LoggedInRole.equalsIgnoreCase("ADMIN") || LoggedInRole.equalsIgnoreCase("SUPER")) {
             // POS
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
@@ -149,6 +156,7 @@ public class NavDrawer extends Activity {
         System.out.println("inside on create");
         initBroadcast();
     }
+
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -160,18 +168,25 @@ public class NavDrawer extends Activity {
                     if (device != null && device.getName() != null) {
                         if (device == null)
                             return;
-                        DrawerService.workThread.connectBt(data);
+
+                        if(value != null)
+                        DrawerService.workThread.connectBt(value);
+                        else
+                            Toast.makeText(NavDrawer.this,"Please check your printer address!",Toast.LENGTH_SHORT).show();
                     }
                 }
-            };
+            }
+
+            ;
         };
-            intentFilter=new  IntentFilter();
-            intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
-            //  intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-            intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-            // intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-            registerReceiver(broadcastReceiver, intentFilter);
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
+        //  intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        // intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
+
     /**
      * Slide menu item click listener
      */
@@ -225,7 +240,6 @@ public class NavDrawer extends Activity {
                 Fragment fragment = new SettingFragments();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
-                Toast.makeText(getApplicationContext(),"This is settting",Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

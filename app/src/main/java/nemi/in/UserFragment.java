@@ -43,14 +43,22 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.usrmgmt, container, false);
         databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+
+
         usersAdapter = new UsersAdapter(getActivity(), databaseHelper.getUsers());
         usersview = (ListView) rootView.findViewById(R.id.userlistview);
         usersview.setAdapter(usersAdapter);
+
+
         username = (EditText) rootView.findViewById(R.id.usernamefield);
         password = (EditText) rootView.findViewById(R.id.passwordfield);
         re_enter_password = (EditText) rootView.findViewById(R.id.co_passwordfield);
         role = (EditText) rootView.findViewById(R.id.rolefield);
+
+
         role.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+
+
         loggedInRole = databaseHelper.getLoggedInRole();
 
         if (!loggedInRole.equals("SUPER")) {

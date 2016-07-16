@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="5dp"
+            android:text="Printer"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            android:padding="5dp"
+            android:text="Current Printer : "
+            android:textSize="23sp" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView3"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_bg"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/etAddress"
+            android:layout_toEndOf="@+id/etAddress"
+            android:layout_toRightOf="@+id/etAddress"
+            android:background="@drawable/button_bg"
+            android:text="Add" />
+
+        <View
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/etAddress"
+            android:layout_marginTop="15dp"
+            android:background="@color/ColorPrimary" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView4"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:text="Print Codding"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</ScrollView>

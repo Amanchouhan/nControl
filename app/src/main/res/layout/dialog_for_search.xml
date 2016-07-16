@@ -29,20 +29,21 @@
 
             <EditText
                 android:id="@+id/tv_bill_number_id"
-                android:inputType="number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Bill number" >
+                android:hint="Bill number"
+                android:inputType="number">
+
                 <requestFocus />
             </EditText>
 
             <ImageButton
                 android:id="@+id/billbtn_id"
                 android:layout_width="0dp"
-                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
+                android:background="@drawable/button"
                 android:src="@drawable/ic_search_white" />
 
         </LinearLayout>
@@ -78,6 +79,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:paddingStart="5dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -94,9 +96,9 @@
             <ImageButton
                 android:id="@+id/datebtn_id"
                 android:layout_width="0dp"
-                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:layout_weight=".016"
+                android:background="@drawable/button"
                 android:src="@drawable/ic_search_white" />
 
         </LinearLayout>
@@ -127,8 +129,8 @@
                 android:id="@+id/amountbtn_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button"
                 android:layout_weight=".2"
+                android:background="@drawable/button"
                 android:src="@drawable/ic_search_white" />
 
         </LinearLayout>
@@ -158,9 +160,9 @@
             <ImageButton
                 android:id="@+id/customernamebtn_id"
                 android:layout_width="0dp"
-                android:background="@drawable/button"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
+                android:background="@drawable/button"
                 android:src="@drawable/ic_search_white" />
 
         </LinearLayout>
@@ -190,27 +192,28 @@
                 android:id="@+id/customercontactbtn_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button"
                 android:layout_weight=".2"
+                android:background="@drawable/button"
                 android:src="@drawable/ic_search_white" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_cancel_id"
-                android:background="@drawable/button"
                 android:layout_width="0dp"
-                android:textColor="#fff"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="bottom"
                 android:layout_weight=".75"
+                android:background="@drawable/button"
+                android:gravity="center"
                 android:text="CANCEL"
+                android:textColor="#fff"
+
                 android:textSize="20dp" />
 
         </LinearLayout>

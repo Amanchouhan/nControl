@@ -49,6 +49,11 @@ public class NdbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BILL_DATE_TIME = "c_billdatetime";
     public static final String COLUMN_BILLAMOUNT = "billamount";
 
+    // Hardware number table
+    public static final String TABLE_HADDRESS = "haddress";
+    public static final String COLUMN_H_NUMBER = "h_number";
+
+
     public NdbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = getReadableDatabase();
@@ -91,6 +96,11 @@ public class NdbHelper extends SQLiteOpenHelper {
                 COLUMN_BILLAMOUNT + " INTEGER NOT NULL" +
                 ");";
         db.execSQL(billquery);
+        String haddressquery = "create table " + TABLE_HADDRESS + "(" +
+                COLUMN_ID + " integer primary key autoincrement," +
+                COLUMN_H_NUMBER + " text not null" +
+                ");";
+        db.execSQL(haddressquery);
     }
 
     @Override
@@ -99,6 +109,7 @@ public class NdbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_BILL);
         db.execSQL("DROP TABLE IF EXISTS" + TABLE_SALES);
+        db.execSQL("DROP TABLE IF EXISTS" + TABLE_HADDRESS);
 
         onCreate(db);
     }
@@ -189,7 +200,22 @@ public class NdbHelper extends SQLiteOpenHelper {
         db.close();
 
     }
+    public void addHAddress(String hnumber) {
 
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_H_NUMBER, hnumber);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_HADDRESS, null, cv);
+        db.close();
+
+    }
+    public Cursor getHAddress() {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery(
+                "select * from " + TABLE_HADDRESS,
+                null
+        );
+    }
     public Cursor getItems() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery(

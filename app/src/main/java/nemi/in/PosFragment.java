@@ -1,9 +1,9 @@
 package nemi.in;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -11,13 +11,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,22 +29,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import adapter.OnItemClickListener;
-import adapter.RecyclerViewAdapter;
-import adapter.SwipeToDismissTouchListener;
-import adapter.SwipeableItemClickListener;
 import common.view.SlidingTabLayout;
 import in.nemi.ncontrol.R;
 import printing.DrawerService;
 import printing.Global;
-
 import android.support.annotation.Nullable;
-
 import java.util.ArrayList;
-import java.util.List;
 
-import static android.widget.Toast.LENGTH_SHORT;
 
 public class PosFragment extends Fragment {
     ListView lv, items_list;
@@ -63,7 +53,7 @@ public class PosFragment extends Fragment {
     BroadcastReceiver broadcastReceiver;
 
 //    String data = "00:02:0A:03:1D:F5";
-    String data = "88:68:2E:00:31:4A";
+//    String data = "88:68:2E:00:31:4A";
 
     String c_name = null;
     String blank;
@@ -74,11 +64,20 @@ public class PosFragment extends Fragment {
     BillItems billItems;
     int billnumber, total = 0;
     private static final int TIME_TO_AUTOMATICALLY_DISMISS_ITEM = 3000;
-
+    String value;
+    public static final String MyPREFERENCES = "MyPrefs";
+    public static final String address = "Bluetooth_address";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pos, container, false);
+
+
+        SharedPreferences settings = getActivity().getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
+        // Reading from SharedPreferences
+        value = settings.getString(SettingFragments.BLUETOOTH_KEY,"");
+        Toast.makeText(getActivity(),"hey ........"+value,Toast.LENGTH_SHORT).show();
+
         tv_id__pos_column = (TextView) view.findViewById(R.id._id_on_pos_id);
         tv_item_on_pos = (TextView) view.findViewById(R.id.item_on_pos_id);
         tv_price_on_pos = (TextView) view.findViewById(R.id.price_on_pos_id);
@@ -92,6 +91,7 @@ public class PosFragment extends Fragment {
         c_contact_et = (EditText) view.findViewById(R.id.c_number_id);
         initBroadcast();
         //pay_button.setEnabled(false);
+
 
         pay_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +177,7 @@ public class PosFragment extends Fragment {
                                 "Name: " + c_name + "            \n" +
                                 "Contact: " + c_contact + "      \n" +
                                 "--------------------------------\n" +
-                                "ITEM          PRICE  QTY  AMOUNT";
+                                "ITEM          PRICE  QTY  AMOUNT\n";
 
 
                         String printDatap3 = "--------------------------------\n" +
@@ -288,12 +288,14 @@ public class PosFragment extends Fragment {
             }
         });
         if (savedInstanceState == null) {
-            android.app.FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();
             transaction.replace(R.id.sample_content_fragment, fragment);
             transaction.commit();
         }
+
         return view;
+
 
     }
 
@@ -344,7 +346,7 @@ public class PosFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 // TODO Auto-generated method stub
 
-                System.out.println("data comig here" + data);
+                System.out.println("data comig here" + value);
                 String action = intent.getAction();
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 if (BluetoothDevice.ACTION_FOUND.equals(action)) {
@@ -352,7 +354,8 @@ public class PosFragment extends Fragment {
                         if (device == null)
                             return;
 //                        DrawerService.workThread.connectBt("00:02:0A:02:E9:9E");
-                        DrawerService.workThread.connectBt("88:68:2E:00:31:4A");
+//                        DrawerService.workThread.connectBt("88:68:2E:00:31:4A");
+                        DrawerService.workThread.connectBt(value);
 
                     }
                 }
