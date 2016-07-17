@@ -36,7 +36,7 @@ public class DrawerService extends Service {
         workThread = new WorkThread(mHandler);
         workThread.start();
 
-    //PosFragment.enablePayButton();
+    //FragmentPOS.enablePayButton();
         Log.e("DrawerService", "onCreate");
     }
 

@@ -33,7 +33,7 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
-import nemi.in.NdbHelper;
+import nemi.in.DatabaseHelper;
 
 public class SlidingTabLayout extends HorizontalScrollView {
 
@@ -47,7 +47,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     private static final int TITLE_OFFSET_DIPS = 24;
     private static final int TAB_VIEW_PADDING_DIPS = 16;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
-    NdbHelper databaseHelper;
+    DatabaseHelper databaseHelper;
     View tabView;
     private int mTitleOffset;
     TextView tabTitleView;
@@ -155,7 +155,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 //        final PagerAdapter adapter = mViewPager.getAdapter();
 
         final OnClickListener tabClickListener = new TabClickListener();
-        databaseHelper = new NdbHelper(getContext(), null, null, 1);
+        databaseHelper = new DatabaseHelper(getContext(), null, null, 1);
         final Cursor c = databaseHelper.getCategories();
         c.moveToFirst();
 

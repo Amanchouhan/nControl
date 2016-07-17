@@ -18,8 +18,6 @@ import com.lvrenyang.rwusb.USBRWThread;
 import com.lvrenyang.rwwifi.NETHeartBeatThread;
 import com.lvrenyang.rwwifi.NETRWThread;
 
-import nemi.in.PosFragment;
-
 public class WorkThread extends Thread {
 
     private static final String TAG = "WorkThread";

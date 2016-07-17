@@ -15,27 +15,27 @@ import in.nemi.ncontrol.R;
 /**
  * Created by shouryas on 4/21/2016.
  */
-public class Main extends Activity {
+public class ActivityMain extends Activity {
 
-    NdbHelper databaseHelper;
-    EditText username_super, password_super, confirm_password_super,username, password;
-    Button add,login;
+    DatabaseHelper databaseHelper;
+    EditText username_super, password_super, confirm_password_super, username, password;
+    Button add, login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        username = (EditText)findViewById(R.id.ed_username_1);
-        password = (EditText)findViewById(R.id.ed_password_1);
+        username = (EditText) findViewById(R.id.ed_username_1);
+        password = (EditText) findViewById(R.id.ed_password_1);
         login = (Button) findViewById(R.id.button_login);
-        databaseHelper = new NdbHelper(this, null, null, 1);
+        databaseHelper = new DatabaseHelper(this, null, null, 1);
 
         //check for superuser
         Boolean a = databaseHelper.checkS();
         if (!a) {
             //Dialog with custom layout to add super
-            final Dialog d = new Dialog(Main.this);
-            d.setContentView(R.layout.createsuper);
+            final Dialog d = new Dialog(ActivityMain.this);
+            d.setContentView(R.layout.dialog_create_super);
             d.setTitle("Super doesn't exist!");
             d.setCancelable(false);
             d.show();
@@ -52,19 +52,23 @@ public class Main extends Activity {
                     String conf_pass = confirm_password_super.getText().toString();
 
                     String r = "SUPER";
-                    if(u.equals("")) {
+                    if (u.equals("")) {
                         username_super.setError("User name");
-                    } else if(p.equals("")) {
+                    } else if (p.equals("")) {
                         password_super.setError("Password");
 
-                    } else if(p.compareTo(conf_pass)!=0) {
+                    } else if (p.compareTo(conf_pass) != 0) {
                         confirm_password_super.setError("Password is not correct");
-                    } else{
+                    } else {
                         databaseHelper.addUser(r, u, p);
                         d.dismiss();
                     }
                 }
             });
+            //Check if already logged in
+        } else if (!databaseHelper.getLoggedInUser().isEmpty()) {
+            Intent i = new Intent(ActivityMain.this, ActivityNavDrawer.class);
+            startActivity(i);
         }
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +76,12 @@ public class Main extends Activity {
             public void onClick(View view) {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-                if(user.equals("")) {
+                if (user.equals("")) {
                     username.setError("Username");
                 } else if (pass.equals("")) {
                     password.setError("password");
                 } else if (pass.equals(databaseHelper.loginUser(user))) {
-                    Intent i = new Intent(Main.this, NavDrawer.class);
+                    Intent i = new Intent(ActivityMain.this, ActivityNavDrawer.class);
 //                    change login status of the logged in user
                     databaseHelper.loginStatus("true", user);
                     startActivity(i);

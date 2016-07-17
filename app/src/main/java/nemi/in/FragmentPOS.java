@@ -37,7 +37,7 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 
 
-public class PosFragment extends Fragment {
+public class FragmentPOS extends Fragment {
     ListView lv, items_list;
     static Button pay_button;
     Button clear_button, set_qty_btn, delete_bill_btn, set, cancel,tv_selected_qty_on_pos;
@@ -48,7 +48,7 @@ public class PosFragment extends Fragment {
     TextView tv_id__pos_column, tv_item_on_pos, tv_price_on_pos;
     TextView tv_selected_id_on_pos, tv_selected_item_on_pos,  tv_selected_price_on_pos, tv_selected_amount_on_pos;
     int decre = 0;
-    NdbHelper databaseHelper;
+    DatabaseHelper databaseHelper;
     private IntentFilter intentFilter = null;
     BroadcastReceiver broadcastReceiver;
 
@@ -75,8 +75,8 @@ public class PosFragment extends Fragment {
 
         SharedPreferences settings = getActivity().getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
         // Reading from SharedPreferences
-        value = settings.getString(SettingFragments.BLUETOOTH_KEY,"");
-        Toast.makeText(getActivity(),"hey ........"+value,Toast.LENGTH_SHORT).show();
+        value = settings.getString(FragmentSettings.BLUETOOTH_KEY,"");
+//        Toast.makeText(getActivity(),"hey ........"+value,Toast.LENGTH_SHORT).show();
 
         tv_id__pos_column = (TextView) view.findViewById(R.id._id_on_pos_id);
         tv_item_on_pos = (TextView) view.findViewById(R.id.item_on_pos_id);
@@ -84,7 +84,7 @@ public class PosFragment extends Fragment {
         alist = new ArrayList<BillItems>();
         lv = (ListView) view.findViewById(R.id.userlist);
         total_amo = (TextView) view.findViewById(R.id.total_amo);
-        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+        databaseHelper = new DatabaseHelper(getActivity(), null, null, 1);
         pay_button = (Button) view.findViewById(R.id.pay);
         clear_button = (Button) view.findViewById(R.id.clear);
         c_name_et = (EditText) view.findViewById(R.id.c_name_id);
@@ -167,7 +167,7 @@ public class PosFragment extends Fragment {
            String printDatap1 = "             *PAID*             \n" +
                                 "--------------------------------\n" +
                                 "               D3               \n" +
-                                "   III Floor, #330, 27th Main,  \n" +
+                                "   III Floor, #330, 27th ActivityMain,  \n" +
                                 "      Sector 2, HSR Layout,     \n" +
                                 "       Bangalore-560102,        \n" +
                                 "       Karnataka, INDIA.        \n" +
@@ -193,7 +193,7 @@ public class PosFragment extends Fragment {
 //                        String printDatap1 = "                     *PAID*                     \n" +
 //                                "------------------------------------------------\n" +
 //                                "                       D3                       \n" +
-//                                "      III Floor, #330, 27th Main, Sector 2,     \n" +
+//                                "      III Floor, #330, 27th ActivityMain, Sector 2,     \n" +
 //                                "          HSR Layout, Bangalore-560102,         \n" +
 //                                "               Karnataka, India.                \n" +
 //                                "------------------------------------------------\n" +
@@ -231,7 +231,7 @@ public class PosFragment extends Fragment {
 
 //                        Print
                         Bundle data = new Bundle();
-                        data.putByteArray(Global.BYTESPARA1, PosFragment.buf);
+                        data.putByteArray(Global.BYTESPARA1, FragmentPOS.buf);
                         data.putInt(Global.INTPARA1, 0);
                         data.putInt(Global.INTPARA2, buf.length);
                         DrawerService.workThread.handleCmd(Global.CMD_POS_WRITE, data);
@@ -396,7 +396,7 @@ public class PosFragment extends Fragment {
     };
 
     public class SlidingTabsBasicFragment extends Fragment {
-        NdbHelper databaseHelper;
+        DatabaseHelper databaseHelper;
         static final String LOG_TAG = "SlidingTabsBasicFragment";
         private SlidingTabLayout mSlidingTabLayout;
         private ViewPager mViewPager;
@@ -404,7 +404,7 @@ public class PosFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_sample, container, false);
-            databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+            databaseHelper = new DatabaseHelper(getActivity(), null, null, 1);
             // BillAdapre set here
             billAdap = new BillAdapter(getActivity(), alist);
             return view;
@@ -476,7 +476,7 @@ public class PosFragment extends Fragment {
                 container.addView(view);
                 String ourTabName;
                 POSCursorAdapter posCursorAdapter;
-                databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+                databaseHelper = new DatabaseHelper(getActivity(), null, null, 1);
                 final Cursor c = databaseHelper.getCategories();
 
                 String[] TabbyName = new String[c.getCount()];

@@ -53,6 +53,7 @@
             android:layout_toEndOf="@+id/etAddress"
             android:layout_toRightOf="@+id/etAddress"
             android:background="@drawable/button_bg"
+            android:textColor="#fff"
             android:text="Add" />
 
         <View

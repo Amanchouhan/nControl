@@ -33,8 +33,8 @@ import in.nemi.ncontrol.R;
 /**
  * Created by Aman on 6/3/2016.
  */
-public class SalesManagment extends Fragment implements View.OnClickListener {
-    NdbHelper databaseHelper;
+public class FragmentSalesManagment extends Fragment implements View.OnClickListener {
+    DatabaseHelper databaseHelper;
     SalesManagmentAdapter salesManagmentAdapter;
     BillDetailAdapter billDetailAdapter;
     ListView bill_list, bill_details;
@@ -54,13 +54,13 @@ public class SalesManagment extends Fragment implements View.OnClickListener {
 
     private int mHour, mMinute;
 
-    public SalesManagment() {
+    public FragmentSalesManagment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.salesmgmt, container, false);
-        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+        databaseHelper = new DatabaseHelper(getActivity(), null, null, 1);
         search_btn = (Button) rootView.findViewById(R.id.btn_search_bill_id);
         bill_number_tv2 = (TextView) rootView.findViewById(R.id.tv_bill_number_id);
         date_tv = (TextView) rootView.findViewById(R.id.tv_bill_date_id);

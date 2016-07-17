@@ -28,21 +28,21 @@ import in.nemi.ncontrol.R;
 /**
  * Created by Aman on 5/3/2016.
  */
-public class UserFragment extends Fragment {
-    NdbHelper databaseHelper;
+public class FragmentUser extends Fragment {
+    DatabaseHelper databaseHelper;
     EditText role, username, password, re_enter_password;
     Button add;
     UsersAdapter usersAdapter;
     ListView usersview;
     String loggedInRole;
 
-    public UserFragment() {
+    public FragmentUser() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.usrmgmt, container, false);
-        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+        final View rootView = inflater.inflate(R.layout.fragment_user_management, container, false);
+        databaseHelper = new DatabaseHelper(getActivity(), null, null, 1);
 
 
         usersAdapter = new UsersAdapter(getActivity(), databaseHelper.getUsers());
@@ -102,17 +102,17 @@ public class UserFragment extends Fragment {
 //                    arrayAdapter.add("ADMIN");
 //                    dialogCatList.setAdapter(arrayAdapter);
 //                    builder.setView(dialogCatList);
-//                    final Dialog dialog = builder.create();
+//                    final Dialog dialog_set_qty = builder.create();
 //                    dialogCatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                        @Override
 //                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                            String strName = arrayAdapter.getItem(position);
 //                            role.setText(strName);
 //                            role.setEnabled(false);
-//                            dialog.cancel();
+//                            dialog_set_qty.cancel();
 //                        }
 //                    });
-//                    dialog.show();
+//                    dialog_set_qty.show();
 //                }
 //            });
         }

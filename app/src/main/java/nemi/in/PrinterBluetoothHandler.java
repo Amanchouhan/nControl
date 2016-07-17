@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
@@ -16,11 +15,11 @@ import printing.Global;
  * Created by Aman on 7/2/2016.
  */
 
-class MHandler extends Handler {
+class PrinterBluetoothHandler extends Handler {
 
     WeakReference<Context> mActivity;
 
-    MHandler(Context activity) {
+    PrinterBluetoothHandler(Context activity) {
         mActivity = new WeakReference<Context>(activity);
     }
 
@@ -34,7 +33,7 @@ class MHandler extends Handler {
 
                 if (result == 1) {
 
-                    byte[] buf = PosFragment.buf;
+                    byte[] buf = FragmentPOS.buf;
 
                     if (DrawerService.workThread.isConnected() && buf != null) {
 
@@ -46,7 +45,7 @@ class MHandler extends Handler {
 
 
                     }else if(DrawerService.workThread.isConnected()){
-                        //PosFragment.enablePayButton();
+                        //FragmentPOS.enablePayButton();
                         Toast.makeText(theActivity, "Printer Connected",
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -58,10 +57,10 @@ class MHandler extends Handler {
                 }
 
                 if (result == 0) {
-                    //PosFragment.disblePayButton();
+                    //FragmentPOS.disblePayButton();
                     Toast.makeText(theActivity, "Please connect to the printer", Toast.LENGTH_SHORT).show();
                 }
-                PosFragment.buf = null;
+                FragmentPOS.buf = null;
                 break;
             }
 

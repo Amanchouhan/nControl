@@ -34,9 +34,9 @@ import in.nemi.ncontrol.R;
 /**
  * Created by Aman on 5/3/2016.
  */
-public class ItemFragment extends Fragment {
+public class FragmentItem extends Fragment {
     ItemsAdapter itemsAdapter;
-    NdbHelper databaseHelper;
+    DatabaseHelper databaseHelper;
     EditText et_item, et_category, et_price;
     Button additem, upload_imagepath;
     String item, category, price, imagepath;
@@ -51,12 +51,12 @@ public class ItemFragment extends Fragment {
     private static final int MY_INTENT_CLICK = 302;
     int selectedId;
     ListView itemview;
-    public ItemFragment() {
+    public FragmentItem() {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.itemsmgmt, container, false);
-        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+        databaseHelper = new DatabaseHelper(getActivity(), null, null, 1);
         itemsAdapter = new ItemsAdapter(getActivity(), databaseHelper.getItems());
         itemview = (ListView) rootView.findViewById(R.id.itemlistview);
         itemview.setAdapter(itemsAdapter);

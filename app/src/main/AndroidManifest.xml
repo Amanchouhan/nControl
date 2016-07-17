@@ -22,15 +22,15 @@
         </receiver>
 
         <activity
-            android:name="nemi.in.Main"
+            android:name="nemi.in.ActivityMain"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name="nemi.in.Main" />-->
-        <activity android:name="nemi.in.NavDrawer"
+        <!--<activity android:name="nemi.in.ActivityMainvityMain" />-->
+        <activity android:name="nemi.in.ActivityNavDrawer"
             android:screenOrientation="landscape"/>
         <activity android:name="common.activities.SampleActivityBase"
             android:screenOrientation="landscape"/>

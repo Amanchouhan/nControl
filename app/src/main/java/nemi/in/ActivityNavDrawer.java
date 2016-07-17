@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import in.nemi.ncontrol.R;
 import printing.DrawerService;
 
-public class NavDrawer extends Activity {
-    PosFragment abc = new PosFragment();
-    NdbHelper databaseHelper;
+public class ActivityNavDrawer extends Activity {
+    FragmentPOS abc = new FragmentPOS();
+    DatabaseHelper databaseHelper;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -44,12 +44,12 @@ public class NavDrawer extends Activity {
     // slide menu items
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
-    MHandler mHandler;
+    PrinterBluetoothHandler printerBluetoothHandler;
     BroadcastReceiver broadcastReceiver;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
     private IntentFilter intentFilter = null;
-//        String data = "00:02:0A:02:E9:9E";
+    //        String data = "00:02:0A:02:E9:9E";
     String value;
     //    String data = "00:02:0A:03:1D:F5";
 //    String data = "88:68:2E:00:31:4A";
@@ -59,14 +59,14 @@ public class NavDrawer extends Activity {
     //    String data = "00:12:6F:73:DA:04";  @SuppressWarnings("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        databaseHelper = new NdbHelper(this, null, null, 1);
+        databaseHelper = new DatabaseHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
 
         // We are using shared preferences for printer address
         SharedPreferences settings = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         // Reading from SharedPreferences
-        value = settings.getString(SettingFragments.BLUETOOTH_KEY, null);
-//        Toast.makeText(NavDrawer.this, "This is navDrawer  : " + value, Toast.LENGTH_SHORT).show();
+        value = settings.getString(FragmentSettings.BLUETOOTH_KEY, null);
+//        Toast.makeText(ActivityNavDrawer.this, "This is navDrawer  : " + value, Toast.LENGTH_SHORT).show();
 
         setContentView(R.layout.navdrawer_frame_listview);
         mTitle = mDrawerTitle = getTitle();
@@ -79,7 +79,7 @@ public class NavDrawer extends Activity {
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
         navDrawerItems = new ArrayList<NavDrawerItem>();
         String LoggedInRole = databaseHelper.getLoggedInRole();
-        Toast.makeText(NavDrawer.this, "Logged in as : " + LoggedInRole, Toast.LENGTH_SHORT).show();
+        Toast.makeText(ActivityNavDrawer.this, "Logged in as : " + LoggedInRole, Toast.LENGTH_SHORT).show();
         if (LoggedInRole.equalsIgnoreCase("ADMIN") || LoggedInRole.equalsIgnoreCase("SUPER")) {
             // POS
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
@@ -89,7 +89,6 @@ public class NavDrawer extends Activity {
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
             // Item Management
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-
         } else {
             // POS
             navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
@@ -111,6 +110,8 @@ public class NavDrawer extends Activity {
         if (getActionBar() != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
             getActionBar().setHomeButtonEnabled(true);
+            getActionBar().setDisplayUseLogoEnabled(true);
+            getActionBar().setLogo(R.drawable.ncontrol);
         }
 
 
@@ -148,8 +149,8 @@ public class NavDrawer extends Activity {
     }
 
     public void setBluetoothReceiver() {
-        mHandler = new MHandler(this);
-        DrawerService.addHandler(mHandler);
+        printerBluetoothHandler = new PrinterBluetoothHandler(this);
+        DrawerService.addHandler(printerBluetoothHandler);
 
         Intent intent = new Intent(this, DrawerService.class);
         startService(intent);
@@ -169,10 +170,10 @@ public class NavDrawer extends Activity {
                         if (device == null)
                             return;
 
-                        if(value != null)
-                        DrawerService.workThread.connectBt(value);
+                        if (value != null)
+                            DrawerService.workThread.connectBt(value);
                         else
-                            Toast.makeText(NavDrawer.this,"Please check your printer address!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityNavDrawer.this, "Please check your printer address!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -223,7 +224,7 @@ public class NavDrawer extends Activity {
                             public void onClick(DialogInterface dialog, int id) {
                                 String user = databaseHelper.getLoggedInUser();
                                 databaseHelper.loginStatus("false", user);
-                                Intent in = new Intent(NavDrawer.this, Main.class);
+                                Intent in = new Intent(ActivityNavDrawer.this, ActivityMain.class);
                                 startActivity(in);
                                 finish();
                             }
@@ -237,7 +238,7 @@ public class NavDrawer extends Activity {
                 alertDialog.show();
                 return true;
             case R.id.settingbtn:
-                Fragment fragment = new SettingFragments();
+                Fragment fragment = new FragmentSettings();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
                 return true;
@@ -263,16 +264,16 @@ public class NavDrawer extends Activity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new PosFragment();
+                fragment = new FragmentPOS();
                 break;
             case 1:
-                fragment = new SalesManagment();
+                fragment = new FragmentSalesManagment();
                 break;
             case 2:
-                fragment = new UserFragment();
+                fragment = new FragmentUser();
                 break;
             case 3:
-                fragment = new ItemFragment();
+                fragment = new FragmentItem();
                 break;
         }
 
@@ -293,7 +294,7 @@ public class NavDrawer extends Activity {
 
         } else {
             // error in creating fragment
-            Log.e("nemi.in.NavDrawer", "Error in creating fragment");
+            Log.e("nemi.in.ActivityNavDrawer", "Error creating fragment");
         }
     }
 

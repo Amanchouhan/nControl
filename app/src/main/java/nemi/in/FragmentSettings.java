@@ -21,22 +21,22 @@ import in.nemi.ncontrol.R;
 /**
  * Created by Aman on 7/15/2016.
  */
-public class SettingFragments extends Fragment implements View.OnClickListener{
-    MHandler mHandler;
+public class FragmentSettings extends Fragment implements View.OnClickListener{
+    PrinterBluetoothHandler printerBluetoothHandler;
     EditText etAddress;
     Button buttonAdd;
-    NdbHelper databaseHelper;
+    DatabaseHelper databaseHelper;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String BLUETOOTH_KEY = "Bluetooth_address";
     private IntentFilter intentFilter = null;
     SharedPreferences sharedpreferences;
-    public SettingFragments() {
+    public FragmentSettings() {
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.setting_fragment_view, container, false);
-        databaseHelper = new NdbHelper(getActivity(), null, null, 1);
+        View view = inflater.inflate(R.layout.fragment_setting_view, container, false);
+        databaseHelper = new DatabaseHelper(getActivity(), null, null, 1);
         etAddress = (EditText) view.findViewById(R.id.etAddress);
         buttonAdd = (Button) view.findViewById(R.id.btnAdd);
         sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -67,7 +67,7 @@ public class SettingFragments extends Fragment implements View.OnClickListener{
                         ,databaseHelper.getHAddress());
                 dialogCatList.setAdapter(hardwareAddressAdapter);
                 builder.setView(dialogCatList);
-                final Dialog dialog = builder.create();
+                final Dialog dialog_set_qty = builder.create();
 
                 dialogCatList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -76,11 +76,11 @@ public class SettingFragments extends Fragment implements View.OnClickListener{
                         String haddress = tv_haddress.getText().toString();
                         hnumber.setText(haddress);
                         hnumber.setEnabled(false);
-                        dialog.cancel();
+                        dialog_set_qty.cancel();
                     }
 
                 });
-                dialog.show();
+                dialog_set_qty.show();
             }
         });*/
         return view;

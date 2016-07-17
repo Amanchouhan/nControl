@@ -21,8 +21,7 @@
             android:layout_width="60dip"
             android:layout_height="60dip"
             android:layout_gravity="top"
-            android:contentDescription="@string/app_name"
-            />
+            android:contentDescription="@string/app_name" />
     </LinearLayout>
 
     <!-- Rightend Arrow -->
