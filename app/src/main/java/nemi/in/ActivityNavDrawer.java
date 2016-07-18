@@ -1,5 +1,6 @@
 package nemi.in;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -17,14 +18,18 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -73,11 +78,14 @@ public class ActivityNavDrawer extends Activity {
         // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         // nav drawer icons from resources
-        navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);
+        navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+
         navDrawerItems = new ArrayList<NavDrawerItem>();
+
         String LoggedInRole = databaseHelper.getLoggedInRole();
         Toast.makeText(ActivityNavDrawer.this, "Logged in as : " + LoggedInRole, Toast.LENGTH_SHORT).show();
         if (LoggedInRole.equalsIgnoreCase("ADMIN") || LoggedInRole.equalsIgnoreCase("SUPER")) {
@@ -101,9 +109,15 @@ public class ActivityNavDrawer extends Activity {
 
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
+
+
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(true);
+        getActionBar().setIcon(R.drawable.ic_ncontrol);
+        getActionBar().setDisplayShowTitleEnabled(true);
+
         // setting_fragment the nav drawer list adapter
-        adapter = new NavDrawerListAdapter(getApplicationContext(),
-                navDrawerItems);
+        adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
         mDrawerList.setAdapter(adapter);
 
         // enabling action bar app icon and behaving it as toggle button
@@ -111,10 +125,8 @@ public class ActivityNavDrawer extends Activity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
             getActionBar().setHomeButtonEnabled(true);
             getActionBar().setDisplayUseLogoEnabled(true);
-            getActionBar().setLogo(R.drawable.ncontrol);
+
         }
-
-
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.drawable.ic_drawer, //nav menu toggle icon
                 R.string.app_name, // nav drawer open - description for accessibility

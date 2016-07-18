@@ -211,10 +211,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public Cursor getHAddress() {
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery(
-                "select * from " + TABLE_HADDRESS,
-                null
-        );
+        return db.rawQuery("select _id, h_number from haddress where _id in (select min(_id) from " + TABLE_HADDRESS + " group by h_number)",null);
     }
     public Cursor getItems() {
         SQLiteDatabase db = getReadableDatabase();

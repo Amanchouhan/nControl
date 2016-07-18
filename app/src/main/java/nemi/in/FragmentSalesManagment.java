@@ -69,7 +69,7 @@ public class FragmentSalesManagment extends Fragment implements View.OnClickList
         customer_name_tv = (TextView) rootView.findViewById(R.id.tv_customer_name_id);
         customer_contact_tv = (TextView) rootView.findViewById(R.id.tv_customer_contact_id);
 
-
+        search_btn.setOnClickListener(this);
 
 /*================================================SalesManagmentAdapter ========================================================================*/
         salesManagmentAdapter = new SalesManagmentAdapter(getActivity(), databaseHelper.getBill());
@@ -293,6 +293,11 @@ public class FragmentSalesManagment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_search_bill_id:
+
+        }
+
         if (view == fromDateEtxt) {
             fromDatePickerDialog.show();
         } else if (view == toDateEtxt) {
