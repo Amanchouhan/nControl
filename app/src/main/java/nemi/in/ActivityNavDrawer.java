@@ -109,12 +109,14 @@ public class ActivityNavDrawer extends Activity {
 
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
+//        getActionBar().setHomeAsUpIndicator(R.drawable.ic_ncontrol);
+//        getActionBar().setHomeButtonEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        getActionBar().setHomeButtonEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setIcon(R.drawable.ic_ncontrol);
         getActionBar().setDisplayShowTitleEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setIcon(R.drawable.ic_ncontrol);
 
         // setting_fragment the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
@@ -148,6 +150,8 @@ public class ActivityNavDrawer extends Activity {
                 invalidateOptionsMenu();
             }
         };
+
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
@@ -169,6 +173,7 @@ public class ActivityNavDrawer extends Activity {
         System.out.println("inside on create");
         initBroadcast();
     }
+
 
     private void initBroadcast() {
         broadcastReceiver = new BroadcastReceiver() {
@@ -254,6 +259,7 @@ public class ActivityNavDrawer extends Activity {
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -262,11 +268,13 @@ public class ActivityNavDrawer extends Activity {
     /* *
      * Called when invalidateOptionsMenu() is triggered
      */
+    // option menu for visibility or not
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // if nav drawer is opened, hide the action items
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//        menu.findItem(R.id.menu_toggle_log).setVisible(!drawerOpen);
+        menu.findItem(R.id.settingbtn).setVisible(!drawerOpen);
+        menu.findItem(R.id.logout).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 

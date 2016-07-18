@@ -165,7 +165,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_LOGINSTATUS, loginstatus);
         SQLiteDatabase db = getWritableDatabase();
-        db.update(TABLE_USERS, cv, COLUMN_USERNAME + " = ?",new String[]{user});
+        db.update(TABLE_USERS, cv, COLUMN_USERNAME + " = ?", new String[]{user});
         db.close();
     }
 
@@ -187,7 +187,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     /*------------------------------------Add a user to the db-----------------------------------------------------------------*/
-
+    // add item in to db
     public void addItem(String item, String category,int price,String path) {
 
         ContentValues cv = new ContentValues();
@@ -200,6 +200,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
     }
+    // added hardware address in to db
     public void addHAddress(String hnumber) {
 
         ContentValues cv = new ContentValues();
@@ -209,6 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
     }
+    // get hardware address from the db
     public Cursor getHAddress() {
         SQLiteDatabase db = getReadableDatabase();
         return db.rawQuery("select _id, h_number from haddress where _id in (select min(_id) from " + TABLE_HADDRESS + " group by h_number)",null);
@@ -279,7 +281,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
+   // get postion of item from pos
     public Cursor getPOSItems(String a) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery("select * from items where " + COLUMN_CATEGORY + "=\"" + a + "\";", null);
@@ -287,7 +289,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 /*-------------------------------------------------------pos bill-----------------------------------------------------------------*/
-
+// check last bill number in to the db
     public int checkLastBillNumber() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT _id FROM bill ORDER BY _id DESC LIMIT 1;", null);

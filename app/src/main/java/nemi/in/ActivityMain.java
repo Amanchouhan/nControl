@@ -1,9 +1,11 @@
 package nemi.in;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +31,9 @@ public class ActivityMain extends Activity {
         password = (EditText) findViewById(R.id.ed_password_1);
         login = (Button) findViewById(R.id.button_login);
         databaseHelper = new DatabaseHelper(this, null, null, 1);
-
+        getActionBar().setHomeAsUpIndicator(R.drawable.ic_ncontrol);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         //check for superuser
         Boolean a = databaseHelper.checkS();
         if (!a) {
@@ -65,11 +69,12 @@ public class ActivityMain extends Activity {
                     }
                 }
             });
-            //Check if already logged in
-        } else if (!databaseHelper.getLoggedInUser().isEmpty()) {
-            Intent i = new Intent(ActivityMain.this, ActivityNavDrawer.class);
-            startActivity(i);
         }
+        //Check if already logged in
+//      else if (!databaseHelper.getLoggedInUser().isEmpty()) {
+//          Intent i = new Intent(ActivityMain.this, ActivityNavDrawer.class);
+//          startActivity(i);
+//      }
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

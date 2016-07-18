@@ -46,8 +46,7 @@ class PrinterBluetoothHandler extends Handler {
 
                     }else if(DrawerService.workThread.isConnected()){
                         //FragmentPOS.enablePayButton();
-                        Toast.makeText(theActivity, "Printer Connected",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(theActivity, "Printer Connected",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         Toast.makeText(theActivity, "Printer Connection Failed",
