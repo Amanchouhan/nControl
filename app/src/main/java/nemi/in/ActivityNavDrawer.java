@@ -16,23 +16,19 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import java.util.ArrayList;
-
 import in.nemi.ncontrol.R;
 import printing.DrawerService;
 
@@ -66,6 +62,8 @@ public class ActivityNavDrawer extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         databaseHelper = new DatabaseHelper(this, null, null, 1);
         super.onCreate(savedInstanceState);
+        ActionBar bar = getActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
 
         // We are using shared preferences for printer address
         SharedPreferences settings = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
@@ -109,24 +107,22 @@ public class ActivityNavDrawer extends Activity {
 
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
-//        getActionBar().setHomeAsUpIndicator(R.drawable.ic_ncontrol);
-//        getActionBar().setHomeButtonEnabled(true);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setHomeAsUpIndicator(R.drawable.2
 
-        getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setDisplayShowTitleEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setIcon(R.drawable.ic_ncontrol);
+
+//        getActionBar().setIcon(R.drawable.ic_ncontrol);
 
         // setting_fragment the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
         mDrawerList.setAdapter(adapter);
 
-        // enabling action bar app icon and behaving it as toggle button
+//        // enabling action bar app icon and behaving it as toggle button
         if (getActionBar() != null) {
+            getActionBar().setDisplayShowHomeEnabled(true);
+            getActionBar().setDisplayShowTitleEnabled(true);
             getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeAsUpIndicator(R.drawable.ic_ncontrol);
             getActionBar().setHomeButtonEnabled(true);
-            getActionBar().setDisplayUseLogoEnabled(true);
 
         }
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,

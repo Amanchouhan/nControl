@@ -4,6 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,9 +33,8 @@ public class ActivityMain extends Activity {
         password = (EditText) findViewById(R.id.ed_password_1);
         login = (Button) findViewById(R.id.button_login);
         databaseHelper = new DatabaseHelper(this, null, null, 1);
-        getActionBar().setHomeAsUpIndicator(R.drawable.ic_ncontrol);
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar bar = getActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
         //check for superuser
         Boolean a = databaseHelper.checkS();
         if (!a) {
